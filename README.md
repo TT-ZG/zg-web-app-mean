@@ -14,4 +14,3 @@ Website built from the ground up using the MEAN stack.
 2. Run `npm install -g nodemon` to install nodemon. (https://github.com/remy/nodemon)
 
 3. Run this app solely with the command 'nodemon' in the project directory.
-

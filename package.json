@@ -2,7 +2,7 @@
   "name": "zeta-gamma",
   "version": "1.0.0",
   "description": "Fraternity website",
-  "author": "Jeffrey McLemore <jmclemore368@gmail.com",
+  "author": "Jeffrey McLemore <jmclemore368@gmail.com>",
   "main": "server.js",
   "repository": {
     "type": "git",

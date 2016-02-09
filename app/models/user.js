@@ -1,38 +1,73 @@
-// grab the packages that we need for the user model
-var mongoose = require('mongoose'),
-    Schema   = mongoose.Schema,
-    bcrypt   = require('bcrypt-nodejs');
+// =============================================================================
+// SETUP
+// =============================================================================
 
-// create the user Schema
+// ------------------------------------
+// GET DEPENDENCIES
+// ------------------------------------
+var mongoose = require('mongoose'),       //lets us use an easier mongo framework
+    Schema   = mongoose.Schema,           //lets us create a schema for mongo
+    bcrypt   = require('bcrypt-nodejs');  //lets us hash and check passwords
+
+// ------------------------------------
+// CREATE THE SCHEMA
+// ------------------------------------
 var UserSchema = new Schema({
-  name     : String,
-  username : { type: String, required: true, index: { unique: true }},
-  password : { type: String, required: true, select: false }
+    name: {
+      type: String
+    },
+    username: {
+      type: String,
+      required: true,           //required
+      index: { unique: true }   //unique in the database
+    },
+    password: {
+      type: String,
+      required: true,
+      select: false             //excluded from query results
+    }
 });
 
+
+// =============================================================================
+// METHODS
+// =============================================================================
+
+// ------------------------------------
+// MONGOOSE SCHEMA MIDDLEWARE
+// ------------------------------------
 // hash the password before the user is saved
 UserSchema.pre('save', function(next) {
   var user = this;
 
-  // has the password only if the password has been changed or user is new
+  // hash the password iff the user is new or the password has been changed
   if (!user.isModified('password')) return next();
 
-  // generate the hash
+  // hash the password
   bcrypt.hash(user.password, null, null, function(err, hash) {
     if (err) return next(err);
 
-    // change the password to the hashed version
+    // store the hashed password in the database
     user.password = hash;
+
+    // pass off to the next middleware in line
     next();
   });
 });
 
-// method to compare a given password with the database hash
+// ------------------------------------
+// CUSTOM METHODS
+// ------------------------------------
+// for when the user wants to log in/etc, verify the password they supply
+// compare the given password to the database hash, return T/F
 UserSchema.methods.comparePassword = function(password) {
   var user = this;
-
   return bcrypt.compareSync(password, user.password);
 };
 
-// return the model
+
+// =============================================================================
+// RETURN THE MODEL
+// =============================================================================
+
 module.exports = mongoose.model('User', UserSchema);

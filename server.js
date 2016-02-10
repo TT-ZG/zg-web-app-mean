@@ -1,62 +1,60 @@
-// =============================================================================
-// SETUP
-// =============================================================================
-
-// ------------------------------------
+// ==============================================
 // GET DEPENDENCIES
-// ------------------------------------
-var express    = require('express'),     //lets us use an easier node framework
-    app        = express(),              //Initialize our app to be an express app
-    bodyParser = require('body-parser'), //lets us to get POST content from req
-    morgan     = require('morgan'),      //lets us log reqs to console
-    mongoose   = require('mongoose'),    //lets us use an easier mongo framework
-    config     = require('./config'),    //get the apps sensitive information
-    path       = require('path');        //lets us easily set relative paths
+// ==============================================
+var express    = require('express'),
+		app        = express(),
+		bodyParser = require('body-parser'),
+		morgan     = require('morgan'),
+		mongoose   = require('mongoose'),
+		config 	   = require('./config'),
+		path 	   	 = require('path');
 
-// ------------------------------------
+
+
+// ==============================================
 // APP CONFIGURATION
-// ------------------------------------
-// lets us get the content within a POST request
+// ==============================================
+// lets us get info from post requests
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// CORS errors, handle and allow requests from any domain
-app.use(function(req, res, next){
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-  res.setHeader('Access-Control-Allow-Headers',
-               'X-Requested-With, content-type, Authorization');
-      next();
-})
+// lets us handle CORS requests (cross-domain)
+app.use(function(req, res, next) {
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
+	next();
+});
 
-//log all requests to the console and connect to the database
+// log all requests
 app.use(morgan('dev'));
+
+//connect to mongolabs
 mongoose.connect(config.database);
 
+// location of static files
+app.use(express.static(__dirname + '/public'));
 
-// =============================================================================
-// API ROUTES
-// =============================================================================
 
-//Setup api, pass the secret signature held by the server to verify tokens
-var apiRoutes = require('./app/routes/api')(app, express, config.secret);
+
+// ==============================================
+// ROUTING
+// ==============================================
+
+// for host/api
+var apiRoutes = require('./app/routes/api')(app, express);
 app.use('/api', apiRoutes);
 
 
-// =============================================================================
-// FRONTEND ROUTES
-// =============================================================================
-
-// main catchall route, sends client to home.
-// remember, with middleware, order matters. this comes AFTER the api routes.
+// send users to front end
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname + '/public/app/views/index.html'));
+	res.sendFile(path.join(__dirname + '/public/app/views/index.html'));
 });
 
 
-// =============================================================================
-// START THE SERVER
-// =============================================================================
 
+// ==============================================
+// SERVER START
+// ==============================================
 app.listen(config.port);
-console.log('App listening on port ' + config.port);
+console.log('Starting on port ' + config.port);

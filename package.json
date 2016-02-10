@@ -1,7 +1,7 @@
 {
-  "name": "zeta-gamma",
+  "name": "Theta Tau, Zeta Gamma Chapter",
   "version": "1.0.0",
-  "description": "Fraternity website",
+  "description": "Professional Engineering Fraternity Website",
   "author": "Jeffrey McLemore <jmclemore368@gmail.com>",
   "main": "server.js",
   "repository": {
@@ -13,7 +13,9 @@
   },
   "keywords": [
     "theta tau",
-    "zeta gamma"
+    "zeta gamma",
+    "engineering",
+    "professional"
   ],
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",

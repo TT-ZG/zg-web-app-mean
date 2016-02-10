@@ -1,204 +1,246 @@
-// =============================================================================
-// SETUP
-// =============================================================================
-
-// ------------------------------------
+// ==============================================
 // GET DEPENDENCIES
-// ------------------------------------
-var User = require('../models/user'),
-    jwt  = require('jsonwebtoken');
+// ==============================================
+var bodyParser 	= require('body-parser'),
+		User       	= require('../models/user'),
+		jwt        	= require('jsonwebtoken'),		// for creating JSON web tokens
+		config     	= require('../../config'),
+		superSecret = config.secret;							//secret hash stored server side
+
+// ==============================================
+// EXPORT THE MODULE
+// ==============================================
+module.exports = function(app, express) {
+
+	//get an instance of the router
+	var apiRouter = express.Router();
 
 
-// =============================================================================
-// EXPORT THE API
-// =============================================================================
+	// ==============================================
+	// GENERATE SAMPLE USER - POST host/api/sample
+	// ==============================================
+	apiRouter.post('/sample', function(req, res) {
 
-module.exports = function(app, express, superSecret){
+		// look for the user named jeff
+		User.findOne({ 'username': 'Jeff' }, function(err, user) {
 
-  // make an instance of the express router
-  var apiRouter = express.Router();
+			// if there is no jeff user, create one
+			if (!user) {
+				var sampleUser = new User();
 
-  // ------------------------------------
-  // POST host/api/authenticate
-  // ------------------------------------
-  // route to authenticate a user
-  apiRouter.post('/authenticate', function(req, res) {
+				sampleUser.name = 'Jeff McLemore';
+				sampleUser.username = 'Jeff';
+				sampleUser.password = 'Brobama';
 
-    // find the users
-    // select the name, username and password explicitly
-    User.findOne({username: req.body.username})
-    .select('name username password')
-    .exec(function(err, user) {
+				sampleUser.save();
+			} else {
+				console.log(user);
 
-      if (err) throw err;
+				// if there is a jeff, update his password
+				user.password = 'Brobama';
+				user.save();
+			}
 
-      // no user with the username was found
-      if (!user) {
-        res.json({success: false, message: 'Failed. User not found.'});
-      }
+		});
 
-      else if (user) {
+	});
 
-        // compare the submitted password to that users hashed password
-        var validPassword = user.comparePassword(req.body.password);
+	// ==============================================
+	// AUTHENTICATE USER - POST host/api/authenticate
+	// ==============================================
+	apiRouter.post('/authenticate', function(req, res) {
 
-        //if the password is invalid
-        if(!validPassword){
-          res.json({success: false, message: 'Failed. Wrong password.'});
-        }
-        else {
-          // if user is found and password is right, create a token
-          var token = jwt.sign({name: user.name, username: user.username},
-                               superSecret, {expiresInMinutes: 1440});
+	  // find the user
+	  User.findOne({
+	    username: req.body.username
+	  }).select('name username password').exec(function(err, user) {
 
-          // return the information including token as json
-          res.json({success: true, message: 'Enjoy your token!', token: token});
-        }
-      }
-    });
-  });
+	    if (err) throw err;
 
-  // ------------------------------------
-  // VALIDATE REQUEST TO host/api/*
-  // ------------------------------------
-  // route middleware to verify a token
-  apiRouter.use(function(req, res, next) {
+	    // no user with that username was found
+	    if (!user) {
+	      res.json({
+	      	success: false,
+	      	message: 'Authentication failed. User not found.'
+	    	});
+	    } else if (user) {
 
-    // check header or url parameters or post parameters for token
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	      // check if password matches
+	      var validPassword = user.comparePassword(req.body.password);
+	      if (!validPassword) {
+	        res.json({
+	        	success: false,
+	        	message: 'Authentication failed. Wrong password.'
+	      	});
+	      } else {
 
-    // decode token
-    if (token) {
+	        // if user is found and password is right
+	        // create a token
+	        var token = jwt.sign({
+	        	name: user.name,
+	        	username: user.username
+	        }, superSecret, {
+	          expiresInMinutes: 1440 // expires in 24 hours
+	        });
 
-      // verifies token, returns tokens user as decoded JSON object
-      jwt.verify(token, superSecret, function(err, decoded) {
+	        // return the information including token as JSON
+	        res.json({
+	          success: true,
+	          message: 'Enjoy your token!',
+	          token: token
+	        });
+	      }
 
-        if(err){
-          return res.status(403).send({ success: false, message: 'Invalid token.'});
-        }
-        else {
-          // if good, save to request for use in other routes, continue
-          req.decoded = decoded;
-          next();
-        }
-      });
-    }
-    else {
-      // if there is no token provided
-      return res.status(403).send({success: false, message: 'No token provided.'});
-    }
-  });
+	    }
 
-  // ------------------------------------
-  // GET host/api/
-  // ------------------------------------
-  // welcome message
-  apiRouter.get('/', function(req, res){
-        res.json( { message : 'Token accepted. Welcome to the API.' });
-  });
+	  });
+	});
 
+	// ==============================================
+	// VERIFY ALL TOKENS
+	// ==============================================
+	apiRouter.use(function(req, res, next) {
 
-  // --------------------------------------------
-  // ROUTES WITH ENDPOINT api/users
-  // --------------------------------------------
-  apiRouter.route('/users')
+	  // check header or url parameters or post parameters for token
+	  var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
-    // POST host/api/users
-    .post(function(req,res) {
+	  // decode token
+	  if (token) {
 
-      // create a new instance of the User model
-      var user = new User();
+	    // verifies secret and checks exp
+	    jwt.verify(token, superSecret, function(err, decoded) {
 
-      // set the users information (comes from the request)
-          user.name = req.body.name;
-      user.username = req.body.username;
-      user.password = req.body.password;
+	      if (err) {
+	        res.status(403).send({
+	        	success: false,
+	        	message: 'Failed to authenticate token.'
+	    	});
+	      } else {
+	        // if everything is good, save to request for use in other routes
+	        req.decoded = decoded;
 
-      // save the user and check for errors
-      user.save(function(err) {
-        if (err) {
-          // duplicate entry
-          if (err.code == 11000)
-            return res.json({success: false, message: 'Username already exists.'});
-          else
-            return res.send(err);
-        }
+	        next(); // make sure we go to the next routes and don't stop here
+	      }
+	    });
 
-        res.json({ message: 'User created!' });
-      });
-    })
+	  } else {
 
-    // GET host/api/users)
-    .get(function(req, res) {
+	    // if there is no token
+	    // return an HTTP response of 403 (access forbidden) and an error message
+   	 	res.status(403).send({
+   	 		success: false,
+   	 		message: 'No token provided.'
+   	 	});
 
-      User.find(function(err, users) {
-        if (err) res.send(err);
+	  }
+	});
 
-        // return the users
-        res.json(users);
-      });
-    });
+	// ==============================================
+	// CHAIN ROUTES FOR host/api/users
+	// ==============================================
+	apiRouter.route('/users')
 
+		// ==============================================
+		// CREATE USER - POST host/api/users
+		// ==============================================
+		.post(function(req, res) {
 
-  // --------------------------------------------
-  // ROUTES WITH ENDPOINT api/users/:user_id
-  // --------------------------------------------
-  apiRouter.route('/users/:user_id')
+			var user = new User();							// create a new instance of the User model
+			user.name 		= req.body.name;  		// set the users name (comes from the request)
+			user.username = req.body.username;  // set the users username (comes from the request)
+			user.password = req.body.password;  // set the users password (comes from the request)
 
-    // get the user with that id
-    //GET host/api/users/:user_id
-    .get(function (req, res) {
-      User.findById(req.params.user_id, function(err, user) {
-        if (err) res.send(err);
+			user.save(function(err) {
+				if (err) {
+					// duplicate entry
+					if (err.code == 11000)
+						return res.json({ success: false, message: 'A user with that username already exists. '});
+					else
+						return res.send(err);
+				}
 
-        // return the user
-        res.json(user);
-      });
-     })
+				// return a message
+				res.json({ message: 'User created!' });
+			});
 
-    // PUT host/api/users/:user_id
-    .put(function(req, res) {
+		})
 
-      // use our user model to find the user we want
-      User.findById(req.params.user_id, function(err, user) {
-        if (err) res.send(err);
+		// ==============================================
+		// GET USERS - GET host/api/users
+		// ==============================================
+		.get(function(req, res) {
 
-        // update the users info only if its new
-        if (req.body.name)        user.name  = req.body.name;
-        if (req.body.username) user.username = req.body.username;
-        if (req.body.password) user.password = req.body.password;
+			User.find({}, function(err, users) {
+				if (err) res.send(err);
 
-        // save the user
-        user.save(function(err) {
-          if (err) res.send(err);
+				// return the users
+				res.json(users);
+			});
+		});
 
-          // return a message
-          res.json({ message: 'User updated!' });
-        });
-      });
-    })
+	// ==============================================
+	// CHAIN ROUTES FOR host/api/users/:user_id
+	// ==============================================
+	apiRouter.route('/users/:user_id')
 
-    //DELETE host/api/users/:user_id)
-    .delete(function(req, res) {
-      User.remove({_id: req.params.user_id}, function(err, user) {
-        if (err) return res.send(err);
+		// ==============================================
+		// GET A USER - GET host/api/users/:user_id
+		// ==============================================
+		.get(function(req, res) {
+			User.findById(req.params.user_id, function(err, user) {
+				if (err) res.send(err);
 
-        res.json({ message: 'Successfully deleted' });
+				// return that user
+				res.json(user);
+			});
+		})
 
-      });
-    });
+		// ==============================================
+		// UPDATE A USER - PUT host/api/users/:user_id
+		// ==============================================
+		.put(function(req, res) {
+			User.findById(req.params.user_id, function(err, user) {
 
-  // --------------------------------------------
-  // ROUTES WITH ENDPOINT api/me
-  // --------------------------------------------
-  // api endpoint to get user information
-  // recall we store the logged in user in req.decoded in app.use(...)
-  apiRouter.get('/me', function(req, res) {
-    res.send(req.decoded);
-  });
+				if (err) res.send(err);
 
-  // --------------------------------------------
-  // return the router
-  // --------------------------------------------
-  return apiRouter;
-  };
+				// set the new user information if it exists in the request
+				if (req.body.name) user.name 				 = req.body.name;
+				if (req.body.username) user.username = req.body.username;
+				if (req.body.password) user.password = req.body.password;
+
+				// save the user
+				user.save(function(err) {
+					if (err) res.send(err);
+
+					// return a message
+					res.json({ message: 'User updated!' });
+				});
+
+			});
+		})
+
+		// ==============================================
+		// DELETE A USER - DELETE host/api/users/:user_id
+		// ==============================================
+		.delete(function(req, res) {
+			User.remove({
+				_id: req.params.user_id
+			}, function(err, user) {
+				if (err) res.send(err);
+
+				res.json({ message: 'Successfully deleted' });
+			});
+		});
+
+	// ==============================================
+	// GET CURRENT USER - GET host/api/me
+	// ==============================================
+	apiRouter.get('/me', function(req, res) {
+		res.send(req.decoded);
+	});
+
+	// ==============================================
+	// RETURN ROUTER
+	// ==============================================
+	return apiRouter;
+};

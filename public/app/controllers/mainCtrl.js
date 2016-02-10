@@ -55,11 +55,4 @@ angular.module('mainCtrl', [])
 		$location.path('/login');
 	};
 
-	// ==============================================
-	// CALL A SERVICE TO CREATE A SAMPLE USER
-	// ==============================================
-	vm.createSample = function() {
-		Auth.createSampleUser();
-	};
-
 });

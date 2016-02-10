@@ -56,13 +56,6 @@ angular.module('authService', [])
 			return $q.reject({ message: 'User has no token.' });
 	};
 
-	// ==============================================
-	// CREATE A SAMPLE USER
-	// ==============================================
-	authFactory.createSampleUser = function() {
-		$http.post('/api/sample');
-	};
-
 	// return auth factory object
 	return authFactory;
 
@@ -104,7 +97,7 @@ angular.module('authService', [])
 	var interceptorFactory = {};
 
 	// ===================================================
-	// THIS HAPPENS ON ALL HTTP REQUESTS
+	// INTERCEPT HTTP REQUESTS BEFORE THEY HAPPEN
 	// ===================================================
 	interceptorFactory.request = function(config) {
 
@@ -119,7 +112,7 @@ angular.module('authService', [])
 	};
 
 	// ===================================================
-	// REDIRECT TO HOMEPAGE IF THERE IS AN ERROR
+	// INTERCEPT HTTP RESPONSES BEFORE THEY ARE SENT
 	// ===================================================
 	interceptorFactory.responseError = function(response) {
 

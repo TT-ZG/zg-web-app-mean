@@ -87,7 +87,7 @@ angular.module('userCtrl', ['userService'])
 
 	// variable to determine if we should hide/show elements of the view
 	vm.type = 'edit';
-	console.log('here');
+
 	// ==============================================
 	// GET THE USER TO EDIT BASED ON ID
 	// ==============================================

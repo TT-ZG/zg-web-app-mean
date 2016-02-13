@@ -1,46 +1,31 @@
-angular.module('app.routes', ['ngRoute'])
+angular.module('app.routes', ['ui.router'])
 
-.config(function($routeProvider, $locationProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
 
-	$routeProvider
+    //home is the default state
+    $urlRouterProvider.otherwise('/home');
 
-		// route for the home page
-		.when('/', {
-			templateUrl : 'app/views/pages/home.html'
-		})
+    $stateProvider
 
-		// login page
-		.when('/login', {
-			templateUrl : 'app/views/pages/login.html',
-   			controller  : 'mainController',
-    			controllerAs: 'login'
-		})
+        // HOME STATES AND NESTED VIEWS ========================================
+        .state('home', {
+            url: '/home',
+            templateUrl: 'app/views/partial-home.html'
+        })
 
-		// show all users
-		.when('/users', {
-			templateUrl: 'app/views/pages/users/all.html',
-			controller: 'userController',
-			controllerAs: 'user'
-		})
+        // nested list with custom controller
+        .state('home.list', {
+        url: '/list',
+        templateUrl: 'app/views/partial-home-list.html',
+        controller: function($scope) {
+            $scope.dogs = ['Bernese', 'Husky', 'Goldendoodle'];
+        }
+        })
 
-		// form to create a new user
-		// same view as edit page
-		.when('/users/create', {
-			templateUrl: 'app/views/pages/users/single.html',
-			controller: 'userCreateController',
-			controllerAs: 'user'
-		})
-
-		// page to edit a user
-		.when('/users/:user_id', {
-			templateUrl: 'app/views/pages/users/single.html',
-			controller: 'userEditController',
-			controllerAs: 'user'
-		})
-
-		//Else
-		.otherwise( { redirectTo: '/' } ); 
-
-	$locationProvider.html5Mode(true);
+    // nested list with just some random string data
+    .state('home.paragraph', {
+        url: '/paragraph',
+        template: 'I could sure use a drink right now.'
+    })
 
 });

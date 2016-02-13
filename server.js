@@ -47,7 +47,6 @@ app.use('/api', apiRoutes);
 
 
 // send users to front end
-// using the * will match all routes
 app.get('*', function(req, res) {
 	res.sendFile(path.join(__dirname + '/public/app/views/index.html'));
 });

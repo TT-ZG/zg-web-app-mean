@@ -33,7 +33,7 @@
 	<link href="assets/css/bootstrap/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
 	<!-- Custom styles for this template -->
-  <link href="assets/css/custom/dashboard.css" rel="stylesheet">
+  <link href="assets/css/custom/styles.css" rel="stylesheet">
 
   <!-- JS (load angular, ui-router, and our custom js file) -->
   <script src="http://code.angularjs.org/1.2.13/angular.js"></script>
@@ -45,7 +45,13 @@
 <!-- apply our angular app to our site -->
 <body ng-app="routerApp">
 
-	<!--header-->
+	<!-- uiRouter injected views-->
+	<div class="container">
+		<div ui-view></div>
+	</div>
+
+
+	<!--header
 	<nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -59,28 +65,28 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul id="top" class="nav navbar-nav navbar-right">
-            <li><a ui-sref="home">Dashboard</a></li>
-            <li><a ui-sref="about">Profile</a></li>
+            <li><a ui-sref="dashboard">Dashboard</a></li>
+            <li><a ui-sref="dashboard">Profile</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
 
-		<!--sidebar and main content-->
+		<!--sidebar and main content
 		<div class="container-fluid">
 			<div class="row">
 		    <div class="col-sm-3 col-md-2 sidebar">
 		      <ul class="nav nav-sidebar">
-		        <li class="active"><a ui-sref="home">Brother List</a></li>
-		        <li><a ui-sref="home">Brother Map</a></li>
+		        <li class="active"><a ui-sref="dashboard">Brother List</a></li>
+		        <li><a ui-sref="about">Brother Map</a></li>
 		      </ul>
 		    </div>
 		    <div class="container col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 					<div ui-view></div>
 				</div>
 		</div>
-	</div>
+	</div>-->
 
 
 <!-- Bootstrap core JavaScript -->

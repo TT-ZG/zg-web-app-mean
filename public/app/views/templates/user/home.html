@@ -1,13 +1,27 @@
-<form class="form-signin">
-  <h2 class="form-signin-heading">Please sign in</h2>
-  <label for="inputEmail" class="sr-only">Email address</label>
-  <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-  <label for="inputPassword" class="sr-only">Password</label>
-  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox" value="remember-me"> Remember me
-    </label>
-  </div>
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-</form>
+<div class="row col-md-6 col-md-offset-3">
+
+	<div class="jumbotron">
+		<h1>Login</h1>
+
+		<form ng-submit="login.doLogin()">
+
+			<div class="form-group">
+				<label>Username</label>
+				<input type="text" class="form-control" ng-model="login.loginData.username" required>
+			</div>
+
+			<div class="form-group">
+				<label>Password</label>
+				<input type="password" class="form-control" ng-model="login.loginData.password" required>
+			</div>
+
+			<div class="alert alert-danger" ng-if="login.error">
+				{{ login.error }}
+			</div>
+
+			<button type="submit" class="btn btn-block btn-primary">Login</button>
+
+		</form>
+	</div>
+
+</div>

@@ -26,93 +26,62 @@
 
   <title>UF Theta Tau</title>
 
-	<!-- Bootstrap core CSS -->
-	<link href="assets/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+	<!-- Bootstrap, fonts, custom css-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<link rel="stylesheet" href="assets/css/custom/styles.css">
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.css">
 
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<link href="assets/css/bootstrap/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-	<!-- Custom styles for this template -->
-  <link href="assets/css/custom/styles.css" rel="stylesheet">
 
   <!-- JS (load angular, ui-router, and our custom js file) -->
   <script src="http://code.angularjs.org/1.2.13/angular.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
   <script src="app/app.js"></script>
 	<script src="app/app.routes.js"></script>
+
+	<!-- controllers -->
+	<script src="app/controllers/mainCtrl.js"></script>
+	<script src="app/controllers/dashCtrl.js"></script>
+
+	<!-- services -->
+	<script src="app/services/authService.js"></script>
+	<script src="app/services/userService.js"></script>
 </head>
 
 <!-- apply our angular app to our site -->
-<body ng-app="routerApp">
+<body ng-app="routerApp" ng-controller="mainController as main">
 
 	<!-- uiRouter injected views-->
 	<div class="container">
 		<div ui-view></div>
 	</div>
 
+	<!-- Bootstrap core JavaScript -->
+ 	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+ 	<script src="assets/js/bootstrap.min.js"></script>
 
-	<!--header
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" ui-sref="home">Brother Dashboard</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul id="top" class="nav navbar-nav navbar-right">
-            <li><a ui-sref="dashboard">Dashboard</a></li>
-            <li><a ui-sref="dashboard">Profile</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+ 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
 
-
-		<!--sidebar and main content
-		<div class="container-fluid">
-			<div class="row">
-		    <div class="col-sm-3 col-md-2 sidebar">
-		      <ul class="nav nav-sidebar">
-		        <li class="active"><a ui-sref="dashboard">Brother List</a></li>
-		        <li><a ui-sref="about">Brother Map</a></li>
-		      </ul>
-		    </div>
-		    <div class="container col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-					<div ui-view></div>
-				</div>
-		</div>
-	</div>-->
-
-
-<!-- Bootstrap core JavaScript -->
- <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
- <script src="assets/js/bootstrap.min.js"></script>
-
- <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="assets/js/ie10-viewport-bug-workaround.js"></script>
-
-<!--for the sidebar active class-->
-<script>
+	<!--for the sidebar active class-->
+	<script>
 		$(".nav-sidebar li").on("click", function(){
     	$(".nav-sidebar li").removeClass("active");
     	$(this).addClass("active");
 		});
-</script>
+	</script>
 
-<!--for the navbar active class-->
-<script>
+	<!--for the navbar active class-->
+	<script>
 		$("#top li").on("click", function(){
     	$("#top li").removeClass("active");
     	$(this).addClass("active");
 		});
-</script>
+	</script>
 
 </body>
 </html>

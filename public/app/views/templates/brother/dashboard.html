@@ -1,1 +1,40 @@
-Dash!
+<!--header-->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a ui-sref="dashboard" class="navbar-brand"><span class="glyphicon glyphicon-cog"></span>&Zeta;&Gamma;&nbsp;&nbsp;Dashboard</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul id="top" class="nav navbar-nav navbar-right">
+          <li ng-if="main.loggedIn"><a ui-sref="home" ng-click="main.doLogout()">Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!--sidebar and main content-->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar">
+        <ul class="nav nav-sidebar">
+          <li class="active"><a ui-sref=".list">Admin</a></li>
+          <li><a ui-sref="home">Brother List</a></li>
+          <li><a ui-sref="home">Brother Map</a></li>
+        </ul>
+      </div>
+      <div class="container col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div ui-view>
+          <div class="jumbotron">
+            <h1>Brother Dashboard</h1>
+              <p>Welcome. Use the side menu to explore the features.</p>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

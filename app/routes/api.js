@@ -1,23 +1,20 @@
-// ==============================================
-// GET DEPENDENCIES
-// ==============================================
+// *****************************************************************************
+// get dependencies
 var bodyParser 	= require('body-parser'),
 		User       	= require('../models/user'),
 		jwt        	= require('jsonwebtoken'),		// for creating JSON web tokens
 		config     	= require('../../config'),
 		superSecret = config.secret;							//secret hash stored server side
 
-// ==============================================
-// EXPORT THE MODULE
-// ==============================================
+// *****************************************************************************
+// export the module
 module.exports = function(app, express) {
 
 	//get an instance of the router
 	var apiRouter = express.Router();
 
-	// ==============================================
-	// AUTHENTICATE USER - POST host/api/authenticate
-	// ==============================================
+	// ***************************************************************************
+	// authenticate a user
 	apiRouter.post('/authenticate', function(req, res) {
 
 	  // find the user
@@ -66,9 +63,8 @@ module.exports = function(app, express) {
 	  });
 	});
 
-	// ==============================================
-	// VERIFY ALL TOKENS
-	// ==============================================
+	// ***************************************************************************
+	// check token on every request
 	apiRouter.use(function(req, res, next) {
 
 	  // check header or url parameters or post parameters for token
@@ -105,14 +101,12 @@ module.exports = function(app, express) {
 	  }
 	});
 
-	// ==============================================
-	// CHAIN ROUTES FOR host/api/users
-	// ==============================================
+	// ***************************************************************************
+	// routes for host/api/users
 	apiRouter.route('/users')
 
-		// ==============================================
-		// CREATE USER - POST host/api/users
-		// ==============================================
+		// ============================================
+		// create user
 		.post(function(req, res) {
 
 			var user = new User();							// create a new instance of the User model
@@ -135,9 +129,8 @@ module.exports = function(app, express) {
 
 		})
 
-		// ==============================================
-		// GET USERS - GET host/api/users
-		// ==============================================
+		// ============================================
+		// get user
 		.get(function(req, res) {
 
 			User.find({}, function(err, users) {
@@ -148,14 +141,12 @@ module.exports = function(app, express) {
 			});
 		});
 
-	// ==============================================
-	// CHAIN ROUTES FOR host/api/users/:user_id
-	// ==============================================
+	// ***************************************************************************
+	// routes for host/api/users/:user_id
 	apiRouter.route('/users/:user_id')
 
-		// ==============================================
-		// GET A USER - GET host/api/users/:user_id
-		// ==============================================
+		// =============================================
+		// get a single user
 		.get(function(req, res) {
 			User.findById(req.params.user_id, function(err, user) {
 				if (err) res.send(err);
@@ -165,9 +156,8 @@ module.exports = function(app, express) {
 			});
 		})
 
-		// ==============================================
-		// UPDATE A USER - PUT host/api/users/:user_id
-		// ==============================================
+		// =============================================
+		// update a single user
 		.put(function(req, res) {
 			User.findById(req.params.user_id, function(err, user) {
 
@@ -189,9 +179,8 @@ module.exports = function(app, express) {
 			});
 		})
 
-		// ==============================================
-		// DELETE A USER - DELETE host/api/users/:user_id
-		// ==============================================
+		// =============================================
+		// delete a single user
 		.delete(function(req, res) {
 			User.remove({
 				_id: req.params.user_id
@@ -202,15 +191,12 @@ module.exports = function(app, express) {
 			});
 		});
 
-	// ==============================================
-	// GET CURRENT USER - GET host/api/me
-	// ==============================================
+	// =============================================
+	// get current user
 	apiRouter.get('/me', function(req, res) {
 		res.send(req.decoded);
 	});
 
-	// ==============================================
-	// RETURN ROUTER
-	// ==============================================
+	// ***************************************************************************
 	return apiRouter;
 };

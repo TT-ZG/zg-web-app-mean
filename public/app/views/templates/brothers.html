@@ -1,0 +1,31 @@
+<div class="page-header">
+	<h1>
+		Brothers
+		<a ui-sref="dashboard.createBrother" class="btn btn-default">
+			<span class="glyphicon glyphicon-plus"></span>
+			New Brother
+		</a>
+	</h1>
+</div>
+
+<table class="table table-bordered table-striped" ng-show="user.brothers">
+	<thead>
+		<tr>
+			<th>_id</th>
+			<th>Name</th>
+			<th>Username</th>
+			<th class="col-sm-2"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="brother in user.brothers">
+			<td>{{ brother._id }}</td>
+			<td>{{ brother.name }}</td>
+			<td>{{ brother.username }}</td>
+			<td class="col-sm-2">
+      <a ng-click="user.setID(brother._id)" ui-sref="dashboard.editBrother({brotherid: user.desiredID})" class="btn btn-danger">Edit</a>
+			<a ng-click="user.deleteUser(brother._id)" ui-sref="dashboard.brothers" class="btn btn-primary">Delete</a>
+			</td>
+		</tr>
+	</tbody>
+</table>

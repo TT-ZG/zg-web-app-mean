@@ -1,58 +1,55 @@
-angular.module('mainCtrl', [])
+angular.module('mainCtrl', ['authService'])
 
-// ==============================================
-// INJECT DEPENDENCIES
-// ==============================================
-.controller('mainController', function($rootScope, $location, Auth) {
+// *****************************************************************************
+// main controller that handles logging in and state monitoring
+// *****************************************************************************
+.controller('mainController', function($rootScope, $state, Auth) {
 
+	///===========================================
 	// better to use 'controller as' rather than $scope
 	var vm = this;
 
 	// get info if a person is logged in
 	vm.loggedIn = Auth.isLoggedIn();
 
-	// ==============================================
-	// CALL A SERVICE TO CHECK IF LOGGED ON
-	// ==============================================
-	$rootScope.$on('$routeChangeStart', function() {
+	///===========================================
+	// on every change of state, fetch and update the users data and status
+	$rootScope.$on('$stateChangeStart', function(toState) {
+
 		vm.loggedIn = Auth.isLoggedIn();
 
-		Auth.getUser()
-			.then(function(data) {
+		//even more validation
+		if (toState.controller == 'dashController as user' && !vm.loggedIn){
+			event.preventDefault();
+			$state.go('home');
+		}
+
+		Auth.getUser().then(function(data) {
 				vm.user = data.data;
 			});
 	});
 
-	// ==============================================
-	// CALL A SERVICE TO LOGIN A USER
-	// ==============================================
+	///===========================================
+	//use authService.js to log in a user
 	vm.doLogin = function() {
-		vm.processing = true;
 
-		// clear the error
+		// clear error
 		vm.error = '';
 
-		Auth.login(vm.loginData.username, vm.loginData.password)
-			.success(function(data) {
-				vm.processing = false;
-
-				// if a user successfully logs in, redirect to users page
-				if (data.success)
-					$location.path('/users');
-				else
-					vm.error = data.message;
-
+    //redirect as necessary
+		Auth.login(vm.loginData.username, vm.loginData.password).success(function(data) {
+			if (data.success)
+        $state.go('dashboard');
+			else
+        vm.error = data.message;
 			});
 	};
 
-	// ==============================================
-	// CALL A SERVICE TO LOGOUT A USER
-	// ==============================================
+	///===========================================
+  //use authService.js to log out a user
 	vm.doLogout = function() {
 		Auth.logout();
 		vm.user = '';
-
-		$location.path('/login');
+		$state.go('home');
 	};
-
 });

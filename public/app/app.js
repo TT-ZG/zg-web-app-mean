@@ -1,12 +1,6 @@
-angular.module('userApp',
-[
-	'ngAnimate',
-	'app.routes',
-	'authService',
-	'mainCtrl',
-	'userCtrl',
-	'userService'
-])
+// app.js
+angular.module('routerApp', ['authService','mainCtrl','dashCtrl','userService','app.routes'])
+
 
 // application configuration to integrate token into requests
 .config(function($httpProvider) {

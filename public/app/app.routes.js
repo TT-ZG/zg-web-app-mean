@@ -1,43 +1,50 @@
-angular.module('app.routes', ['ngRoute'])
+angular.module('app.routes', ['ui.router'])
 
-.config(function($routeProvider, $locationProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
 
-	$routeProvider
+    // ===========================================
+    // home is the default state
+    $urlRouterProvider.otherwise('/home');
 
-		// route for the home page
-		.when('/', {
-			templateUrl : 'app/views/pages/home.html'
-		})
-		
-		// login page
-		.when('/login', {
-			templateUrl : 'app/views/pages/login.html',
-   			controller  : 'mainController',
-    			controllerAs: 'login'
-		})
-		
-		// show all users
-		.when('/users', {
-			templateUrl: 'app/views/pages/users/all.html',
-			controller: 'userController',
-			controllerAs: 'user'
-		})
+    $stateProvider
 
-		// form to create a new user
-		// same view as edit page
-		.when('/users/create', {
-			templateUrl: 'app/views/pages/users/single.html',
-			controller: 'userCreateController',
-			controllerAs: 'user'
-		})
+      // ===========================================
+      // home state
+      .state('home', {
+        url: '/home',
+        templateUrl: 'app/views/templates/home.html',
+        controller  : 'mainController as login'
+      })
 
-		// page to edit a user
-		.when('/users/:user_id', {
-			templateUrl: 'app/views/pages/users/single.html',
-			controller: 'userEditController',
-			controllerAs: 'user'
-		});
+      // ===========================================
+      // dashboard state
+      .state('dashboard', {
+        url: '/dashboard',
+        templateUrl: 'app/views/templates/dashboard.html',
+        controller  : 'dashController as user'
+      })
 
-	$locationProvider.html5Mode(true);
+      // ===========================================
+      // brothers nested view
+      .state('dashboard.brothers', {
+        url: '/brothers',
+        templateUrl: 'app/views/templates/brothers.html',
+        controller  : 'dashController as user'
+      })
 
+      // ===========================================
+      // create brother nested view
+      .state('dashboard.createBrother', {
+        url: '/brothers/create',
+        templateUrl: 'app/views/templates/profile.html',
+        controller  : 'brotherCreateController as user'
+      })
+
+      // ===========================================
+      // edit brother nested view
+      .state('dashboard.editBrother', {
+        url: '/brothers/:brotherid',
+        templateUrl: 'app/views/templates/profile.html',
+        controller  : 'brotherEditController as user'
+      })
 });

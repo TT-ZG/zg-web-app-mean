@@ -1,18 +1,18 @@
 angular.module('mainCtrl', ['authService'])
 
-// =============================================================================
+// *****************************************************************************
 // main controller that handles logging in and state monitoring
-// =============================================================================
+// *****************************************************************************
 .controller('mainController', function($rootScope, $state, Auth) {
 
-  //============================================================================
+	///===========================================
 	// better to use 'controller as' rather than $scope
 	var vm = this;
 
 	// get info if a person is logged in
 	vm.loggedIn = Auth.isLoggedIn();
 
-	//============================================================================
+	///===========================================
 	// on every change of state, fetch and update the users data and status
 	$rootScope.$on('$stateChangeStart', function(toState) {
 
@@ -29,7 +29,7 @@ angular.module('mainCtrl', ['authService'])
 			});
 	});
 
-  //============================================================================
+	///===========================================
 	//use authService.js to log in a user
 	vm.doLogin = function() {
 
@@ -45,7 +45,7 @@ angular.module('mainCtrl', ['authService'])
 			});
 	};
 
-  //============================================================================
+	///===========================================
   //use authService.js to log out a user
 	vm.doLogout = function() {
 		Auth.logout();

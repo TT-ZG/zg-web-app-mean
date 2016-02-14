@@ -1,7 +1,7 @@
 angular.module('dashCtrl', ['userService'])
 
 // dashboard controller
-.controller('dashController', function(User) {
+.controller('dashController', function(User, $state) {
 
 	// better to use 'controller as' rather than $scope
 	var vm = this;

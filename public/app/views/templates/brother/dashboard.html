@@ -8,7 +8,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a ui-sref="dashboard" class="navbar-brand"><span class="glyphicon glyphicon-cog"></span>&Zeta;&Gamma;&nbsp;&nbsp;Dashboard</a>
+        <a ui-sref="dashboard" class="navbar-brand"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;&Zeta;&Gamma;&nbsp;Dashboard</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul id="top" class="nav navbar-nav navbar-right">
@@ -23,9 +23,9 @@
     <div class="row">
       <div class="col-sm-3 col-md-2 sidebar">
         <ul class="nav nav-sidebar">
-          <li class="active"><a ui-sref=".list">Admin</a></li>
-          <li><a ui-sref="home">Brother List</a></li>
-          <li><a ui-sref="home">Brother Map</a></li>
+          <li ui-sref-active="active"><a ui-sref=".list">Admin</a></li>
+          <li ui-sref-active="active"><a ui-sref="">Brother List</a></li>
+          <li ui-sref-active="active"><a ui-sref="">Brother Map</a></li>
         </ul>
       </div>
       <div class="container col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

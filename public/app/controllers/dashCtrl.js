@@ -1,8 +1,8 @@
 angular.module('dashCtrl', ['userService'])
 
-// ==============================================
-// main controller
-// ==============================================
+// =============================================================================
+// main controller that handles the brother dashboard
+// =============================================================================
 .controller('dashController', function(User, $state, $stateParams) {
 
 	//============================================================================
@@ -17,6 +17,8 @@ angular.module('dashCtrl', ['userService'])
 
 	//============================================================================
 	// get all the users from the database
+	// all other controllers are children of this one
+	// therefore api will reject any request to dashboard/* unless verified
 	User.all().success(function(data) {
 		vm.brothers = data;
 	});
@@ -34,11 +36,9 @@ angular.module('dashCtrl', ['userService'])
 
 })
 
-
-
-// ==============================================
+// =============================================================================
 // controller for creating users
-// ==============================================
+// =============================================================================
 .controller('brotherCreateController', function(User, $state, $stateParams) {
 
 	var vm = this;
@@ -59,11 +59,9 @@ angular.module('dashCtrl', ['userService'])
 	};
 })
 
-
-
-// ==============================================
+// =============================================================================
 // controller for editing
-// ==============================================
+// =============================================================================
 .controller('brotherEditController', function(User, $state, $stateParams) {
 
 	// better to use 'controller as' rather than $scope

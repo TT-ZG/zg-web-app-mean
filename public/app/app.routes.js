@@ -10,34 +10,35 @@ angular.module('app.routes', ['ui.router'])
       // home state
       .state('home', {
         url: '/home',
-        templateUrl: 'app/views/templates/user/home.html',
+        templateUrl: 'app/views/templates/home.html',
         controller  : 'mainController as login'
       })
 
       // dashboard state
       .state('dashboard', {
         url: '/dashboard',
-        templateUrl: 'app/views/templates/brother/dashboard.html',
+        templateUrl: 'app/views/templates/dashboard.html',
         controller  : 'dashController as user'
       })
 
       .state('dashboard.brothers', {
         url: '/brothers',
-        templateUrl: 'app/views/templates/brother/pages/brothers.html',
+        templateUrl: 'app/views/templates/brothers.html',
         controller  : 'dashController as user'
       })
 
       .state('dashboard.createBrother', {
         url: '/brothers/create',
-        templateUrl: 'app/views/templates/brother/pages/profile.html',
+        templateUrl: 'app/views/templates/profile.html',
         controller  : 'brotherCreateController as user'
       })
 
       .state('dashboard.editBrother', {
         url: '/brothers/:brotherid',
-        templateUrl: 'app/views/templates/brother/pages/profile.html',
+        templateUrl: 'app/views/templates/profile.html',
         controller  : 'brotherEditController as user'
-      });
+      })
+      
 
 
 

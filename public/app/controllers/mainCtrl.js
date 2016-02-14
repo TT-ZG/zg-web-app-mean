@@ -12,6 +12,7 @@ angular.module('mainCtrl', ['authService'])
 	// get info if a person is logged in
 	vm.loggedIn = Auth.isLoggedIn();
 
+	//============================================================================
 	// on every change of state, fetch and update the users data and status
 	$rootScope.$on('$stateChangeStart', function(toState) {
 

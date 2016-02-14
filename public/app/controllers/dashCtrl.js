@@ -81,7 +81,7 @@ angular.module('dashCtrl', ['userService'])
 	vm.saveUser = function() {
 		vm.message = '';
 
-		User.update($stateParams.user_id, vm.userData).success(function(data) {
+		User.update($stateParams.brotherid, vm.userData).success(function(data) {
 				vm.userData = {};
 				vm.message = data.message;
 			});

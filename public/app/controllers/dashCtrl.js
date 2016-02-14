@@ -1,33 +1,34 @@
 angular.module('dashCtrl', ['userService'])
 
-// dashboard controller
-.controller('dashController', function(User, $state) {
+// ==============================================
+// main controller
+// ==============================================
+.controller('dashController', function(User, $state, $stateParams) {
 
+	//============================================================================
 	// better to use 'controller as' rather than $scope
 	var vm = this;
 
+	//============================================================================
+	// set the id in scope because uirouter doesn't accept angular exp as parameters
+	vm.setID = function(id){
+		vm.desiredID = id;
+	}
+
+	//============================================================================
 	// get all the users from the database
 	User.all().success(function(data) {
-		vm.users = data;
+		vm.brothers = data;
 	});
 
-
-	// ==============================================
-	// CALL A SERVICE TO DELETE A USER
-	// ==============================================
+	//============================================================================
+	// call a service to delete a user
 	vm.deleteUser = function(id) {
-		vm.processing = true;
-
-		User.delete(id)
-			.success(function(data) {
-
+		User.delete(id).success(function(data) {
 				// get all users to update the table
-				User.all()
-					.success(function(data) {
-						vm.processing = false;
-						vm.users = data;
+				User.all().success(function(data) {
+						vm.brothers = data;
 					});
-
 			});
 	};
 
@@ -35,53 +36,35 @@ angular.module('dashCtrl', ['userService'])
 
 
 
-// ================================================================================
-
-.controller('adminController', function(User) {
-
-})
-
-
-
-
-
-
 // ==============================================
-// INJECT DEPENDENCIES
+// controller for creating users
 // ==============================================
-// controller applied to user creation page
-.controller('userCreateController', function(User) {
+.controller('brotherCreateController', function(User, $state, $stateParams) {
 
 	var vm = this;
 
-	// variable to hide/show elements of the view
-	// differentiates between create or edit pages
 	vm.type = 'create';
 
-	// ==============================================
-	// CALL A SERVICE TO SAVE A USER
-	// ==============================================
+	//============================================================================
+	// call a service to save a user
 	vm.saveUser = function() {
-		vm.processing = true;
 		vm.message = '';
 
 		// use the create function in the userService
-		User.create(vm.userData)
-			.success(function(data) {
+		User.create(vm.userData).success(function(data) {
 				vm.processing = false;
 				vm.userData = {};
 				vm.message = data.message;
 			});
-
 	};
-
 })
 
+
+
 // ==============================================
-// INJECT DEPENDENCIES
+// controller for editing
 // ==============================================
-// controller applied to user edit page
-.controller('userEditController', function($routeParams, User) {
+.controller('brotherEditController', function(User, $state, $stateParams) {
 
 	// better to use 'controller as' rather than $scope
 	var vm = this;
@@ -89,32 +72,20 @@ angular.module('dashCtrl', ['userService'])
 	// variable to determine if we should hide/show elements of the view
 	vm.type = 'edit';
 
-	// ==============================================
-	// GET THE USER TO EDIT BASED ON ID
-	// ==============================================
-	User.get($routeParams.user_id)
-		.success(function(data) {
+	//============================================================================
+	// call a service to get a specific user
+	User.get($stateParams.brotherid).success(function(data) {
 			vm.userData = data;
 		});
 
-	// ==============================================
-	// SAVE THE USERS NEW INFORMATION
-	// ==============================================
+	//============================================================================
+	// call a service to edit a specific user
 	vm.saveUser = function() {
-		vm.processing = true;
 		vm.message = '';
 
-		// call the userService function to update
-		User.update($routeParams.user_id, vm.userData)
-			.success(function(data) {
-				vm.processing = false;
-
-				// clear the form
+		User.update($stateParams.user_id, vm.userData).success(function(data) {
 				vm.userData = {};
-
-				// bind the message from our API to vm.message
 				vm.message = data.message;
 			});
 	};
-
 });

@@ -3,9 +3,7 @@ Website built from the ground up using the MEAN stack.
 
 ### Prerequisites
 
-- [Git](https://git-scm.com/)
 - [Node.js and npm](nodejs.org)
-- [MongoDB](https://www.mongodb.org/)
 
 ### Developing
 

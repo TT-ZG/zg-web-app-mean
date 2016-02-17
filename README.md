@@ -1,14 +1,5 @@
 # zg-web-app-mean
 Website built from the ground up using the MEAN stack.
 
-### Prerequisites
-
-- [Node.js and npm](nodejs.org)
-
-### Developing
-
-1. Run `npm install` to install server dependencies.
-
-2. Run `npm install -g nodemon` to install nodemon. (https://github.com/remy/nodemon)
-
-3. Run this app solely with the command 'nodemon' in the project directory.
+### Master Branch Live in Production
+https://zg-web-app-mean.herokuapp.com

@@ -1,12 +1,29 @@
 {
-  "name": "node-api",
+  "name": "Theta Tau, Zeta Gamma Chapter",
+  "version": "1.0.0",
+  "description": "Professional Engineering Fraternity Website",
+  "author": "Jeffrey McLemore <jmclemore368@gmail.com>",
   "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TT-ZG/zg-web-app-mean"
+  },
+  "bugs": {
+    "url": "https://github.com/TT-ZG/zg-web-app-mean/issues"
+  },
+  "keywords": [
+    "theta tau",
+    "zeta gamma",
+    "engineering",
+    "professional"
+  ],
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
-    "body-parser": "~1.9.3",
-    "express": "~4.10.3",
-    "jsonwebtoken": "^1.2.0",
-    "mongoose": "~3.8.19",
-    "morgan": "~1.5.0"
-  }
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "jsonwebtoken": "^5.5.4",
+    "mongoose": "^4.4.2",
+    "morgan": "^1.6.1"
+  },
+  "license": "http://creativecommons.org/licenses/by/4.0/"
 }

@@ -2,14 +2,23 @@
 // get dependencies
 var bodyParser 	= require('body-parser'),
 		User       	= require('../models/user'),
-		jwt        	= require('jsonwebtoken'),		// for creating JSON web tokens
-		config     	= require('../../config'),
-		superSecret = config.secret;							//secret hash stored server side
+		jwt        	= require('jsonwebtoken');
 
-var superSecret = config.secret;
+// Get secret key
+var config = '';
+var superSecret = '';
 if (process.env.NODE_ENV === 'production') {
-	superSecret = process.env.SECRET;
+	console.log("Getting secret production");
+  superSecret = process.env.SECRET;
 }
+else {
+	console.log("Getting secret locally");
+	config 			= require('../../config'),
+	superSecret = config.secret;
+}
+
+
+
 
 // *****************************************************************************
 // export the module

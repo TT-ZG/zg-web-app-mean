@@ -6,9 +6,7 @@ var express    = require('express'),
 		bodyParser = require('body-parser'),
 		morgan     = require('morgan'),
 		mongoose   = require('mongoose'),
-		config 	   = require('./config'),
 		path 	   	 = require('path');
-
 
 
 // ==============================================
@@ -29,12 +27,20 @@ app.use(function(req, res, next) {
 // log all requests
 app.use(morgan('dev'));
 
-//connect to mongolabs
-var dbURI = config.database;
-var dbPort = config.port;
+//Get keys for the DB
+var dbUri = '';
+var dbPort = '';
+var config = '';
 if (process.env.NODE_ENV === 'production') {
-  dbURI  = process.env.MONGOLAB_URI;
-	dbPort = process.env.PORT;
+	console.log("Starting on production");
+  dbURI  = process.env.MONGOLAB_URI,
+ 	dbPort = process.env.PORT;
+}
+else {
+	console.log("Starting locally");
+	config = require('./config'),
+	dbURI  = config.database,
+	dbPort = config.port;
 }
 mongoose.connect(dbURI);
 

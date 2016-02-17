@@ -17,6 +17,10 @@
     "engineering",
     "professional"
   ],
+  "engines": {
+    "node": "~5.6.0",
+    "npm": "~3.6.0"
+  },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.14.2",

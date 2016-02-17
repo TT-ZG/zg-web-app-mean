@@ -6,6 +6,11 @@ var bodyParser 	= require('body-parser'),
 		config     	= require('../../config'),
 		superSecret = config.secret;							//secret hash stored server side
 
+var superSecret = config.secret;
+if (process.env.NODE_ENV === 'production') {
+	superSecret = process.env.SECRET;
+}
+
 // *****************************************************************************
 // export the module
 module.exports = function(app, express) {

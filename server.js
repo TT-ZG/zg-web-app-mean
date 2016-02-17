@@ -30,7 +30,13 @@ app.use(function(req, res, next) {
 app.use(morgan('dev'));
 
 //connect to mongolabs
-mongoose.connect(config.database);
+var dbURI = config.database;
+var dbPort = config.port;
+if (process.env.NODE_ENV === 'production') {
+  dbURI  = process.env.MONGOLAB_URI;
+	dbPort = process.env.PORT;
+}
+mongoose.connect(dbURI);
 
 // location of static files
 app.use(express.static(__dirname + '/public'));
@@ -56,5 +62,5 @@ app.get('*', function(req, res) {
 // ==============================================
 // SERVER START
 // ==============================================
-app.listen(config.port);
-console.log('Starting on port ' + config.port);
+app.listen(dbPort);
+console.log('Starting on port ' + dbPort);

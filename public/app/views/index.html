@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
  <!-- ################################################################################### -->
  <!-- # THIS SITE, ITS CONTENT, CODE AND DESIGN ARE COPYRIGHTED PROPERTY OF THETA TAU - # -->
@@ -15,10 +12,18 @@
  <!-- # THESE REQUIREMENTS, PLEASE FEEL FREE TO CONTACT THE CURRENT WEBMASTER.          # -->
  <!-- ################################################################################### -->
 
+	<!-- Meta tags -->
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Theta Tau, Zeta Gamma Chapter Professional Engineering Fraternity">
   <meta name="author" content="Jeffrey Mora McLemore, Zeta Gamma, Role #499">
 
+	<!-- Webpage title -->
   <title>UF Theta Tau</title>
+
+	<!-- For HTML5 mode in angular to remove the #-->
+	<base href="/">
 
 	<!-- Bootstrap, fonts, custom css-->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -47,9 +52,8 @@
 <body ng-app="routerApp" ng-controller="mainController as main">
 
 	<!-- uiRouter injected views-->
-	<div class="container">
-		<div ui-view></div>
-	</div>
+	<div class="container" ui-view></div>
+
 
 	<!-- Bootstrap core JavaScript -->
  	<!-- Placed at the end of the document so the pages load faster -->

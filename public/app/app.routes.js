@@ -1,6 +1,6 @@
 angular.module('app.routes', ['ui.router'])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
     // ===========================================
     // home is the default state
@@ -46,5 +46,11 @@ angular.module('app.routes', ['ui.router'])
         url: '/brothers/:brotherid',
         templateUrl: 'app/views/templates/profile.html',
         controller  : 'brotherEditController as user'
-      })
+      });
+
+      //Enable HTML5 which rids us of octothorps
+      $locationProvider.html5Mode(true);
+
+      //Set a default route
+      $urlRouterProvider.otherwise('/home');
 });

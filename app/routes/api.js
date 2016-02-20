@@ -79,7 +79,7 @@ module.exports = function(app, express) {
 
 	// ***************************************************************************
 	// check token on every request
-	apiRouter.use(function(req, res, next) {
+	apiRouter.use(function($window, req, res, next) {
 
 	  // check header or url parameters or post parameters for token
 	  var token = req.body.token || req.query.token || req.headers['x-access-token'];

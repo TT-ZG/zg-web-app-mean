@@ -1,9 +1,9 @@
-angular.module('mainCtrl', ['authService'])
+angular.module('loginCtrl', ['authService'])
 
 // *****************************************************************************
 // main controller that handles logging in and state monitoring
 // *****************************************************************************
-.controller('mainController', function($rootScope, $state, Auth) {
+.controller('loginController', function($rootScope, $state, Auth) {
 
 	///===========================================
 	// better to use 'controller as' rather than $scope
@@ -17,13 +17,6 @@ angular.module('mainCtrl', ['authService'])
 	$rootScope.$on('$stateChangeStart', function(toState) {
 
 		vm.loggedIn = Auth.isLoggedIn();
-
-		//even more validation
-		if (toState.controller == 'dashController as user' && !vm.loggedIn){
-			event.preventDefault();
-			$state.go('home');
-		}
-
 		Auth.getUser().then(function(data) {
 				vm.user = data.data;
 			});

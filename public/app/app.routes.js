@@ -13,7 +13,7 @@ angular.module('app.routes', ['ui.router'])
       .state('home', {
         url: '/home',
         templateUrl: 'app/views/templates/home.html',
-        controller  : 'mainController as login'
+        controller  : 'loginController as login'
       })
 
       // ===========================================

@@ -1,5 +1,13 @@
 // app.js
-angular.module('routerApp', ['authService','mainCtrl','dashCtrl','userService','app.routes'])
+angular.module('routerApp', [
+	'authService',
+	'userService',
+	'loginCtrl',
+	'dashCtrl',
+	'editCtrl',
+	'createCtrl',
+	'app.routes'
+])
 
 
 // application configuration to integrate token into requests

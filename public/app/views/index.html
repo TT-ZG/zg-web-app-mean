@@ -40,8 +40,10 @@
 	<script src="app/app.routes.js"></script>
 
 	<!-- controllers -->
-	<script src="app/controllers/mainCtrl.js"></script>
+	<script src="app/controllers/loginCtrl.js"></script>
 	<script src="app/controllers/dashCtrl.js"></script>
+	<script src="app/controllers/editCtrl.js"></script>
+	<script src="app/controllers/createCtrl.js"></script>
 
 	<!-- services -->
 	<script src="app/services/authService.js"></script>
@@ -49,20 +51,13 @@
 </head>
 
 <!-- apply our angular app to our site -->
-<body ng-app="routerApp" ng-controller="mainController as main">
+<body ng-app="routerApp" ng-controller="loginController as login">
 
 	<!-- uiRouter injected views-->
 	<div class="container" ui-view></div>
 
-	<!-- Bootstrap core JavaScript -->
- 	<!-- Placed at the end of the document so the pages load faster -->
+ 	<!-- Scrips. Placed at the end of the document so the pages load faster -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
  	<script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
-
- 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-	<script src="../../assets/bootstrap/js/ie10-viewport-bug-workaround.js"></script>
-	<script src="../../assets/custom/js/offcanvas.js"></script>
-
 </body>
 </html>

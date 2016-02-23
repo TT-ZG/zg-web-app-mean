@@ -7,5 +7,5 @@ server/tests/api.server.routes.test.js
 # node
 node_modules
 
-# random
-old
+# bower
+public

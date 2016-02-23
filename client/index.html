@@ -1,1 +1,51 @@
-Hello
+<!DOCTYPE html>
+<html>
+<head>
+
+ <!-- ################################################################################### -->
+ <!-- # THIS SITE, ITS CONTENT, CODE AND DESIGN ARE COPYRIGHTED PROPERTY OF THETA TAU - # -->
+ <!-- # ZETA GAMMA CHAPTER AND ARE PROTECTED BY A CREATIVE COMMONS LICENSE. YOU MAY     # -->
+ <!-- # ACCESS THE LICENSE AT http://creativecommons.org/licenses/by/4.0/					      # -->
+ <!-- #                                                                                 # -->
+ <!-- # USE OF MATERIAL FROM THIS WEBSITE MUST BE ATTRIBUTED TO OUR CHAPTER AND LINKED  # -->
+ <!-- # TO OUR SITE (http://www.ufthetatau.org/). IF YOU HAVE ANY QUESTIONS REGARDING   # -->
+ <!-- # THESE REQUIREMENTS, PLEASE FEEL FREE TO CONTACT THE CURRENT WEBMASTER.          # -->
+ <!-- ################################################################################### -->
+
+	<!-- Meta tags -->
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Theta Tau, Zeta Gamma Chapter Professional Engineering Fraternity">
+  <meta name="author" content="Jeffrey Mora McLemore, Zeta Gamma, Role #499">
+
+	<!-- Webpage title -->
+  <title>UF Theta Tau</title>
+
+	<!-- For HTML5 mode in angular to remove the #-->
+	<base href="/">
+
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="/public/lib/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<!-- apply our angular app to our site -->
+<body ng-app="zgApp">
+
+	<!-- uiRouter injected views-->
+	<div class = "container" ui-view></div>
+
+</script>
+  <!-- Dependencies -->
+  <script src="/public/lib/jquery/dist/jquery.min.js"></script>
+  <script src="/public/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/public/lib/angular/angular.js"></script>
+  <script src="/public/lib/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="/public/lib/angular-bootstrap/ui-bootstrap.js"></script>
+
+  <!-- Application Source Code -->
+  <script src="app/app.js"></script>
+  <script src="app/config/app.client.routes.js"></script>
+</body>
+</html>

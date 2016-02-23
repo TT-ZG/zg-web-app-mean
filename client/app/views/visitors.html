@@ -1,0 +1,37 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">UF Theta Tau</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li ui-sref-active="active">
+          <a ui-sref=".home" class="hidden-xs">
+            <span class="glyphicon glyphicon-home"></span> Home
+          </a>
+          <a ui-sref=".home" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="glyphicon glyphicon-home"></span> Home
+          </a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li ui-sref-active="active">
+          <a ui-sref=".login" class="hidden-xs">
+            <span class="glyphicon glyphicon-login"></span> Login
+          </a>
+          <a ui-sref=".login" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="glyphicon glyphicon-login"></span> Login
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div ui-view></div>

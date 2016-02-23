@@ -5,16 +5,19 @@ angular.module('routes').config(['$stateProvider', '$urlRouterProvider',
       .state('visitors', {
         url: '/visitors',
         abstract: true,
-        templateUrl: 'app/views/visitors.html'
+        templateUrl: 'app/views/visitors/visitors.html'
       })
       .state('visitors.home', {
         url: '/home',
-        templateUrl: 'app/views/home.html',
+        templateUrl: 'app/views/visitors/templates/home.html',
       })
       .state('visitors.login', {
         url: '/login',
-        templateUrl: 'app/views/login.html',
+        templateUrl: 'app/views/visitors/templates/login.html',
       })
+
+
+      /*
       .state('brothers', {
         url: '/brothers',
         abstract: true,
@@ -35,6 +38,6 @@ angular.module('routes').config(['$stateProvider', '$urlRouterProvider',
      .state('brothers.edit', {
        url: '/edit?listingId',
        templateUrl: 'app/views/home.html',
-     })
+     })*/
   }
 ]);

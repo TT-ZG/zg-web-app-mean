@@ -3,7 +3,7 @@
 var mongoose    = require('mongoose'),
     bodyParser 	= require('body-parser'),
     jwt        	= require('jsonwebtoken'),
-    Brothers     = require('../models/brothers.server.model.js'),
+    Brothers     = require('../models/api.server.model.js'),
     config      = require('../config/config.js'),
     superSecret = config.secret;
 
@@ -14,11 +14,11 @@ exports.authenticate = function(req, res) {
   // find the user
   Brothers.findOne({ username: req.body.username }).select('name username password').exec(function(err, brother) {
 
-    // throw error if not found
+    // throw error
     if (err) throw err;
 
-    // no user with that username was found, return an error message in json format
-    if (!brother) { res.json({ success: false, message: 'Brother not found.'}); }
+    // no user with that username was not found, return an error message in json format
+    if (!brother) res.status(404).send({ success: false, message: 'Not found.' });
 
     // otherwise, we have found the user, continue...
     else if (brother) {
@@ -27,7 +27,7 @@ exports.authenticate = function(req, res) {
       var validPassword = brother.comparePassword(req.body.password);
 
       // if the password is invalid, return an error message in json format...
-      if (!validPassword) { res.json({ success: false, message: 'Wrong password.' }); }
+      if (!validPassword) res.status(401).send({ success: false, message: 'Unauthorized.' });
 
       // else, the credentials are correct, continue...
       else {
@@ -41,7 +41,7 @@ exports.authenticate = function(req, res) {
         });
 
         // return the information, including token, in json format...
-        res.json({ success: true, message: 'Enjoy your token!', token: token });
+        res.status(200).send({ success: true, message: 'OK.' });
       }
     }
   });
@@ -76,7 +76,7 @@ exports.tokens = function(req, res, next) {
   }
 
   // if there is no token, send an error, as a json response...
-  else res.status(403).send({ success: false, message: 'No token provided.' });
+  else res.status(403).send({ success: false, message: 'Forbidden.' });
 };
 
 // =============================================================================

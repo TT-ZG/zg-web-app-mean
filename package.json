@@ -25,5 +25,9 @@
     "mongoose": "^4.4.2",
     "morgan": "^1.6.1"
   },
+  "devDependencies": {
+    "should": "^7.1.1",
+    "supertest": "^1.1.0"
+  },
   "license": "http://creativecommons.org/licenses/by/4.0/"
 }

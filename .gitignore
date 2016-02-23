@@ -1,2 +1,8 @@
-config.js
+# configuration files
+server/config/config.js
+
+# node
 node_modules
+
+# random
+old

@@ -27,7 +27,6 @@
 
   <!-- bootstrap -->
   <link rel="stylesheet" href="/public/lib/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/main.css">
 </head>
 
 <!-- apply our angular app to our site -->
@@ -35,7 +34,7 @@
 
 	<!-- uiRouter injected views-->
 	<div class = "container" ui-view></div>
-
+	
 </script>
   <!-- Dependencies -->
   <script src="/public/lib/jquery/dist/jquery.min.js"></script>
@@ -47,5 +46,8 @@
   <!-- Application Source Code -->
   <script src="app/app.js"></script>
   <script src="app/config/app.client.routes.js"></script>
+	<script src="app/controllers/main.client.controller.js"></script>
+	<script src="app/factories/login.client.factory.js"></script>
+	<script src="app/factories/intercept.client.factory.js"></script>
 </body>
 </html>

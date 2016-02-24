@@ -5,15 +5,16 @@ angular.module('routes').config(['$stateProvider', '$urlRouterProvider',
       .state('visitors', {
         url: '/visitors',
         abstract: true,
-        templateUrl: 'app/views/visitors/visitors.html'
+        templateUrl: 'app/views/layout.html',
+        controller  : 'mainCtrl as main'
       })
       .state('visitors.home', {
         url: '/home',
-        templateUrl: 'app/views/visitors/templates/home.html',
+        templateUrl: 'app/views/home.html',
       })
       .state('visitors.login', {
         url: '/login',
-        templateUrl: 'app/views/visitors/templates/login.html',
+        templateUrl: 'app/views/login.html',
       })
 
 

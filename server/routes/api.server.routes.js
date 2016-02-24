@@ -21,6 +21,9 @@ router.route('/brothers/:brother_id')
   .put(api.update)
   .delete(api.delete);
 
+router.route('/me')
+  .get(api.me);
+
 // =============================================================================
 // export the router
 module.exports = router;

@@ -41,7 +41,7 @@ exports.authenticate = function(req, res) {
         });
 
         // return the information, including token, in json format...
-        res.status(200).send({ success: true, message: 'OK.' });
+        res.status(200).send({ success: true, message: 'OK.', token: token });
       }
     }
   });
@@ -52,7 +52,7 @@ exports.authenticate = function(req, res) {
 exports.tokens = function(req, res, next) {
 
   // check header or url parameters or post parameters for token
-  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers['token'];
 
   // decode token
   if (token) {
@@ -189,6 +189,13 @@ exports.delete = function(req, res) {
   // else, it was not a correct mongo id format
   else res.json({ message: 'Invalid id format.' });
 };
+
+// =============================================================================
+// send the current user
+exports.me = function(req, res) {
+  res.send(req.decoded);
+};
+
 
 
 

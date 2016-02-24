@@ -193,8 +193,13 @@ exports.delete = function(req, res) {
 // =============================================================================
 // send the current user
 exports.me = function(req, res) {
-  res.send(req.decoded);
-};
+
+  // jwt has saved the username in decoded, use this to search as usernames are unique
+  // now we can return all the info from the db including _id
+  Brothers.findOne({ username: req.decoded.username }).exec(function(err, brother) {
+    res.send(brother);
+  });
+}
 
 
 

@@ -3,8 +3,9 @@
 var mongoose    = require('mongoose'),
     bodyParser 	= require('body-parser'),
     jwt        	= require('jsonwebtoken'),
-    Brothers     = require('../models/api.server.model.js'),
+    Brothers    = require('../models/api.server.model.js'),
     config      = require('../config/config.js'),
+    morgan      = require('morgan'),
     superSecret = config.secret;
 
 // =============================================================================
@@ -14,20 +15,18 @@ exports.authenticate = function(req, res) {
   // find the user
   Brothers.findOne({ username: req.body.username }).select('name username password').exec(function(err, brother) {
 
-    // throw error
     if (err) throw err;
 
     // no user with that username was not found, return an error message in json format
-    if (!brother) res.status(404).send({ success: false, message: 'Not found.' });
+    if (!brother) res.json({ success: false, message: 'User not found.' });
 
-    // otherwise, we have found the user, continue...
+    // else, if that user name exists
     else if (brother) {
 
-      // check if password matches
+      // verify the password
       var validPassword = brother.comparePassword(req.body.password);
+      if (!validPassword) res.json({ success: false, message: 'Wrong password.' });
 
-      // if the password is invalid, return an error message in json format...
-      if (!validPassword) res.status(401).send({ success: false, message: 'Unauthorized.' });
 
       // else, the credentials are correct, continue...
       else {
@@ -41,7 +40,7 @@ exports.authenticate = function(req, res) {
         });
 
         // return the information, including token, in json format...
-        res.status(200).send({ success: true, message: 'OK.', token: token });
+        res.json({ success: true, message: 'OK.', token: token });
       }
     }
   });
@@ -52,6 +51,7 @@ exports.authenticate = function(req, res) {
 exports.tokens = function(req, res, next) {
 
   // check header or url parameters or post parameters for token
+
   var token = req.body.token || req.query.token || req.headers['x-access-token'] || req.headers['token'];
 
   // decode token

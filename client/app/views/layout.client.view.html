@@ -1,5 +1,7 @@
 <div class = "container-fluid">
   <nav class="navbar navbar-inverse">
+
+    <!-- Collapse the menu to a hamburger menu on shrink -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
@@ -8,54 +10,43 @@
       </button>
       <a class="navbar-brand" href="#">UF Theta Tau</a>
     </div>
+
+    <!-- Main nav bar items -->
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li ui-sref-active="active">
-          <a ui-sref=".home" class="hidden-xs">
+
+          <!-- Home tab -->
+          <a ui-sref="visitors.home" class="hidden-xs">
             <span class="glyphicon glyphicon-home"></span> Home
           </a>
-          <a ui-sref=".home" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
+          <a ui-sref="visitors.home" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="glyphicon glyphicon-home"></span> Home
           </a>
         </li>
       </ul>
+
+      <!-- Right menu -->
       <ul class="nav navbar-nav navbar-right">
-
+        <!-- If the user is logged in ... -->
         <li ng-if="main.loggedIn">
-          <a ui-sref="visitors.login" ng-click="main.doLogout()">Logout</a>
+          <a ui-sref="visitors.login" class="hidden-xs" ng-click="main.doLogout()">
+            <span class="glyphicon glyphicon-log-out"></span> Logout
+          </a>
+          <a ui-sref="visitors.login" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" ng-click="main.doLogout()">
+            <span class="glyphicon glyphicon-log-out"></span> Logout
+          </a>
         </li>
 
+        <!-- If the user is not logged in ... -->
         <li ng-if="!main.loggedIn">
-          <a ui-sref="visitors.login">Login</a>
+          <a ui-sref="visitors.login" class="hidden-xs">
+            <span class="glyphicon glyphicon-log-in"></span> Login
+          </a>
+          <a ui-sref="visitors.login" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="glyphicon glyphicon-log-in"></span> Login
+          </a>
         </li>
-
-
-        <!--
-        <li ui-sref-active="active">
-
-          <!-- If logged in, display a logout button
-          <a ng-if="main.loggedIn" ui-sref="visitors.home" class="hidden-xs" ng-click="main.doLogout()">
-            <span class="glyphicon glyphicon-login"></span> Logout
-          </a>
-
-          <!-- If logged out, display a login button
-          <a ng-if="!main.loggedIn" ui-sref=".login" class="hidden-xs">
-            <span class="glyphicon glyphicon-login"></span> Login
-          </a>
-
-          <!--
-          <a ui-sref=".login" class="hidden-xs">
-            <span class="glyphicon glyphicon-login"></span> Login
-          </a>-->
-          <!--
-          <a ng-if="main.loggedIn" ui-sref=".home" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse"  ng-click="main.doLogout()">
-            <span class="glyphicon glyphicon-login"></span> Logout
-          </a>
-
-          <a ng-if="!main.loggedIn" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" ui-sref=".login">
-            <span class="glyphicon glyphicon-login"></span> Login
-          </a>
-        </li>-->
 
 
 
@@ -63,6 +54,7 @@
     </div>
   </nav>
 
+  <!-- Injected views -->
   <div ui-view></div>
 
 </div>

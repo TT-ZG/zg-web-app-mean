@@ -10,8 +10,8 @@
 				<label>Password</label>
 				<input type="password" class="form-control" ng-model="main.loginData.password" required>
 			</div>
-			<div class="alert alert-danger" ng-if="login.error">
-				{{ login.error }}
+			<div class="alert alert-danger" ng-if="main.error">
+				{{ main.error }}
 			</div>
 			<button type="submit" class="btn btn-block btn-primary">Login</button>
 		</form>

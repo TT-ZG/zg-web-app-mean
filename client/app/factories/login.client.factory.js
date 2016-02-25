@@ -13,6 +13,7 @@ angular.module('zgApp').factory('Login', ['$http', '$q', '$window',
         })
         // if it was a success
         .success(function(data) {
+          console.log('Data: ' + data);
           $window.localStorage.setItem('token', data.token);
           return data;
         });

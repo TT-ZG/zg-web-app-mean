@@ -35,7 +35,7 @@ angular.module('zgApp').controller('mainCtrl', ['$state', '$rootScope', 'Login',
         // redirect as neccesary
   			if (data.success){
           console.log('Login successful.');
-          $state.go('visitors.home');
+          $state.go('brothers.search');
         }
   			else{
           console.log('Login unsuccessful.');

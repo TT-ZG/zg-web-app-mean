@@ -20,14 +20,45 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
+
+        <li ng-if="main.loggedIn">
+          <a ui-sref="visitors.login" ng-click="main.doLogout()">Logout</a>
+        </li>
+
+        <li ng-if="!main.loggedIn">
+          <a ui-sref="visitors.login">Login</a>
+        </li>
+
+
+        <!--
         <li ui-sref-active="active">
+
+          <!-- If logged in, display a logout button
+          <a ng-if="main.loggedIn" ui-sref="visitors.home" class="hidden-xs" ng-click="main.doLogout()">
+            <span class="glyphicon glyphicon-login"></span> Logout
+          </a>
+
+          <!-- If logged out, display a login button
+          <a ng-if="!main.loggedIn" ui-sref=".login" class="hidden-xs">
+            <span class="glyphicon glyphicon-login"></span> Login
+          </a>
+
+          <!--
           <a ui-sref=".login" class="hidden-xs">
             <span class="glyphicon glyphicon-login"></span> Login
+          </a>-->
+          <!--
+          <a ng-if="main.loggedIn" ui-sref=".home" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse"  ng-click="main.doLogout()">
+            <span class="glyphicon glyphicon-login"></span> Logout
           </a>
-          <a ui-sref=".login" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
+
+          <a ng-if="!main.loggedIn" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" ui-sref=".login">
             <span class="glyphicon glyphicon-login"></span> Login
           </a>
-        </li>
+        </li>-->
+
+
+
       </ul>
     </div>
   </nav>

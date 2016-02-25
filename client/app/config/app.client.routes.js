@@ -5,29 +5,29 @@ angular.module('routes').config(['$stateProvider', '$urlRouterProvider',
       .state('visitors', {
         url: '/visitors',
         abstract: true,
-        templateUrl: 'app/views/layout.html',
+        templateUrl: 'app/views/layout.client.view.html',
         controller  : 'mainCtrl as main'
       })
       .state('visitors.home', {
         url: '/home',
-        templateUrl: 'app/views/home.html',
+        templateUrl: 'app/views/home.client.view.html',
       })
       .state('visitors.login', {
         url: '/login',
-        templateUrl: 'app/views/login.html',
+        templateUrl: 'app/views/login.client.view.html',
       })
-
-
-      /*
       .state('brothers', {
         url: '/brothers',
         abstract: true,
-        template: '<ui-view/>'
+        templateUrl: 'app/views/layout.client.view.html',
+        controller  : 'mainCtrl as main'
       })
-      .state('brothers.list', {
-        url: '',
-        templateUrl: 'app/views/home.html',
+      .state('brothers.search', {
+        url: '/search',
+        templateUrl: 'app/views/search.client.view.html',
       })
+
+      /*
       .state('brothers.create', {
         url: '/create',
         templateUrl: 'app/views/home.html'

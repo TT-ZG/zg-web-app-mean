@@ -6,6 +6,7 @@ angular.module('zgApp').controller('mainCtrl', ['$state', '$rootScope', 'Login',
 
     // get info if a person is logged in
   	main.loggedIn = Login.isLoggedIn();
+    main.$state = $state;
 
     // =========================================================================
     // on every change of state ...
@@ -48,6 +49,7 @@ angular.module('zgApp').controller('mainCtrl', ['$state', '$rootScope', 'Login',
     main.doLogout = function() {
       Login.logout();
       main.current = '';
+      console.log('Changing to home...');
       $state.go('visitors.home');
     };
   }

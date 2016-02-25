@@ -11,35 +11,52 @@
       <a class="navbar-brand" href="#">UF Theta Tau</a>
     </div>
 
-    <!-- Main nav bar items -->
+    <!-- Navbar -->
     <div class="collapse navbar-collapse" id="myNavbar">
+      <!-- Main nav bar items -->
       <ul class="nav navbar-nav">
-        <li ui-sref-active="active">
 
-          <!-- Home tab -->
+        <!-- Home tab -->
+        <li ui-sref-active-if="visitors.home">
+          <!-- For full screen -->
           <a ui-sref="visitors.home" class="hidden-xs">
             <span class="glyphicon glyphicon-home"></span> Home
           </a>
+          <!-- For the hamburger menu, so the menu closes when clicked -->
           <a ui-sref="visitors.home" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="glyphicon glyphicon-home"></span> Home
           </a>
         </li>
+
+        <!-- Search tab -->
+        <li ui-sref-active-if="brothers.search">
+          <!-- For full screen -->
+          <a ui-sref="brothers.search" class="hidden-xs">
+            <span class="glyphicon glyphicon-home"></span> Search
+          </a>
+          <!-- For the hamburger menu, so the menu closes when clicked -->
+          <a ui-sref="brothers.search" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="glyphicon glyphicon-home"></span> Search
+          </a>
+        </li>
       </ul>
 
-      <!-- Right menu -->
+
+      <!-- Right navbar items -->
       <ul class="nav navbar-nav navbar-right">
+
         <!-- If the user is logged in ... -->
         <li ng-if="main.loggedIn">
-          <a ui-sref="visitors.login" class="hidden-xs" ng-click="main.doLogout()">
+          <a ui-sref="visitors.home" class="hidden-xs" ng-click="main.doLogout()">
             <span class="glyphicon glyphicon-log-out"></span> Logout
           </a>
-          <a ui-sref="visitors.login" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" ng-click="main.doLogout()">
+          <a ui-sref="visitors.home" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" ng-click="main.doLogout()">
             <span class="glyphicon glyphicon-log-out"></span> Logout
           </a>
         </li>
 
         <!-- If the user is not logged in ... -->
-        <li ng-if="!main.loggedIn">
+        <li ui-sref-active-if="visitors.login" ng-if="!main.loggedIn">
           <a ui-sref="visitors.login" class="hidden-xs">
             <span class="glyphicon glyphicon-log-in"></span> Login
           </a>
@@ -47,8 +64,6 @@
             <span class="glyphicon glyphicon-log-in"></span> Login
           </a>
         </li>
-
-
 
       </ul>
     </div>

@@ -18,7 +18,7 @@ angular.module('zgApp').factory('Interceptor', ['$location', '$q', '$injector', 
       //========================================================================
       // response errors
       responseError : function(response) {
-
+        
         // if our server returns a 403 forbidden response
         if (response.status == 403) {
           $window.localStorage.removeItem('token');

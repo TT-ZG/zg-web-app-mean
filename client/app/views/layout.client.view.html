@@ -1,61 +1,68 @@
-<div class = "container-fluid">
-  <nav class="navbar navbar-inverse">
+<!-- Fixed navbar -->
+<nav class="navbar navbar-default navbar-fixed-top">
 
-    <!-- Collapse the menu to a hamburger menu on shrink -->
+  <div class="container-fluid">
+    <!-- ================================================================= -->
+    <!-- Collapse to hamburger menu -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">UF Theta Tau</a>
+
+      <!-- Cog Icon -->
+      <a class="navbar-brand">
+        <i class="fa fa-cog fa-spin fa-lg"></i><span> UF Theta Tau</span>
+      </a>
     </div>
 
-    <!-- Navbar -->
+    <!-- ================================================================= -->
+    <!-- Main nav bar items-->
     <div class="collapse navbar-collapse" id="myNavbar">
-      <!-- Main nav bar items -->
       <ul class="nav navbar-nav">
 
-        <!-- Home tab -->
+        <!-- Home tab-->
         <li ui-sref-active-if="main.home">
-          <!-- For full screen -->
+          <!-- For full screen-->
           <a ui-sref="main.home">
             <span class="glyphicon glyphicon-home"></span> Home
           </a>
         </li>
 
-        <!-- Search tab -->
+        <!-- Search tab-->
         <li ui-sref-active-if="main.search">
-          <!-- For full screen -->
+          <!-- For full screen-->
           <a ui-sref="main.search">
-            <span class="glyphicon glyphicon-home"></span> Search
+            <span class="glyphicon glyphicon-search"></span> Brothers
           </a>
         </li>
       </ul>
 
-
-      <!-- Right navbar items -->
+      <!-- ================================================================= -->
+      <!-- Right navbar items-->
       <ul class="nav navbar-nav navbar-right">
 
-        <!-- If the user is logged in ... -->
+        <!-- If the user is logged in ...-->
         <li ng-if="main.loggedIn">
           <a ui-sref="main.home" ng-click="main.doLogout()">
-            <span class="glyphicon glyphicon-log-out"></span> Logout
+            <span class="glyphicon glyphicon-off"></span> Logout
           </a>
         </li>
 
-        <!-- If the user is not logged in ... -->
+        <!-- If the user is not logged in ...-->
         <li ui-sref-active-if="main.login" ng-if="!main.loggedIn">
           <a ui-sref="main.login">
             <span class="glyphicon glyphicon-log-in"></span> Login
           </a>
         </li>
-
       </ul>
-    </div>
-  </nav>
+    </div> <!-- .navbar collapse -->
+  </div> <!-- .container-fluid -->
+</nav>
 
-  <!-- Injected views -->
+
+<!-- Angular injected views -->
+<div class="container">
   <div ui-view></div>
-
 </div>

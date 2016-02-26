@@ -15,6 +15,7 @@
     "jquery": "~2.1.4",
     "angular": "~1.4.8",
     "bootstrap": "~3.3.6",
-    "angular-bootstrap": "~0.14.3"
+    "angular-bootstrap": "~0.14.3",
+    "font-awesome": "fontawesome#^4.5.0"
   }
 }

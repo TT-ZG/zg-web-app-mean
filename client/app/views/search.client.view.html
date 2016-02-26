@@ -1,3 +1,32 @@
-{{main.loggedIn}}
-{{bro.bro}}
-Aww yea
+<div class="page-header">
+	<h1>
+		<a ui-sref="main.create" class="btn btn-default">
+			<span class="glyphicon glyphicon-plus"></span>
+			New Brother
+		</a>
+	</h1>
+</div>
+
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th>_id</th>
+			<th>Name</th>
+			<th>Username</th>
+			<th class="col-sm-2"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="brother in main.brothers">
+			<td>{{ brother._id }}</td>
+			<td>{{ brother.name }}</td>
+			<td>{{ brother.username }}</td>
+			<td class="col-sm-2">
+      <a ng-click="main.setID(brother._id)" ui-sref="main.edit({brotherid: main.desiredID})" class="btn btn-danger">Edit</a>
+			<a ng-click="main.deleteBrother(brother._id)" ui-sref="main.search" class="btn btn-primary">Delete</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<div>

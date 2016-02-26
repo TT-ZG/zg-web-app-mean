@@ -1,4 +1,6 @@
-angular.module('zgApp').directive('uiSrefActiveIf', ['$state', function($state) {
+angular.module('zgApp')
+
+.directive('uiSrefActiveIf', ['$state', function($state) {
     return {
         restrict: "A",
         controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {

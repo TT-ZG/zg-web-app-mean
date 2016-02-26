@@ -16,17 +16,41 @@ angular.module('routes').config(['$stateProvider', '$urlRouterProvider',
         url: '/login',
         templateUrl: 'app/views/login.client.view.html',
       })
-      .state('main.brothers', {
-        url: '/brothers',
-        templateUrl: 'app/views/layout.client.view.html',
-        controller  : 'mainCtrl as main'
-      })
       .state('main.search', {
         url: '/search',
         templateUrl: 'app/views/search.client.view.html',
-        controller  : 'brotherCtrl as bro'
+        controller  : 'brotherCtrl as search'
+      })
+      .state('main.create', {
+        url: '/brothers/create',
+        templateUrl: 'app/views/profile.client.view.html',
+        controller  : 'createCtrl as modify'
+      })
+      .state('main.edit', {
+        url: '/brothers/:brotherid',
+        templateUrl: 'app/views/profile.client.view.html',
+        controller  : 'editCtrl as modify'
       })
 
+
+
+
+      /*
+      // ===========================================
+      // create brother nested view
+      .state('dashboard.createBrother', {
+        url: '/brothers/create',
+        templateUrl: 'app/views/templates/profile.html',
+        controller  : 'brotherCreateController as user'
+      })
+
+      // ===========================================
+      // edit brother nested view
+      .state('dashboard.editBrother', {
+        url: '/brothers/:brotherid',
+        templateUrl: 'app/views/templates/profile.html',
+        controller  : 'brotherEditController as user'
+      });*/
       /*
       .state('brothers.create', {
         url: '/create',

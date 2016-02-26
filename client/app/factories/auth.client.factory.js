@@ -2,7 +2,7 @@ angular.module('zgApp')
 
 // =============================================================================
 // =============================================================================
-.factory('Login', ['$http', '$q', '$window',
+.factory('Auth', ['$http', '$q', '$window',
   function($http, $q, $window) {
     var methods = {
 
@@ -25,13 +25,13 @@ angular.module('zgApp')
 
       // ***************************************
       // log a user out by removing the token from the browser
-      logout: function() {
+      logout : function() {
         $window.localStorage.removeItem('token');
       },
 
       // ***************************************
       // check if a user is logged in by checking for the existence of a token
-      isLoggedIn: function() {
+      isLoggedIn : function() {
         if ($window.localStorage.getItem('token'))
           return true;
         else
@@ -40,7 +40,7 @@ angular.module('zgApp')
 
       // ***************************************
       // get the current users info
-      getUser: function() {
+      getUser : function() {
         if ($window.localStorage.getItem('token')){
           return $http.get('/api/me');
         }

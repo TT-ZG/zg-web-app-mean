@@ -1,4 +1,6 @@
-angular.module('zgApp').controller('brotherCtrl', ['$state', '$rootScope',
+angular.module('zgApp')
+
+.controller('brotherCtrl', ['$state', '$rootScope',
   function($state, $rootScope){
 
     // better to use 'controller as' rather than $scope

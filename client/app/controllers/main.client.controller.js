@@ -8,7 +8,7 @@ angular.module('zgApp').controller('mainCtrl', ['$state', '$rootScope', 'Login',
   	main.loggedIn = Login.isLoggedIn();
     main.$state = $state;
 
-    // =========================================================================
+    // ***************************************
     // on every change of state ...
     $rootScope.$on('$stateChangeStart', function() {
 
@@ -23,7 +23,7 @@ angular.module('zgApp').controller('mainCtrl', ['$state', '$rootScope', 'Login',
       });
     });
 
-    //==========================================================================
+    // ***************************************
   	// for logging in a user
   	main.doLogin = function() {
 
@@ -36,7 +36,7 @@ angular.module('zgApp').controller('mainCtrl', ['$state', '$rootScope', 'Login',
         // redirect as neccesary
   			if (data.success){
           console.log('Login successful.');
-          $state.go('brothers.search');
+          $state.go('main.search');
         }
   			else{
           console.log('Login unsuccessful.');
@@ -44,13 +44,13 @@ angular.module('zgApp').controller('mainCtrl', ['$state', '$rootScope', 'Login',
         }
   		});
   	};
-    //==========================================================================
+    // ***************************************
     // for logging out a user
     main.doLogout = function() {
       Login.logout();
       main.current = '';
       console.log('Changing to home...');
-      $state.go('visitors.home');
+      //$state.go('visitors.home');
     };
   }
 ]);

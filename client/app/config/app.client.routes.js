@@ -2,29 +2,29 @@ angular.module('routes').config(['$stateProvider', '$urlRouterProvider',
   function($stateProvider) {
     //Listings state providing
     $stateProvider
-      .state('visitors', {
-        url: '/visitors',
+      .state('main', {
+        url: '',
         abstract: true,
         templateUrl: 'app/views/layout.client.view.html',
         controller  : 'mainCtrl as main'
       })
-      .state('visitors.home', {
+      .state('main.home', {
         url: '/home',
         templateUrl: 'app/views/home.client.view.html',
       })
-      .state('visitors.login', {
+      .state('main.login', {
         url: '/login',
         templateUrl: 'app/views/login.client.view.html',
       })
-      .state('brothers', {
+      .state('main.brothers', {
         url: '/brothers',
-        abstract: true,
         templateUrl: 'app/views/layout.client.view.html',
         controller  : 'mainCtrl as main'
       })
-      .state('brothers.search', {
+      .state('main.search', {
         url: '/search',
         templateUrl: 'app/views/search.client.view.html',
+        controller  : 'brotherCtrl as bro'
       })
 
       /*

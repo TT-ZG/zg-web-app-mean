@@ -21,6 +21,6 @@ app.config([ '$urlRouterProvider', '$locationProvider', '$httpProvider',
 
 /* set the initial state of the application */
 app.run(['$state', function($state) {
-    $state.go('visitors.home');
+    $state.go('main.home');
   }
 ]);

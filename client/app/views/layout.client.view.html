@@ -17,25 +17,17 @@
       <ul class="nav navbar-nav">
 
         <!-- Home tab -->
-        <li ui-sref-active-if="visitors.home">
+        <li ui-sref-active-if="main.home">
           <!-- For full screen -->
-          <a ui-sref="visitors.home" class="hidden-xs">
-            <span class="glyphicon glyphicon-home"></span> Home
-          </a>
-          <!-- For the hamburger menu, so the menu closes when clicked -->
-          <a ui-sref="visitors.home" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
+          <a ui-sref="main.home">
             <span class="glyphicon glyphicon-home"></span> Home
           </a>
         </li>
 
         <!-- Search tab -->
-        <li ui-sref-active-if="brothers.search">
+        <li ui-sref-active-if="main.search">
           <!-- For full screen -->
-          <a ui-sref="brothers.search" class="hidden-xs">
-            <span class="glyphicon glyphicon-home"></span> Search
-          </a>
-          <!-- For the hamburger menu, so the menu closes when clicked -->
-          <a ui-sref="brothers.search" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
+          <a ui-sref="main.search">
             <span class="glyphicon glyphicon-home"></span> Search
           </a>
         </li>
@@ -47,20 +39,14 @@
 
         <!-- If the user is logged in ... -->
         <li ng-if="main.loggedIn">
-          <a ui-sref="visitors.home" class="hidden-xs" ng-click="main.doLogout()">
-            <span class="glyphicon glyphicon-log-out"></span> Logout
-          </a>
-          <a ui-sref="visitors.home" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse" ng-click="main.doLogout()">
+          <a ui-sref="main.home" ng-click="main.doLogout()">
             <span class="glyphicon glyphicon-log-out"></span> Logout
           </a>
         </li>
 
         <!-- If the user is not logged in ... -->
-        <li ui-sref-active-if="visitors.login" ng-if="!main.loggedIn">
-          <a ui-sref="visitors.login" class="hidden-xs">
-            <span class="glyphicon glyphicon-log-in"></span> Login
-          </a>
-          <a ui-sref="visitors.login" class="visible-xs" data-toggle="collapse" data-target=".navbar-collapse">
+        <li ui-sref-active-if="main.login" ng-if="!main.loggedIn">
+          <a ui-sref="main.login">
             <span class="glyphicon glyphicon-log-in"></span> Login
           </a>
         </li>

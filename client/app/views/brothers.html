@@ -18,13 +18,13 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="brother in main.brothers">
+		<tr ng-repeat="brother in admin.brothers">
 			<td>{{ brother._id }}</td>
 			<td>{{ brother.name }}</td>
 			<td>{{ brother.username }}</td>
 			<td class="col-sm-2">
-      <a ng-click="main.setID(brother._id)" ui-sref="main.edit({brotherid: main.desiredID})" class="btn btn-danger">Edit</a>
-			<a ng-click="main.deleteBrother(brother._id)" ui-sref="main.search" class="btn btn-primary">Delete</a>
+      <a ng-click="admin.setID(brother._id)" ui-sref="main.edit({brotherid: admin.desiredID})" class="btn btn-danger">Edit</a>
+			<a ng-click="admin.deleteBrother(brother._id)" ui-sref="main.brothers" class="btn btn-primary">Delete</a>
 			</td>
 		</tr>
 	</tbody>

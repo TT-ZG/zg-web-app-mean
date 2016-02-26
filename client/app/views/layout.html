@@ -22,6 +22,12 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
 
+        <li>
+          <a>
+            <span></span> Current State: {{main.$state.current.name}}
+          </a>
+        </li>
+
         <!-- Home tab-->
         <li ui-sref-active-if="main.home">
           <!-- For full screen-->
@@ -30,10 +36,12 @@
           </a>
         </li>
 
+
+
         <!-- Search tab-->
-        <li ui-sref-active-if="main.search">
+        <li ui-sref-active-if="main.brothers">
           <!-- For full screen-->
-          <a ui-sref="main.search">
+          <a ui-sref="main.brothers">
             <span class="glyphicon glyphicon-search"></span> Brothers
           </a>
         </li>

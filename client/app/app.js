@@ -1,3 +1,6 @@
+// best practice: wrap in function
+(function() {
+
 // register the module and dependencies here
 angular.module('routes', []);
 
@@ -12,10 +15,10 @@ app.config([ '$urlRouterProvider', '$locationProvider', '$httpProvider',
     $locationProvider.html5Mode(true);
 
     // go to the '/home' URL if an invalid route is provided
-    $urlRouterProvider.otherwise('/visitors/home');
+    $urlRouterProvider.otherwise('/home');
 
     // attach our auth interceptor
-    $httpProvider.interceptors.push('Interceptor');
+    $httpProvider.interceptors.push('interceptFactory');
   }
 ]);
 
@@ -24,3 +27,5 @@ app.run(['$state', function($state) {
     $state.go('main.home');
   }
 ]);
+
+}());

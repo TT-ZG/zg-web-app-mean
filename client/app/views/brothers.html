@@ -3,15 +3,18 @@
     <!-- Search box -->
     <div class="input-group">
       <div class="input-group-addon"><i class="fa fa-search"></i></div>
-      <input type="text" class="form-control" placeholder="Search" ng-model="main.searchBro">
+      <input type="text" class="form-control" placeholder="Search" ng-model="main.search">
     </div>
 
     <!-- Filter -->
+    <div ng-init="main.filter[main.prop]={}">
+      <input type="checkbox"  ng-model="main.filter[main.prop][main.opt]" />
+      <input type="checkbox"  ng-model="main.filter[main.prop2][main.opt2]" />
+    </div>
 
-    <br>
-    <label class="checkbox-inline"><input type="checkbox">
-      Option 1
-    </label>
+
+
+
 
 
 
@@ -46,11 +49,19 @@
 		</tr>
 	</thead>
 	<tbody>
+
+    <tr ng-repeat="brother in filtered=(main.brothers | filter:main.filterByProperties | filter:main.search)">
+      <td>{{ brother.roll}}</td>
+      <td>{{ brother.name }}</td>
+      <td>{{ brother.major }}</td>
+    </tr>
+
+    <!--
 		<tr ng-repeat="brother in main.brothers | orderBy:main.sortType:main.sortReverse | filter:main.searchBro">
 			<td>{{ brother.roll}}</td>
 			<td>{{ brother.name }}</td>
       <td>{{ brother.major }}</td>
-		</tr>
+		</tr>-->
 	</tbody>
 </table>
 <div>

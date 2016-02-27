@@ -5,9 +5,12 @@
 
       // ***************************************
       // set data
-    	var main = this;                   // better to use 'controller as' rather than $scope
-    	main.loggedIn = authFactory.isLoggedIn(); // get info if a person is logged in
-      main.$state = $state;               // set the current state
+    	var main          = this;                     // better to use 'controller as' rather than $scope
+    	main.loggedIn     = authFactory.isLoggedIn(); // get info if a person is logged in
+      main.$state       = $state;                   // set the current state
+      main.sortType     = 'roll';                   // set the default sort type
+      main.sortReverse  = true;                    // set the default sort order
+      main.searchBro    = '';                       // set the default search/filter term
 
       // ***************************************
       // on every change of state ...
@@ -15,6 +18,9 @@
 
         // update and store users logged in status
         main.loggedIn = authFactory.isLoggedIn();
+
+        // refresh active brothers
+        main.init();
 
         // continuously updated the currently logged on user
         authFactory.getUser().then(function(data) {
@@ -46,6 +52,15 @@
         main.current = '';
         main.loggedIn = false;
       };
+
+      // ***************************************
+      main.init = function() {
+        // get all brothers
+        crudFactory.get().success(function(data) {
+          main.brothers = data;
+        });
+      };
+      main.init();
     };
 
     mainController.$inject = ['$state', '$rootScope', 'authFactory', 'crudFactory'];

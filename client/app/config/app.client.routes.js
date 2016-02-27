@@ -24,22 +24,31 @@
           templateUrl: 'app/views/login.html'
         })
         //===========================================
-        /* Admin controllers */
+        //* Brothers */
         .state('main.brothers', {
           url: '/brothers',
-          templateUrl: 'app/views/brothers.html',
+          templateUrl: 'app/views/brothers.html'
+        })
+
+        //===========================================
+        /* Admin controllers */
+        .state('main.admin', {
+          url: '/admin',
+          templateUrl: 'app/views/temp/brothers.html',
           controller  : 'adminController as admin'
         })
         .state('main.create', {
           url: '/brothers/create',
-          templateUrl: 'app/views/profile.html',
+          templateUrl: 'app/views/temp/profile.html',
           controller  : 'createController as brother'
         })
         .state('main.edit', {
           url: '/brothers/:brotherid',
-          templateUrl: 'app/views/profile.html',
+          templateUrl: 'app/views/temp/profile.html',
           controller  : 'editController as brother'
         })
+
+
     };
 
     // Inject this way for minification

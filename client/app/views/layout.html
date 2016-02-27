@@ -21,12 +21,12 @@
     <!-- Main nav bar items-->
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-
+        <!--
         <li>
           <a>
             <span></span> Current State: {{main.$state.current.name}}
           </a>
-        </li>
+        </li>-->
 
         <!-- Home tab-->
         <li ui-sref-active-if="main.home">
@@ -36,8 +36,6 @@
           </a>
         </li>
 
-
-
         <!-- Search tab-->
         <li ui-sref-active-if="main.brothers">
           <!-- For full screen-->
@@ -45,11 +43,20 @@
             <span class="glyphicon glyphicon-search"></span> Brothers
           </a>
         </li>
+
       </ul>
 
       <!-- ================================================================= -->
       <!-- Right navbar items-->
       <ul class="nav navbar-nav navbar-right">
+
+        <!-- Search tab-->
+        <li ui-sref-active-if="main.admin">
+          <!-- For full screen-->
+          <a ui-sref="main.admin">
+            <span class="glyphicon glyphicon-wrench"></span> Admin
+          </a>
+        </li>
 
         <!-- If the user is logged in ...-->
         <li ng-if="main.loggedIn">
@@ -64,6 +71,9 @@
             <span class="glyphicon glyphicon-log-in"></span> Login
           </a>
         </li>
+
+
+
       </ul>
     </div> <!-- .navbar collapse -->
   </div> <!-- .container-fluid -->

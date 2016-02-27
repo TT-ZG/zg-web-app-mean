@@ -7,17 +7,12 @@ var mongoose  = require('mongoose'),
 // =============================================================================
 // brother schema, password is NOT returned on mongoose queries
 var brotherSchema   = new Schema({
-	name: String,
-	username: {
-		type: String,
-		required: true,
-		index: { unique: true }
-	},
-	password: {
-		type: String,
-		required: true,
-		select: false
-	},
+	username: { type: String, required: true, index: { unique: true } },
+	password: { type: String, required: true, select: false},
+	roll: { type: Number, required: true, index: { unique: true } },
+	name: { type: String, required: true },
+	pledgeClass: { type: String, required: true },
+	major: { type: String, required: true },
   created_at: Date,
   updated_at: Date
 });

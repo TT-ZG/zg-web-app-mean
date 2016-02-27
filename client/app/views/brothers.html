@@ -1,31 +1,55 @@
-<div class="page-header">
-	<h1>
-		<a ui-sref="main.create" class="btn btn-default">
-			<span class="glyphicon glyphicon-plus"></span>
-			New Brother
-		</a>
-	</h1>
-</div>
+<form>
+  <div class="form-group">
+    <!-- Search box -->
+    <div class="input-group">
+      <div class="input-group-addon"><i class="fa fa-search"></i></div>
+      <input type="text" class="form-control" placeholder="Search" ng-model="main.searchBro">
+    </div>
+
+    <!-- Filter -->
+
+    <br>
+    <label class="checkbox-inline"><input type="checkbox">
+      Option 1
+    </label>
+
+
+
+  </div>
+</form>
 
 <div class="table-responsive">
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped table-condensed">
 	<thead>
 		<tr>
-			<th>_id</th>
-			<th>Name</th>
-			<th>Username</th>
-			<th class="col-sm-2"></th>
+      <th>
+        <a href="#" ng-click="main.sortType = 'roll';main.sortReverse = !main.sortReverse">
+          Roll
+          <span ng-show="main.sortType == 'roll' && !main.sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="main.sortType == 'roll' && main.sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </th>
+      <th>
+        <a href="#" ng-click="main.sortType = 'name';main.sortReverse = !main.sortReverse">
+          Name
+          <span ng-show="main.sortType == 'name' && !main.sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="main.sortType == 'name' && main.sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </th>
+      <th>
+        <a href="#" ng-click="main.sortType = 'major';main.sortReverse = !main.sortReverse">
+          Major
+          <span ng-show="main.sortType == 'major' && !main.sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="main.sortType == 'major' && main.sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="brother in admin.brothers">
-			<td>{{ brother._id }}</td>
+		<tr ng-repeat="brother in main.brothers | orderBy:main.sortType:main.sortReverse | filter:main.searchBro">
+			<td>{{ brother.roll}}</td>
 			<td>{{ brother.name }}</td>
-			<td>{{ brother.username }}</td>
-			<td class="col-sm-2">
-      <a ng-click="admin.setID(brother._id)" ui-sref="main.edit({brotherid: admin.desiredID})" class="btn btn-danger">Edit</a>
-			<a ng-click="admin.deleteBrother(brother._id)" ui-sref="main.brothers" class="btn btn-primary">Delete</a>
-			</td>
+      <td>{{ brother.major }}</td>
 		</tr>
 	</tbody>
 </table>

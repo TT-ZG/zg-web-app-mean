@@ -85,26 +85,18 @@ exports.create = function(req, res) {
 
   // create a new instance and set its data, which comes from the request body
   var brother = new Brothers();
-  brother.name 		 = req.body.name;
-  brother.username = req.body.username;
-  brother.password = req.body.password;
+  brother.name 		    = req.body.name;
+  brother.username    = req.body.username;
+  brother.password    = req.body.password;
+  brother.roll        = req.body.roll;
+  brother.pledgeClass = req.body.pledgeClass;
+  brother.major       = req.body.major;
 
   // save the new entry
   brother.save(function(err) {
-
-    // if there's an error ...
-    if (err) {
-
-      // duplicate entry error code
-      if (err.code == 11000) return res.json({ success: false, message: 'Username already exists.'});
-
-      // else, return an error message, in json format...
-      else
-        return res.send(err);
-    }
-
-    // return a message
-    res.json({ message: 'User created!' });
+    console.log('Error '  + err);
+    if (err) res.send({ message: 'Error: ' + err.message });
+    else res.json({ message: 'User created!' });
   });
 };
 
@@ -155,16 +147,18 @@ exports.update = function(req, res) {
       if (err) res.send(err);
 
       // set the new brother information if it exists in the request
-      if (req.body.name) brother.name 				= req.body.name;
-      if (req.body.username) brother.username = req.body.username;
-      if (req.body.password) brother.password = req.body.password;
+      if (req.body.username) brother.username       = req.body.username;
+      if (req.body.password) brother.password       = req.body.password;
+      if (req.body.name) brother.name 				      = req.body.name;
+      if (req.body.roll) brother.roll               = req.body.roll;
+      if (req.body.pledgeClass) brother.pledgeClass = req.body.pledgeClass;
+      if (req.body.major) brother.major             = req.body.major;
 
       // save the newly updated brother
       brother.save(function(err) {
-        if (err) res.send(err);
-
-        // return a message
-        res.json({ message: 'Brother updated!' });
+        console.log('Error '  + err);
+        if (err) res.send({ message: 'Error: ' + err.message });
+        else res.json({ message: 'Brother updated!' });
       });
     });
   }

@@ -16,6 +16,7 @@ var brotherSchema   = new Schema({
 	available: { type: String , enum: ['Unavailable', 'Full-Time', 'Part-Time', 'Internship'], required: true},
 	standing: { type: String , enum: ['Active', 'Alumni'], required: true},
 	graduation: {type: Date, required: true},
+	gpa: {type: String, enum: ['3.00 - 3.32', '3.33 - 3.66', '3.67 - 4.00', 'On Request'], required: true},
 	created_at: Date,
   updated_at: Date
 });

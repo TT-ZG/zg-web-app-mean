@@ -3,7 +3,12 @@ body {
   padding-top: 90px;
 }
 
-
+/* Clear floats */
 .clear{
   clear:both;
+}
+
+/* So the table row appears highlightable */
+tr {
+  cursor: pointer;
 }

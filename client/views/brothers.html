@@ -22,13 +22,27 @@
         &nbsp;&nbsp;{{category.value}}&nbsp;&nbsp;
       </div>
     </div>
+
+    <!-- gpa brackets-->
+    <div>
+      <h4><span class="label label-info">With a GPA of..</span></h4>
+      <!-- List options -->
+      <div ng-repeat="category in main.gpas">
+        <input type="checkbox"  ng-model="main.filter[category.property][category.value]"/>
+        &nbsp;&nbsp;{{category.value}}&nbsp;&nbsp;
+      </div>
+    </div>
+
   </div>
+</div>
+
+
 </div> <!--init-->
 
 
 <!--==============================================================================-->
 <!-- Put table in a panel-->
-<div class="panel panel-info col-sm-8">
+<div class="panel panel-info col-sm-9">
   <!-- Default panel contents -->
   <div class="panel-heading" ng-init="main.filter[main.prop]={}">
     <!-- Search box -->
@@ -84,17 +98,28 @@
             <span ng-show="main.sortType == 'graduation' && main.sortReverse" class="fa fa-caret-up"></span>
           </a>
         </th>
+        <th>
+          <a href="#" ng-click="main.sortType = 'gpa';main.sortReverse = !main.sortReverse">
+            GPA
+            <span ng-show="main.sortType == 'gpa' && !main.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="main.sortType == 'gpa' && main.sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
   		</tr>
   	</thead>
   	<tbody>
 
-      <tr ng-repeat="brother in filtered=(main.brothers | orderBy:main.sortType:main.sortReverse | filter:main.filterByProperties | filter:main.search)">
-        <td>{{ brother.roll}}</td>
-        <td>{{ brother.name }}</td>
-        <td>{{ brother.major }}</td>
-        <td>{{ brother.available }}</td>
-        <td>{{ brother.standing }}</td>
-        <td>{{ brother.graduation | date: 'yyyy' }}</td>
+      <!--<a ui-sref="main.login">ay</a>
+      <!--<a ng-click="admin.setID(brother._id)" ui-sref="main.edit({brotherid: admin.desiredID})"-->
+
+      <tr ng-repeat="brother in filtered=(main.brothers | orderBy:main.sortType:main.sortReverse | filter:main.filterByProperties | filter:main.search)" ng-click="main.setID(brother)"  ui-sref="main.profile({brotherid: main.desiredID})">
+          <td>{{ brother.roll}}</td>
+          <td>{{ brother.name }}</td>
+          <td>{{ brother.major }}</td>
+          <td>{{ brother.available }}</td>
+          <td>{{ brother.standing }}</td>
+          <td>{{ brother.graduation | date: 'yyyy' }}</td>
+          <td>{{ brother.gpa}}</td>
       </tr>
   	</tbody>
   </table>

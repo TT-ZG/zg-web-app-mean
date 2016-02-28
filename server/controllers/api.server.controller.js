@@ -107,6 +107,7 @@ exports.create = function(req, res) {
   brother.available   = req.body.available;
   brother.standing    = req.body.standing;
   brother.graduation  = req.body.graduation;
+  brother.gpa         = req.body.gpa;
 
   // save the new entry
   brother.save(function(err) {
@@ -160,6 +161,7 @@ exports.update = function(req, res) {
       if (req.body.available) brother.available     = req.body.available;
       if (req.body.standing) brother.standing       = req.body.standing;
       if (req.body.graduation) brother.graduation   = req.body.graduation;
+      if (req.body.gpa) brother.gpa                 = req.body.gpa;
 
       // save the newly updated brother
       brother.save(function(err) {

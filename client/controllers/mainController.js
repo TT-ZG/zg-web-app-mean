@@ -1,11 +1,12 @@
 // best practice: wrap in function to take out of global scope
 (function() {
 
-  // this controller handles:
+  // this controller handles everything on the public side:
   // - logging in and out
   // - keeping track of the current users info
   // - populating the brothers table
   // - handling brothers table queries
+  // - redirecting to profile pages
   var mainController = function($state, $rootScope, authFactory, crudFactory){
 
     // ***************************************
@@ -66,7 +67,6 @@
     };
     main.init();
 
-
     // ***************************************
     // for handling checkbox filters
     main.sortType     = 'roll';         // set the default sort type
@@ -87,6 +87,14 @@
       { property : "available", value: "Part-Time" },
     ];
 
+    // The gpa brackets
+    main.gpas = [
+      { property : "gpa", value: "3.00 - 3.32" },
+      { property : "gpa", value: "3.33 - 3.66" },
+      { property : "gpa", value: "3.67 - 4.00" },
+      { property : "gpa", value: "On Request" },
+    ];
+
     // Filter by property
     main.filterByProperties = function (brother) {
       // Use this snippet for matching with AND
@@ -99,19 +107,6 @@
         }
       }
       return matchesAND;
-
-      /* Use this snippet for matching with OR
-      var matchesOR = true;
-      for (var prop in main.filter) {
-        if (noSubFilter(main.filter[prop])) continue;
-        if (!main.filter[prop][wine[prop]]) {
-          matchesOR = false;
-        } else {
-          matchesOR = true;
-          break;
-        }
-      }
-      return matchesOR;*/
     };
 
     // checks if there is any filter activated
@@ -121,6 +116,15 @@
       }
       return true;
     }
+
+    // ***************************************
+    // set the id of the clicked row in scope because uirouter doesn't accept angular exp as parameters
+    main.setID = function(brother){
+      main.desiredID = brother._id;
+    };
+
+
+
   };// end of mainController function
 
     // ***************************************

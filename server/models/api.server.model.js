@@ -13,7 +13,10 @@ var brotherSchema   = new Schema({
 	name: { type: String, required: true },
 	pledgeClass: { type: String, required: true },
 	major: { type: String, required: true },
-  created_at: Date,
+	available: { type: String , enum: ['Unavailable', 'Full-Time', 'Part-Time', 'Internship'], required: true},
+	standing: { type: String , enum: ['Active', 'Alumni'], required: true},
+	graduation: {type: Date, required: true},
+	created_at: Date,
   updated_at: Date
 });
 

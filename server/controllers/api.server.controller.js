@@ -47,6 +47,19 @@ exports.authenticate = function(req, res) {
 };
 
 // =============================================================================
+// GET api/brothers
+exports.brothers = function(req, res) {
+
+  // get all the brothers
+  Brothers.find().sort('name').exec(function(err, users) {
+    if (err) res.send(err);
+
+    // return the users
+    res.json(users);
+  });
+};
+
+// =============================================================================
 // validate tokens to access any further route below
 exports.tokens = function(req, res, next) {
 
@@ -91,6 +104,9 @@ exports.create = function(req, res) {
   brother.roll        = req.body.roll;
   brother.pledgeClass = req.body.pledgeClass;
   brother.major       = req.body.major;
+  brother.available   = req.body.available;
+  brother.standing    = req.body.standing;
+  brother.graduation  = req.body.graduation;
 
   // save the new entry
   brother.save(function(err) {
@@ -100,18 +116,6 @@ exports.create = function(req, res) {
   });
 };
 
-// =============================================================================
-// GET api/brothers
-exports.brothers = function(req, res) {
-
-  // get all the brothers
-  Brothers.find().sort('name').exec(function(err, users) {
-    if (err) res.send(err);
-
-    // return the users
-    res.json(users);
-  });
-};
 
 // =============================================================================
 // GET api/brothers/:brother_id
@@ -153,6 +157,9 @@ exports.update = function(req, res) {
       if (req.body.roll) brother.roll               = req.body.roll;
       if (req.body.pledgeClass) brother.pledgeClass = req.body.pledgeClass;
       if (req.body.major) brother.major             = req.body.major;
+      if (req.body.available) brother.available     = req.body.available;
+      if (req.body.standing) brother.standing       = req.body.standing;
+      if (req.body.graduation) brother.graduation   = req.body.graduation;
 
       // save the newly updated brother
       brother.save(function(err) {

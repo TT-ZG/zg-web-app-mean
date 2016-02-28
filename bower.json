@@ -15,7 +15,10 @@
     "jquery": "~2.1.4",
     "angular": "~1.4.8",
     "bootstrap": "~3.3.6",
-    "angular-bootstrap": "~0.14.3",
-    "font-awesome": "fontawesome#^4.5.0"
+    "angular-bootstrap": "~1.1.0",
+    "font-awesome": "fontawesome#^4.5.0",
+    "ngAnimate": "*",
+    "angular-animate": "~1.5.0",
+    "angular-ui-date": "~0.0.11"
   }
 }

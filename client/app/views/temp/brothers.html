@@ -17,6 +17,9 @@
 			<th>Pledge Class</th>
 			<th>Name</th>
 			<th>Major</th>
+			<th>Available For Hire</th>
+			<th>Standing</th>
+			<th>Graduation</th>
 			<th class="col-sm-2"></th>
 		</tr>
 	</thead>
@@ -28,6 +31,9 @@
 			<td>{{ brother.pledgeClass}}</td>
 			<td>{{ brother.name }}</td>
 			<td>{{ brother.major }}</td>
+			<td>{{ brother.available}}</td>
+			<td>{{ brother.standing}}</td>
+			<td>{{ brother.graduation | date: 'yyyy-MM-dd' }}</td>
 			<td class="col-sm-2">
       <a ng-click="admin.setID(brother._id)" ui-sref="main.edit({brotherid: admin.desiredID})" class="btn btn-danger">Edit</a>
 			<a ng-click="admin.deleteBrother(brother._id)" ui-sref="main.admin" class="btn btn-primary">Delete</a>

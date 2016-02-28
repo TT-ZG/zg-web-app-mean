@@ -61,6 +61,7 @@
       // get all brothers
       crudFactory.get().success(function(data) {
         main.brothers = data;
+
       });
     };
     main.init();
@@ -68,26 +69,25 @@
 
     // ***************************************
     // for handling checkbox filters
-    main.sortType     = 'roll';                   // set the default sort type
-    main.sortReverse  = true;                     // set the default sort order
-    main.search       = '';                       // set the default search/filter term
+    main.sortType     = 'roll';         // set the default sort type
+    main.sortReverse  = true;           // set the default sort order
+    main.search       = '';             // set the default search/filter term
+    main.filter       = {};             // holds our filter terms
 
-    main.prop = 'major';
-    main.opt = 'Computer Science Engineering';
+    // The options available for standings
+    main.standings = [
+      { property : "standing", value: "Active" },
+      { property : "standing", value: "Alumni" },
+    ];
 
-    main.prop2 = 'name';
-    main.opt2 = 'Jeffrey McLemore';
+    // The relevant options available for employment seeking status
+    main.availables = [
+      { property : "available", value: "Internship" },
+      { property : "available", value: "Full-Time" },
+      { property : "available", value: "Part-Time" },
+    ];
 
-    main.filter = {};
-
-    main.getOptionsFor = function (propName) {
-      return (main.brothers || []).map(function (w) {
-        return w[propName];
-      }).filter(function (w, idx, arr) {
-        return arr.indexOf(w) === idx;
-      });
-    };
-
+    // Filter by property
     main.filterByProperties = function (brother) {
       // Use this snippet for matching with AND
       var matchesAND = true;
@@ -99,8 +99,22 @@
         }
       }
       return matchesAND;
+
+      /* Use this snippet for matching with OR
+      var matchesOR = true;
+      for (var prop in main.filter) {
+        if (noSubFilter(main.filter[prop])) continue;
+        if (!main.filter[prop][wine[prop]]) {
+          matchesOR = false;
+        } else {
+          matchesOR = true;
+          break;
+        }
+      }
+      return matchesOR;*/
     };
 
+    // checks if there is any filter activated
     function noSubFilter(subFilterObj) {
       for (var key in subFilterObj) {
         if (subFilterObj[key]) return false;
@@ -108,15 +122,6 @@
       return true;
     }
   };// end of mainController function
-
-
-
-
-
-
-
-
-
 
     // ***************************************
     // for minification purposes

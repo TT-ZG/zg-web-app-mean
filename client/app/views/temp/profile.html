@@ -48,6 +48,37 @@
 	</div>
 
 	<div class="form-group">
+  	<label class="col-sm-2 control-label">Available</label>
+		<div class="col-sm-6">
+  		<select class="form-control" ng-model="brother.userData.available">
+    		<option>Unavailable</option>
+    		<option>Full-Time</option>
+    		<option>Part-Time</option>
+    		<option>Internship</option>
+  		</select>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Standing</label>
+		<div class="col-sm-6">
+			<select class="form-control" ng-model="brother.userData.standing">
+				<option>Active</option>
+				<option>Alumni</option>
+			</select>
+		</div>
+	</div>
+
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Graduation</label>
+		<div class="col-sm-6">
+			<input type="date" ng-model="brother.userData.graduation">
+		</div>
+	</div>
+
+
+	<div class="form-group">
 	<div class="col-sm-offset-2 col-sm-6">
 		<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="brother.type == 'create'">Create</button>
 		<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="brother.type == 'edit'">Update</button>

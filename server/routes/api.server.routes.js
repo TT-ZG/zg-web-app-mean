@@ -6,6 +6,10 @@ var api = require('../controllers/api.server.controller.js'),
 
 // =============================================================================
 // setup correct routes
+
+router.route('/brothers')
+  .get(api.brothers);
+
 router.route('/authenticate')
   .post(api.authenticate);
 
@@ -13,8 +17,7 @@ router.route('/authenticate')
 router.use(api.tokens);
 
 router.route('/brothers')
-  .post(api.create)
-  .get(api.brothers);
+  .post(api.create);
 
 router.route('/brothers/:brother_id')
   .get(api.read)

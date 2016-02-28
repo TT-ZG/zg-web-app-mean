@@ -12,6 +12,8 @@
       // call a service to get a specific user
       crudFactory.read($stateParams.brotherid).success(function(data) {
           brother.userData = data;
+          // angular doesn't like the default date object
+          brother.userData.graduation = new Date(brother.userData.graduation);
         });
 
       //===========================================

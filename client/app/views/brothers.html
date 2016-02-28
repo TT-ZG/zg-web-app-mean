@@ -1,67 +1,106 @@
-<form>
-  <div class="form-group">
-    <!-- Search box -->
-    <div class="input-group">
-      <div class="input-group-addon"><i class="fa fa-search"></i></div>
-      <input type="text" class="form-control" placeholder="Search" ng-model="main.search">
+<!--==============================================================================-->
+<!-- Filter options-->
+<div ng-init="main.filter[main.prop]={}">
+  <!-- Active or Alumni-->
+  <div class = "item col-sm-3">
+
+    <!-- Label heading-->
+    <h3><span class="label label-info">I'm looking for..  </span></h3>
+    <!-- List options -->
+    <div class = "item" ng-repeat="category in main.standings">
+      <input type="checkbox"  ng-model="main.filter[category.property][category.value]"/>
+      &nbsp;&nbsp;{{category.value}}&nbsp;&nbsp;
     </div>
-
-    <!-- Filter -->
-    <div ng-init="main.filter[main.prop]={}">
-      <input type="checkbox"  ng-model="main.filter[main.prop][main.opt]" />
-      <input type="checkbox"  ng-model="main.filter[main.prop2][main.opt2]" />
-    </div>
-
-
-
-
-
-
-
   </div>
-</form>
 
-<div class="table-responsive">
-<table class="table table-bordered table-striped table-condensed">
-	<thead>
-		<tr>
-      <th>
-        <a href="#" ng-click="main.sortType = 'roll';main.sortReverse = !main.sortReverse">
-          Roll
-          <span ng-show="main.sortType == 'roll' && !main.sortReverse" class="fa fa-caret-down"></span>
-          <span ng-show="main.sortType == 'roll' && main.sortReverse" class="fa fa-caret-up"></span>
-        </a>
-      </th>
-      <th>
-        <a href="#" ng-click="main.sortType = 'name';main.sortReverse = !main.sortReverse">
-          Name
-          <span ng-show="main.sortType == 'name' && !main.sortReverse" class="fa fa-caret-down"></span>
-          <span ng-show="main.sortType == 'name' && main.sortReverse" class="fa fa-caret-up"></span>
-        </a>
-      </th>
-      <th>
-        <a href="#" ng-click="main.sortType = 'major';main.sortReverse = !main.sortReverse">
-          Major
-          <span ng-show="main.sortType == 'major' && !main.sortReverse" class="fa fa-caret-down"></span>
-          <span ng-show="main.sortType == 'major' && main.sortReverse" class="fa fa-caret-up"></span>
-        </a>
-      </th>
-		</tr>
-	</thead>
-	<tbody>
+  <div class = "clear"></div>
+  
+  <!-- Employment type-->
+  <div class = "item col-sm-9">
+    <!-- Label heading-->
+    <h3><span class="label label-info">That are seeking..</span></h3>
+    <!-- List options -->
+    <div class = "item" ng-repeat="category in main.availables">
+      <input type="checkbox"  ng-model="main.filter[category.property][category.value]"/>&nbsp;&nbsp;{{category.value}}&nbsp;&nbsp;
+    </div>
+  </div>
+</div> <!--init-->
 
-    <tr ng-repeat="brother in filtered=(main.brothers | filter:main.filterByProperties | filter:main.search)">
-      <td>{{ brother.roll}}</td>
-      <td>{{ brother.name }}</td>
-      <td>{{ brother.major }}</td>
-    </tr>
+<!-- Clear floats and make some space-->
+<div class = "clear"></div>
+<br/>
 
-    <!--
-		<tr ng-repeat="brother in main.brothers | orderBy:main.sortType:main.sortReverse | filter:main.searchBro">
-			<td>{{ brother.roll}}</td>
-			<td>{{ brother.name }}</td>
-      <td>{{ brother.major }}</td>
-		</tr>-->
-	</tbody>
-</table>
-<div>
+<!--==============================================================================-->
+<!-- Put table in a panel-->
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">
+    <!-- Search box -->
+    <div class="input-group col-sm-12">
+      <div class="input-group-addon"><i class="fa fa-search"></i></div>
+      <input type="text" class="form-control" placeholder="Search..." ng-model="main.search">
+    </div>
+  </div>
+
+  <div class="table-responsive col-sm-12">
+  <table class="table table-bordered table-striped table-condensed">
+  	<thead>
+  		<tr>
+        <th>
+          <a href="#" ng-click="main.sortType = 'roll';main.sortReverse = !main.sortReverse">
+            Roll
+            <span ng-show="main.sortType == 'roll' && !main.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="main.sortType == 'roll' && main.sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th>
+          <a href="#" ng-click="main.sortType = 'name';main.sortReverse = !main.sortReverse">
+            Name
+            <span ng-show="main.sortType == 'name' && !main.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="main.sortType == 'name' && main.sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th>
+          <a href="#" ng-click="main.sortType = 'major';main.sortReverse = !main.sortReverse">
+            Major
+            <span ng-show="main.sortType == 'major' && !main.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="main.sortType == 'major' && main.sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th>
+          <a href="#" ng-click="main.sortType = 'available';main.sortReverse = !main.sortReverse">
+            Available For Hire
+            <span ng-show="main.sortType == 'available' && !main.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="main.sortType == 'available' && main.sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th>
+          <a href="#" ng-click="main.sortType = 'standing';main.sortReverse = !main.sortReverse">
+            Standing
+            <span ng-show="main.sortType == 'standing' && !main.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="main.sortType == 'standing' && main.sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+        <th>
+          <a href="#" ng-click="main.sortType = 'graduation';main.sortReverse = !main.sortReverse">
+            Graduation
+            <span ng-show="main.sortType == 'graduation' && !main.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="main.sortType == 'graduation' && main.sortReverse" class="fa fa-caret-up"></span>
+          </a>
+        </th>
+  		</tr>
+  	</thead>
+  	<tbody>
+
+      <tr ng-repeat="brother in filtered=(main.brothers | orderBy:main.sortType:main.sortReverse | filter:main.filterByProperties | filter:main.search)">
+        <td>{{ brother.roll}}</td>
+        <td>{{ brother.name }}</td>
+        <td>{{ brother.major }}</td>
+        <td>{{ brother.available }}</td>
+        <td>{{ brother.standing }}</td>
+        <td>{{ brother.graduation | date: 'yyyy' }}</td>
+      </tr>
+  	</tbody>
+  </table>
+  </div>
+</div>

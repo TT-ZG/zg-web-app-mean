@@ -6,3 +6,6 @@ server/tests/api.server.routes.test.js
 
 # node
 node_modules
+
+# bower
+public/lib

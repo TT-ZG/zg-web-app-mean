@@ -1,48 +1,44 @@
 <!--==============================================================================-->
 <!-- Filter options-->
 <div ng-init="main.filter[main.prop]={}">
-  <!-- Active or Alumni-->
-  <div class = "item col-sm-3">
 
-    <!-- Label heading-->
-    <h3><span class="label label-info">I'm looking for..  </span></h3>
-    <!-- List options -->
-    <div class = "item" ng-repeat="category in main.standings">
-      <input type="checkbox"  ng-model="main.filter[category.property][category.value]"/>
-      &nbsp;&nbsp;{{category.value}}&nbsp;&nbsp;
+  <div class="well col-sm-3">
+    <!-- Active or Alumni-->
+    <div>
+      <h4><span class="label label-info">I'm looking for..  </span></h4>
+      <!-- List options -->
+      <div ng-repeat="category in main.standings">
+        <input type="checkbox"  ng-model="main.filter[category.property][category.value]"/>
+        &nbsp;&nbsp;{{category.value}}&nbsp;&nbsp;
+      </div>
     </div>
-  </div>
 
-  <div class = "clear"></div>
-  
-  <!-- Employment type-->
-  <div class = "item col-sm-9">
-    <!-- Label heading-->
-    <h3><span class="label label-info">That are seeking..</span></h3>
-    <!-- List options -->
-    <div class = "item" ng-repeat="category in main.availables">
-      <input type="checkbox"  ng-model="main.filter[category.property][category.value]"/>&nbsp;&nbsp;{{category.value}}&nbsp;&nbsp;
+    <!-- employment type-->
+    <div>
+      <h4><span class="label label-info">That are seeking..</span></h4>
+      <!-- List options -->
+      <div ng-repeat="category in main.availables">
+        <input type="checkbox"  ng-model="main.filter[category.property][category.value]"/>
+        &nbsp;&nbsp;{{category.value}}&nbsp;&nbsp;
+      </div>
     </div>
   </div>
 </div> <!--init-->
 
-<!-- Clear floats and make some space-->
-<div class = "clear"></div>
-<br/>
 
 <!--==============================================================================-->
 <!-- Put table in a panel-->
-<div class="panel panel-default">
+<div class="panel panel-info col-sm-8">
   <!-- Default panel contents -->
-  <div class="panel-heading">
+  <div class="panel-heading" ng-init="main.filter[main.prop]={}">
     <!-- Search box -->
-    <div class="input-group col-sm-12">
+    <div class="input-group">
       <div class="input-group-addon"><i class="fa fa-search"></i></div>
       <input type="text" class="form-control" placeholder="Search..." ng-model="main.search">
     </div>
   </div>
 
-  <div class="table-responsive col-sm-12">
+  <div class="table-responsive">
   <table class="table table-bordered table-striped table-condensed">
   	<thead>
   		<tr>

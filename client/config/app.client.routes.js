@@ -10,41 +10,41 @@
         .state('main', {
           url: '',
           abstract: true,
-          templateUrl: 'app/views/layout.html',
+          templateUrl: 'views/layout.html',
           controller  : 'mainController as main'
         })
         //===========================================
         //* Basic controllers everyone can see */
         .state('main.home', {
           url: '/home',
-          templateUrl: 'app/views/homepage.html'
+          templateUrl: 'views/homepage.html'
         })
         .state('main.login', {
           url: '/login',
-          templateUrl: 'app/views/login.html'
+          templateUrl: 'views/login.html'
         })
         //===========================================
         //* Brothers */
         .state('main.brothers', {
           url: '/brothers',
-          templateUrl: 'app/views/brothers.html'
+          templateUrl: 'views/brothers.html'
         })
 
         //===========================================
         /* Admin controllers */
         .state('main.admin', {
           url: '/admin',
-          templateUrl: 'app/views/temp/brothers.html',
+          templateUrl: 'views/temp/brothers.html',
           controller  : 'adminController as admin'
         })
         .state('main.create', {
           url: '/brothers/create',
-          templateUrl: 'app/views/temp/profile.html',
+          templateUrl: 'views/temp/profile.html',
           controller  : 'createController as brother'
         })
         .state('main.edit', {
           url: '/brothers/:brotherid',
-          templateUrl: 'app/views/temp/profile.html',
+          templateUrl: 'views/temp/profile.html',
           controller  : 'editController as brother'
         })
 

@@ -127,10 +127,10 @@
 
   };// end of mainController function
 
+
     // ***************************************
     // for minification purposes
     mainController.$inject = ['$state', '$rootScope', 'authFactory', 'crudFactory'];
-
-    // attach the controller
+    // Attach the controller to the app
     angular.module('zgApp').controller('mainController', mainController);
 }());

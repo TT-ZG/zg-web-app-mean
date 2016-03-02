@@ -3,7 +3,33 @@
 	<h1 ng-if="brother.type == 'edit'">Edit Brother</h1>
 </div>
 
-<form class="form-horizontal" ng-submit="brother.saveBrother()">
+
+
+<p>
+		<input type="file" file-model="myFile"/>
+</p>
+<p>
+		<input type="text" ng-model="field1"></input>
+</p>
+<p>
+		<input type="text" ng-model="field2"></input>
+</p>
+<button ng-click="uploadForm()">upload me</button>
+
+
+
+<!--
+<form name = "myForm" class="form-horizontal" ng-submit="brother.saveBrother()">
+
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Profile Picture</label>
+		<div class="col-sm-6">
+			<input type="file" id="exampleInputFile" file-model="brother.customer.file">
+		</div>
+	</div>
+
+	{{brother.customer}}
+
 
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Username</label>
@@ -48,7 +74,7 @@
 	</div>
 
 	<div class="form-group">
-  	<label class="col-sm-2 control-label">Available</label>
+  	<label class="col-sm-2 control-label">Availability</label>
 		<div class="col-sm-6">
   		<select class="form-control" ng-model="brother.userData.available">
     		<option>Unavailable</option>
@@ -89,6 +115,13 @@
 		</div>
 	</div>
 
+
+
+
+
+
+
+
 	<div class="form-group">
 	<div class="col-sm-offset-2 col-sm-6">
 		<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="brother.type == 'create'">Create</button>
@@ -107,3 +140,4 @@
 
 	</div>
 </div>
+-->

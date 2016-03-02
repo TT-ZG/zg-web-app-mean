@@ -5,8 +5,11 @@ var api = require('../controllers/api.server.controller.js'),
     router = express.Router();
 
 // =============================================================================
-// setup correct routes
 
+
+
+
+// setup correct routes
 router.route('/brothers')
   .get(api.brothers);
 

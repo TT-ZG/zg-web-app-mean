@@ -2,20 +2,31 @@
 <!-- Filter options-->
 <div ng-init="main.filter[main.prop]={}">
 
-  <div class="well col-sm-3">
+  <div class="well col-sm-3 col-md-2 col-lg-2">
+
+    <!-- Search bar -->
+    <div class="input-group">
+      <div class="input-group-addon"><i class="fa fa-search"></i></div>
+      <input type="text" class="form-control" placeholder="Search..." ng-model="main.search">
+    </div>
+
+    <hr>
+
     <!-- Active or Alumni-->
     <div>
-      <h4><span class="label label-info">I'm looking for..  </span></h4>
       <!-- List options -->
+      <h4>Standing</h4>
       <div ng-repeat="category in main.standings">
         <input type="checkbox"  ng-model="main.filter[category.property][category.value]"/>
         &nbsp;&nbsp;{{category.value}}&nbsp;&nbsp;
       </div>
     </div>
 
+    <hr>
+
     <!-- employment type-->
     <div>
-      <h4><span class="label label-info">That are seeking..</span></h4>
+      <h4>Availability</h4>
       <!-- List options -->
       <div ng-repeat="category in main.availables">
         <input type="checkbox"  ng-model="main.filter[category.property][category.value]"/>
@@ -23,9 +34,11 @@
       </div>
     </div>
 
+    <hr>
+
     <!-- gpa brackets-->
     <div>
-      <h4><span class="label label-info">With a GPA of..</span></h4>
+      <h4>GPA</h4>
       <!-- List options -->
       <div ng-repeat="category in main.gpas">
         <input type="checkbox"  ng-model="main.filter[category.property][category.value]"/>
@@ -37,20 +50,9 @@
 </div>
 
 
-</div> <!--init-->
-
-
 <!--==============================================================================-->
 <!-- Put table in a panel-->
-<div class="panel panel-info col-sm-9">
-  <!-- Default panel contents -->
-  <div class="panel-heading" ng-init="main.filter[main.prop]={}">
-    <!-- Search box -->
-    <div class="input-group">
-      <div class="input-group-addon"><i class="fa fa-search"></i></div>
-      <input type="text" class="form-control" placeholder="Search..." ng-model="main.search">
-    </div>
-  </div>
+<div class="panel panel-default col-sm-9 col-md-10 col-lg-10">
 
   <div class="table-responsive">
   <table class="table table-bordered table-striped table-condensed">
@@ -79,7 +81,7 @@
         </th>
         <th>
           <a href="#" ng-click="main.sortType = 'available';main.sortReverse = !main.sortReverse">
-            Available For Hire
+            Availability
             <span ng-show="main.sortType == 'available' && !main.sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="main.sortType == 'available' && main.sortReverse" class="fa fa-caret-up"></span>
           </a>
@@ -118,7 +120,7 @@
           <td>{{ brother.major }}</td>
           <td>{{ brother.available }}</td>
           <td>{{ brother.standing }}</td>
-          <td>{{ brother.graduation | date: 'yyyy' }}</td>
+          <td>{{ brother.graduation | date: 'yyyy-MM' }}</td>
           <td>{{ brother.gpa}}</td>
       </tr>
   	</tbody>

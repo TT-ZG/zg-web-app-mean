@@ -6,14 +6,16 @@ var express    = require('express'),
     morgan     = require('morgan'),
     mongoose   = require('mongoose'),
     path 	   	 = require('path'),
-    apiRouter  = require('../routes/api.server.routes');
-
+    apiRouter  = require('../routes/api.server.routes'),
+    Grid       = require('gridfs-stream'),
+    multer = require('multer'),
+    upload = multer({ dest: 'uploads/'});
 // =============================================================================
 // export a function that sets up everything for this app
 module.exports.init = function() {
 
   //connect to database
-  mongoose.connect(config.database);
+  //mongoose.connect(config.database);
 
   //initialize app
   var app = express();
@@ -39,6 +41,12 @@ module.exports.init = function() {
 
   /* use the api router for requests to the api*/
   app.use('/api', apiRouter);
+
+  app.post('/test', upload.single('file'), function(req, res) {
+    console.log('req.body', req.body);
+    console.log('req.file', req.file);
+    res.send('post received.');
+  });
 
   /* go to homepage for all routes not specified */
   app.all('/*', function(req, res) {

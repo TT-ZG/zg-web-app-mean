@@ -96,6 +96,8 @@ exports.tokens = function(req, res, next) {
 // POST api/brothers
 exports.create = function(req, res) {
 
+
+
   // create a new instance and set its data, which comes from the request body
   var brother = new Brothers();
   brother.name 		    = req.body.name;
@@ -108,6 +110,11 @@ exports.create = function(req, res) {
   brother.standing    = req.body.standing;
   brother.graduation  = req.body.graduation;
   brother.gpa         = req.body.gpa;
+
+
+
+
+
 
   // save the new entry
   brother.save(function(err) {

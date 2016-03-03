@@ -10,6 +10,7 @@
     // variable to determine if we should hide/show elements of the view
     brother.type = 'edit';
 
+
     // ***************************************
     // call a service to get a specific user
     crudFactory.read($stateParams.brotherid).success(function(data) {
@@ -19,6 +20,8 @@
 
       // angular doesn't like the default date object
       brother.userData.graduation = new Date(brother.userData.graduation);
+
+      
     });
 
     // ***************************************
@@ -33,14 +36,6 @@
         brother.message = data.message;
       });
     };
-
-    // ***************************************
-
-
-
-
-
-
   };
 
     // ***************************************

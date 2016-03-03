@@ -85,6 +85,7 @@
       { property : "available", value: "Internship" },
       { property : "available", value: "Full-Time" },
       { property : "available", value: "Part-Time" },
+      { property : "available", value: "Unavailable"}
     ];
 
     // The gpa brackets
@@ -122,9 +123,6 @@
     main.setID = function(brother){
       main.desiredID = brother._id;
     };
-
-
-
   };// end of mainController function
 
 

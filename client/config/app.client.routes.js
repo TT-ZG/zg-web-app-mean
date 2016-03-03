@@ -35,26 +35,22 @@
           controller  : 'editController as brother'
         })
 
-
-
-
-
         //===========================================
         /* Admin controllers */
         .state('main.admin', {
           url: '/admin',
-          templateUrl: 'views/temp/brothers.html',
+          templateUrl: 'views/adminBrothers.html',
           controller  : 'adminController as admin'
         })
         .state('main.create', {
           url: '/admin/brothers/create',
-          templateUrl: 'views/temp/profile.html',
+          templateUrl: 'views/profile.html',
           controller  : 'createController as brother'
         })
 
         .state('main.edit', {
           url: '/admin/brothers/:brotherid',
-          templateUrl: 'views/temp/profile.html',
+          templateUrl: 'views/profile.html',
           controller  : 'editController as brother'
         })
 

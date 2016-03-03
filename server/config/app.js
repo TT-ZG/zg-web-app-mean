@@ -9,17 +9,20 @@ var config   = require('./config'),
 // export a function that starts the server
 module.exports.start = function() {
 
-  // setup all dependencies and routing
-  var app = express.init();
-
+  // connect to the database
   mongoose.connect(config.database);
+
+  /*set up GridFS
   var conn = mongoose.connection;
   Grid.mongo = mongoose.mongo;
   conn.once('open', function() {
-    console.log('open sesame');
-    var gfs = Grid(conn.db);
-    app.set('gridfs', gfs);
-  });
+    console.log('Database and GridFS connected');
+    //var gfs = Grid(conn.db);
+    //app.set('gridfs', gfs);
+  });*/
+
+  // setup all dependencies and routing
+  var app = express.init();
 
   // begin listening on the specified port
   app.listen(config.port, function() {

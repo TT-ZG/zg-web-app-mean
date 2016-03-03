@@ -17,6 +17,7 @@ var brotherSchema   = new Schema({
 	standing: { type: String , enum: ['Active', 'Alumni'], required: true},
 	graduation: {type: Date, required: true},
 	gpa: {type: String, enum: ['3.00 - 3.32', '3.33 - 3.66', '3.67 - 4.00', 'On Request'], required: true},
+	picture: {type: String, required: true, default: 'NoPictureAvailable.jpg'},
 	created_at: Date,
   updated_at: Date
 });

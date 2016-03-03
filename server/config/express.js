@@ -7,15 +7,12 @@ var express    = require('express'),
     mongoose   = require('mongoose'),
     path 	   	 = require('path'),
     apiRouter  = require('../routes/api.server.routes'),
-    Grid       = require('gridfs-stream'),
-    multer = require('multer'),
-    upload = multer({ dest: 'uploads/'});
+    Grid       = require('gridfs-stream');
+
 // =============================================================================
 // export a function that sets up everything for this app
 module.exports.init = function() {
 
-  //connect to database
-  //mongoose.connect(config.database);
 
   //initialize app
   var app = express();
@@ -42,11 +39,31 @@ module.exports.init = function() {
   /* use the api router for requests to the api*/
   app.use('/api', apiRouter);
 
+/*
   app.post('/test', upload.single('file'), function(req, res) {
     console.log('req.body', req.body);
     console.log('req.file', req.file);
+
     res.send('post received.');
-  });
+    /*
+      var is;
+      var os;
+      var gridfs = app.get('gridfs');
+      //get the extenstion of the file
+      var extension = req.file.path.split(/[. ]+/).pop();
+      console.log(extension);
+      is = fs.createReadStream(req.file.path);
+      os = gridfs.createWriteStream({ filename: 'example.' +extension });
+      is.pipe(os);
+
+      os.on('close', function (file) {
+        //delete file from temp folder
+        fs.unlink(req.file.path, function() {
+          res.json(200, file);
+        });
+      });*
+
+  });*/
 
   /* go to homepage for all routes not specified */
   app.all('/*', function(req, res) {

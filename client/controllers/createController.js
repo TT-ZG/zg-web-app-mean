@@ -54,10 +54,12 @@
       // these are nested b/c we need id from create()
       crudFactory.create(brother.userData)
       .success(function(res){
+        console.log(res.message);
         brother.dataMessage = res.message
         brother.uploadPicture(res.brotherId);
       })
       .error(function(res){
+        console.log(res.message);
         brother.dataMessage = res.message
       });
     };
@@ -74,6 +76,7 @@
 
       // save the brothers picture using special service
       fileUpload.upload(file, uploadUrl, function(data, status, headers, config){
+        console.log(data.message);
         brother.pictureMessage = data.message;
       });
     };

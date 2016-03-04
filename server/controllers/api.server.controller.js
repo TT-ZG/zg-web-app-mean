@@ -30,9 +30,9 @@ exports.brothers = function(req, res) {
   .sort('name')
   .exec(function(err, brothers) {
     if (err){
-      res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+      res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
     } else {
-      res.status(200).send({ success: true, info: brothers });
+      res.status(200).send({ success: true, message: '200 - OK: Successfully retrieved brothers.', info: brothers });
     }
   });
 };
@@ -48,18 +48,18 @@ exports.authenticate = function(req, res) {
   .exec(function(err, brother) {
     // throw error if any
     if (err){
-      res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+      res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
     }
 
     // if not found, return false
     if (!brother)
-      res.status(401).send({ success: false, message: 'Unauthorized: User/password incorrect.' });
+      res.status(401).send({ success: false, message: '401 - Unauthorized: User/password incorrect.' });
 
     else if (brother) {
       // check passwords
       var validPassword = brother.comparePassword(req.body.password);
       if (!validPassword)
-        res.status(401).send({ success: false, message: 'Unauthorized: User/password incorrect.' });
+        res.status(401).send({ success: false, message: '401 - Unauthorized: User/password incorrect.' });
 
       // sign a token if all is OK
       else {
@@ -69,7 +69,7 @@ exports.authenticate = function(req, res) {
           username: brother.username },
           superSecret,
           {expiresInMinutes: 1440});
-        res.status(200).send({ success: true, token: token });
+        res.status(200).send({ success: true,  message: '200 - OK: Successfully created token.', token: token });
       }
     }
   });
@@ -86,7 +86,7 @@ exports.tokens = function(req, res, next) {
   if (token) {
     jwt.verify(token, superSecret, function(err, decoded) {
       if (err)
-        res.status(403).send({ success: false, message: 'Forbidden: Invalid token.' });
+        res.status(403).send({ success: false, message: '403 - Forbidden: Invalid token.' });
       else {
         req.decoded = decoded;        //save to request for use in other routes
         next();
@@ -94,7 +94,7 @@ exports.tokens = function(req, res, next) {
     });
   }
   else{
-    res.status(403).send({ success: false, message: 'Forbidden: No token.' });
+    res.status(403).send({ success: false, message: '403 - Forbidden: No token.' });
   }
 };
 
@@ -105,9 +105,9 @@ exports.me = function(req, res) {
   Brothers.findOne({ username: req.decoded.username })
   .exec(function(err, brother) {
     if (err){
-      res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+      res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
     } else {
-      res.status(200).send({ success: true, info: brother });
+      res.status(200).send({ success: true, message: '200 - OK: Successfully retrieved logged in user.', info: brother });
     }
   });
 }
@@ -122,15 +122,15 @@ exports.delete = function(req, res) {
 
     Brothers.remove({_id: req.params.brother_id}, function(err, user) {
       if (err){
-        res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+        res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
       } else {
-        res.status(200).send({ success: true, message: 'OK. Successfully deleted brother info.' });
+        res.status(200).send({ success: true, message: '200 - OK: Successfully deleted brother info.' });
       }
     });
   }
   // else, it was not a correct mongo id format
   else{
-    res.status(400).send({ success: false, message: 'Bad Request. Id is incorrect format.' });
+    res.status(400).send({ success: false, message: '400 - Bad Request: Id is incorrect format.' });
   }
 };
 // =============================================================================
@@ -139,13 +139,13 @@ exports.delete = function(req, res) {
 exports.deletePicture = function(req, res) {
 
   if (req.params.id === '0.jpg'){
-    res.status(202).send({ success: true, message: 'Accepted request but did not delete default picture.' });
+    res.status(202).send({ success: true, message: '202 - Accepted: Received request but did not delete default picture.' });
   } else{
     gfs.remove({filename: req.params.id}, function (err) {
       if (err){
-        res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+        res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
       } else {
-        res.status(200).send({ success: true, message: 'OK. Successfully deleted brother picture.' });
+        res.status(200).send({ success: true, message: '200 - OK: Successfully deleted brother picture.' });
       }
     });
   }
@@ -174,12 +174,12 @@ exports.create = function(req, res) {
   brother.save(function(err) {
     if (err){
       if (err.code === 11000){
-        res.status(500).send({ success: false, message: 'Internal server error: Duplicate Roll/Username' });
+        res.status(500).send({ success: false, message: '500 - Internal Server Error: Duplicate Roll/Username' });
       } else {
-          res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+          res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
       }
     } else {
-      res.status(200).send({ success: true, message: 'OK. User created!', brotherId: brother._id });
+      res.status(200).send({ success: true, message: '200 - OK: User created!', brotherId: brother._id });
     }
   });
 };
@@ -194,7 +194,7 @@ exports.postPicture = function(req, res) {
     // find the brother given the id
     Brothers.findById(req.params.id, function(err, brother) {
       if (err){
-        res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+        res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
       }
 
       // get the extension
@@ -216,18 +216,18 @@ exports.postPicture = function(req, res) {
       brother.save(function(err) {
         if (err){
           if (err.code === 11000){
-            res.status(500).send({ success: false, message: 'Internal server error: Duplicate Picture' });
+            res.status(500).send({ success: false, message: '500 - Internal Server Error: Duplicate Picture' });
           } else {
-              res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+              res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
           }
         } else {
-          res.status(200).send({ success: true, message: 'OK. Custom brother picture uploaded.' });
+          res.status(200).send({ success: true, message: '200 - OK: Custom brother picture uploaded.' });
         }
       });
     });
   } else {
     console.log('no pic');
-      res.status(200).send({ success: false, message: 'OK. No custom picture uploaded.'});
+      res.status(200).send({ success: false, message: '200 - OK: No custom picture uploaded.'});
     }
   };
 
@@ -243,15 +243,15 @@ exports.read = function(req, res) {
     // find that brother with the given id
     Brothers.findById(req.params.brother_id, function(err, brother) {
       if (err){
-        res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+        res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
       } else {
-        res.status(200).send({ success: true,  message: 'OK. Got brother info.', info: brother });
+        res.status(200).send({ success: true,  message: '200 - OK: Successfully retrieved brother info.', info: brother });
       }
     });
   }
 
   // else, it was not a correct mongo id format
-  else res.status(400).send({ success: false, message: 'Invalid id format' });
+  else res.status(400).send({ success: false, message: '400 - Bad Request: Invalid id format' });
 };
 
 
@@ -266,7 +266,7 @@ exports.readPicture = function(req, res) {
     console.log(files);
 
  	  if(files.length===0)
-      return res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+      return res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
 
     // create a read stream
     var readstream = gfs.createReadStream({
@@ -279,12 +279,12 @@ exports.readPicture = function(req, res) {
        bufs.push(chunk);}
      )
      .on('error', function (err) {
-       return res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+       return res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
      })
      .on('end', function() { // done
        var fbuf = Buffer.concat(bufs);
        var base64 = (fbuf.toString('base64'));
-       res.status(200).send({ success: true, message: 'OK. Img binary->base64 conversion successful.', data: base64});
+       res.status(200).send({ success: true, message: '200 - OK: Img binary->base64 conversion successful.', data: base64});
     });
   });
 };

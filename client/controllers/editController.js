@@ -47,7 +47,7 @@
       crudFactory.read(id)
       .success(function(res){
         if (res.success){
-          // set the data from the response
+          console.log(res.message);
           brother.userData = res.info;
           brother.dataMessage = res.message;
           brother.userData.graduation = new Date(brother.userData.graduation);
@@ -56,7 +56,7 @@
         }
       })
       .error(function(res){
-        console.log ('Uncaught error: ' + res.message);
+        console.log (res.message);
       });
     };
 
@@ -67,11 +67,12 @@
 
        crudFactory.readPicture(pictureName)
        .success(function(res) {
+         console.log(res.message);
          brother.pictureMessage = res.message;
          brother.theImage = res.data;
        })
        .error(function(res){
-         console.log ('Uncaught error: ' + res.message);
+         console.log (res.message);
        });
      }
 

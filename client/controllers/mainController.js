@@ -26,11 +26,11 @@
         .success(function(res){
           if (res.success){
             main.current = res.info;
-            console.log('Current user:' + JSON.stringify(main.current));
+            console.log(res.message);
           }
         })
         .error(function(res){
-          console.log ('Uncaught error: ' + res.message);
+          console.log (res.message);
         });
       }
     });
@@ -43,10 +43,11 @@
       .success(function(res){
         if (res.success){
           main.brothers = res.info;
+          console.log(res.message);
         }
       })
       .error(function(res){
-        console.log ('Uncaught error: ' + res.message);
+        console.log(res.message);
       });
     };
     main.init(); // initialize brothers
@@ -61,11 +62,13 @@
         if (res.success){
           $window.localStorage.setItem('token', res.token);
           $state.go('main.brothers');
+          console.log(res.message);
         }
       })
       .error(function(res){
         if (!res.success){
           main.error = res.message;
+          console.log(res.message);
         }
       });
     };

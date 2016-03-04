@@ -64,7 +64,6 @@
     // =========================================================================
     // call a service to get a specific users picture
      brother.readPicture = function(pictureName){
-
        crudFactory.readPicture(pictureName)
        .success(function(res) {
          console.log(res.message);
@@ -110,7 +109,7 @@
       //console.dir(file);
 
       var uploadUrl = "/api/pictures/" + brotherId;
-
+      
       // save the brothers picture using special service
       fileUpload.upload(method, file, uploadUrl, function(data, status, headers, config){
         console.log(data.message);

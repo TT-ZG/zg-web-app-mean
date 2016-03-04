@@ -336,6 +336,7 @@ exports.update = function(req, res) {
       if (req.body.standing) brother.standing       = req.body.standing;
       if (req.body.graduation) brother.graduation   = req.body.graduation;
       if (req.body.gpa) brother.gpa                 = req.body.gpa;
+      if (req.body.picture) brother.picture         = req.body.picture;
 
       // save the newly updated brother
       brother.save(function(err) {
@@ -393,38 +394,38 @@ exports.updatePicture = function(req, res) {
                 }
               });
             }
-
-            // get the extension
-            var extension   = req.file.originalname.split(/[. ]+/).pop();
-            brother.picture = brother.roll + '.' + extension;
-
-            // streaming to gridfs
-            var writestream = gfs.createWriteStream({ filename: brother.picture });
-            fs.createReadStream(req.file.path).pipe(writestream);
-
-            //delete file from temp folder
-            writestream.on('close', function (file) {
-              fs.unlink(req.file.path, function() {
-                console.log('Temporary file has been deleted.');
-              });
-            });
-
-            // save the brothers information
-            brother.save(function(err) {
-              if (err){
-                if (err.code === 11000){
-                  res.status(500).send({ success: false, message: '500 - Internal Server Error: Duplicate Picture' });
-                }
-                else {
-                  res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
-                }
-              }
-              else {
-                res.status(200).send({ success: true, message: '200 - OK: Custom brother picture updated.' });
-              }
-            });
           });
         }
+
+        // get the extension
+        var extension   = req.file.originalname.split(/[. ]+/).pop();
+        brother.picture = brother.roll + '.' + extension;
+
+        // streaming to gridfs
+        var writestream = gfs.createWriteStream({ filename: brother.picture });
+        fs.createReadStream(req.file.path).pipe(writestream);
+
+        //delete file from temp folder
+        writestream.on('close', function (file) {
+          fs.unlink(req.file.path, function() {
+            console.log('Temporary file has been deleted.');
+          });
+        });
+
+        // save the brothers information
+        brother.save(function(err) {
+          if (err){
+            if (err.code === 11000){
+              res.status(500).send({ success: false, message: '500 - Internal Server Error: Duplicate Picture' });
+            }
+            else {
+              res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
+            }
+          }
+          else {
+            res.status(200).send({ success: true, message: '200 - OK: Custom brother picture updated.' });
+          }
+        });
       });
     }
     else {

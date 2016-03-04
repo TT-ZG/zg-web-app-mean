@@ -70,6 +70,29 @@
         console.log ('Uncaught error: ' + res.message);
       });
     };
+
+    // =========================================================================
+    // =========================================================================
+    // delete a brothers picture
+    admin.resetPicture = function(brotherId){
+      // reset the picture to default
+      admin.userData = {};
+      admin.userData.picture = '0.jpg';
+
+      crudFactory.update(brotherId, admin.userData)
+      .success(function(res) {
+        console.log(res.message);
+        admin.init();
+      })
+      .error(function(res){
+        console.log(res.message);
+        admin.init();
+      });
+
+
+    };
+
+
 };
 
   // =========================================================================

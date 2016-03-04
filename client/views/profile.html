@@ -1,64 +1,60 @@
 <form class="form-horizontal" ng-submit="brother.saveBrother()">
+
+
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Picture</label>
 		<div class="col-sm-6">
-
-
-
-		<img ng-src="data:image/jpeg;base64, {{brother.theImage}}">
-
-
-
-
+			<img ng-src="data:image/jpeg;base64, {{brother.theImage}}" height=250px width=250px>
 			<input type="file" class="form-control" file-directive="myFile"/>
 			Current Pic: {{brother.userData.picture}}
+
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Username</label>
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<input type="text" class="form-control" ng-model="brother.userData.username" placeholder="Username" required>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Password</label>
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<input type="text" class="form-control" ng-model="brother.userData.password" placeholder="Password">
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Roll</label>
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<input type="text"  class="form-control"ng-model="brother.userData.roll" placeholder="Roll" required>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Pledge Class</label>
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<input type="text" class="form-control" ng-model="brother.userData.pledgeClass" placeholder="Pledge Class" required>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Name</label>
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<input type="text" class="form-control" ng-model="brother.userData.name" placeholder="Name" required>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Major</label>
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<input type="text" class="form-control" ng-model="brother.userData.major" placeholder="Major" required>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Graduation</label>
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<input type="date" class="form-control" ng-model="brother.userData.graduation" required>
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Availability</label>
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<select class="form-control" ng-model="brother.userData.available" required>
 				<option ng-repeat="a in brother.availables">{{a.value}}</option>
 			</select>
@@ -66,7 +62,7 @@
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">G.P.A</label>
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<select class="form-control" ng-model="brother.userData.gpa" required>
 				<option ng-repeat="g in brother.gpas">{{g.value}}</option>
 			</select>
@@ -74,151 +70,17 @@
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Standing</label>
-		<div class="col-sm-6">
+		<div class="col-sm-4">
 			<select class="form-control" ng-model="brother.userData.standing">
 				<option ng-repeat="s in brother.standings">{{s.value}}</option>
 			</select>
 		</div>
 	</div>
 	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-6">
-			<button class="btn btn-success btn-lg btn-block" type="submit">Submit</button>
+		<div class="col-sm-offset-2 col-sm-4">
+			<button class="btn btn-success btn-sm btn-block" type="submit">Submit</button>
 		</div>
 	</div>
 </form>
 <div class="alert alert-info" ng-show="brother.dataMessage">{{ brother.dataMessage }}</div>
 <div class="alert alert-info" ng-show="brother.pictureMessage">{{ brother.pictureMessage }}</div>
-
-
-
-
-
-
-<!--
-<p><input type="text" ng-model="field1"></input></p>
-<p><input type="text" ng-model="field2"></input></p>-->
-
-
-<!--
-<form name = "myForm" class="form-horizontal" ng-submit="brother.saveBrother()">
-
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Profile Picture</label>
-		<div class="col-sm-6">
-			<input type="file" id="exampleInputFile" file-model="brother.customer.file">
-		</div>
-	</div>
-
-	{{brother.customer}}
-
-
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Username</label>
-		<div class="col-sm-6">
-			<input type="text" class="form-control" ng-model="brother.userData.username" required>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Password</label>
-		<div class="col-sm-6">
-			<input type="password" class="form-control" ng-model="brother.userData.password">
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Roll</label>
-		<div class="col-sm-6">
-			<input type="text" class="form-control" ng-model="brother.userData.roll" required>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Pledge Class</label>
-		<div class="col-sm-6">
-			<input type="text" class="form-control" ng-model="brother.userData.pledgeClass" required>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Name</label>
-		<div class="col-sm-6">
-			<input type="text" class="form-control" ng-model="brother.userData.name">
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Major</label>
-		<div class="col-sm-6">
-			<input type="text" class="form-control" ng-model="brother.userData.major">
-		</div>
-	</div>
-
-	<div class="form-group">
-  	<label class="col-sm-2 control-label">Availability</label>
-		<div class="col-sm-6">
-  		<select class="form-control" ng-model="brother.userData.available">
-    		<option>Unavailable</option>
-    		<option>Full-Time</option>
-    		<option>Part-Time</option>
-    		<option>Internship</option>
-  		</select>
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Standing</label>
-		<div class="col-sm-6">
-			<select class="form-control" ng-model="brother.userData.standing">
-				<option>Active</option>
-				<option>Alumni</option>
-			</select>
-		</div>
-	</div>
-
-
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Graduation</label>
-		<div class="col-sm-6">
-			<input type="date" ng-model="brother.userData.graduation">
-		</div>
-	</div>
-
-	<div class="form-group">
-		<label class="col-sm-2 control-label">GPA</label>
-		<div class="col-sm-6">
-			<select class="form-control" ng-model="brother.userData.gpa">
-				<option>3.00 - 3.32</option>
-				<option>3.33 - 3.66</option>
-				<option>3.67 - 4.00</option>
-				<option>On Request</option>
-			</select>
-		</div>
-	</div>
-
-
-
-
-
-
-
-
-	<div class="form-group">
-	<div class="col-sm-offset-2 col-sm-6">
-		<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="brother.type == 'create'">Create</button>
-		<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="brother.type == 'edit'">Update</button>
-	</div>
-	</div>
-
-</form>
-
-<div class="row show-hide-message" ng-show="brother.message">
-	<div class="col-sm-6 col-sm-offset-2">
-
-		<div class="alert alert-info">
-			{{ brother.message }}
-		</div>
-
-	</div>
-</div>
--->

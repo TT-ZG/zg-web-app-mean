@@ -231,52 +231,6 @@ exports.postPicture = function(req, res) {
     }
   };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // =============================================================================
 // =============================================================================
 // Retrieve a brother by their id
@@ -288,15 +242,16 @@ exports.read = function(req, res) {
 
     // find that brother with the given id
     Brothers.findById(req.params.brother_id, function(err, brother) {
-      if (err) res.send(err);
-
-      // return that brother
-      res.json(brother);
+      if (err){
+        res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+      } else {
+        res.status(200).send({ success: true,  message: 'OK. Got brother info.', info: brother });
+      }
     });
   }
 
   // else, it was not a correct mongo id format
-  else res.json({ message: 'Invalid id format.' });
+  else res.status(400).send({ success: false, message: 'Invalid id format' });
 };
 
 
@@ -311,63 +266,27 @@ exports.readPicture = function(req, res) {
     console.log(files);
 
  	  if(files.length===0)
-			return res.send({ message: 'File not found' });
+      return res.status(500).send({ success: false, message: 'Internal server error: ' + err });
 
     // create a read stream
     var readstream = gfs.createReadStream({
      	filename: files[0].filename
      });
 
-     // Return the binary data as base64 encoded
+     // Return the binary data as base64 encoded data
      var bufs = [];
      readstream.on('data', function(chunk) {
        bufs.push(chunk);}
      )
+     .on('error', function (err) {
+       return res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+     })
      .on('end', function() { // done
        var fbuf = Buffer.concat(bufs);
        var base64 = (fbuf.toString('base64'));
-       res.send(base64);
+       res.status(200).send({ success: true, message: 'OK. Img binary->base64 conversion successful.', data: base64});
     });
-
-
-// write the content-type we are returning
-//res.writeHead(200, {'Content-Type': 'image/png'});
-//res.writeHead(200, {'Content-Type': files[0].contentType});
-
-     /*
-    // write the data
-    readstream.on('data', function(data) {
-      res.write(data);
-    });
-
-    // end the readstream
-    readstream.on('end', function() {
-      res.end();
-    });
-
-    // for error handling
-    readstream.on('error', function (err) {
-      console.log('An error occurred!', err);
-      throw err;
-    });*/
-
-
   });
-
-
-  /*
-  var readstream = gfs.createReadStream({
-        filename: req.params.pictureName
-      });
-      req.on('error', function(err) {
-        res.send({ message: 'File not found' });
-      });
-      readstream.on('error', function (err) {
-        res.send({ message: 'File not found' });
-      });
-      readstream.pipe(res);
-      */
-
 };
 
 

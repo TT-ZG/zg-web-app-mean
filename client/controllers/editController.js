@@ -30,34 +30,62 @@
       { property : "gpa", value: "3.67 - 4.00" },
       { property : "gpa", value: "On Request" },
     ];
+    // =========================================================================
+    // =========================================================================
+    // get a specific users information
+    brother.init = function() {
+      brother.dataMessage = '';
+      brother.pictureMessage = '';
+      brother.get($stateParams.brotherid);
+    };
 
     // =========================================================================
     // =========================================================================
-    // call a service to get a specific user
-    crudFactory.read($stateParams.brotherid).success(function(data) {
+    // get a brothers info
+    brother.get = function(id){
 
-      // get the information for this id
-      brother.userData = data;
-      // angular doesn't like the default date object
-      brother.userData.graduation = new Date(brother.userData.graduation);
-      // get the users picture
-      brother.readPicture(brother.userData.picture);
-    });
+      crudFactory.read(id)
+      .success(function(res){
+        if (res.success){
+          // set the data from the response
+          brother.userData = res.info;
+          brother.dataMessage = res.message;
+          brother.userData.graduation = new Date(brother.userData.graduation);
+          // get the picture now
+          brother.readPicture(brother.userData.picture);
+        }
+      })
+      .error(function(res){
+        console.log ('Uncaught error: ' + res.message);
+      });
+    };
 
-    // ***************************************
+    // =========================================================================
+    // =========================================================================
     // call a service to get a specific users picture
      brother.readPicture = function(pictureName){
 
-       crudFactory.readPicture(pictureName).success(function(data) {
-
-
-         brother.theImage = data
-
-
+       crudFactory.readPicture(pictureName)
+       .success(function(res) {
+         brother.pictureMessage = res.message;
+         brother.theImage = res.data;
+       })
+       .error(function(res){
+         console.log ('Uncaught error: ' + res.message);
        });
-
-
      }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // ***************************************
@@ -72,6 +100,10 @@
         brother.message = data.message;
       });
     };
+
+
+    // get the data
+    brother.init();
   };
 
 
@@ -85,3 +117,18 @@
     angular.module('zgApp').controller('editController', editController);
 
 }());
+
+
+    /*
+      crudFactory.get()
+      .success(function(brothers){
+        if (brothers.success){
+          main.brothers = brothers.info;
+        }
+      })
+      .error(function(res){
+        console.log ('Uncaught error: ' + brothers.message);
+      });
+    };
+      // get the users picture
+      brother.readPicture(brother.userData.picture);*/

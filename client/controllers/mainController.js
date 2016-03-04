@@ -23,9 +23,9 @@
       // update the info if logged in
       if(main.loggedIn && $window.localStorage.getItem('token')){
         authFactory.getUser()
-        .success(function(brother){
-          if (brother.success){
-            main.current = brother.info;
+        .success(function(res){
+          if (res.success){
+            main.current = res.info;
             console.log('Current user:' + JSON.stringify(main.current));
           }
         })
@@ -40,13 +40,13 @@
     // for populating the brothers table
     main.init = function() {
       crudFactory.get()
-      .success(function(brothers){
-        if (brothers.success){
-          main.brothers = brothers.info;
+      .success(function(res){
+        if (res.success){
+          main.brothers = res.info;
         }
       })
       .error(function(res){
-        console.log ('Uncaught error: ' + brothers.message);
+        console.log ('Uncaught error: ' + res.message);
       });
     };
     main.init(); // initialize brothers

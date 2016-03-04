@@ -69,13 +69,12 @@
     // upload a brothers picture
     brother.uploadPicture = function(brotherId){
       var file = $scope.myFile;
+      var method = 'POST';
       //console.dir(file);
-
-      console.log('Uploading picture...');
       var uploadUrl = "/api/pictures/" + brotherId;
 
       // save the brothers picture using special service
-      fileUpload.upload(file, uploadUrl, function(data, status, headers, config){
+      fileUpload.upload(method, file, uploadUrl, function(data, status, headers, config){
         console.log(data.message);
         brother.pictureMessage = data.message;
       });

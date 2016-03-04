@@ -76,36 +76,52 @@
        });
      }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // ***************************************
-    // call a service to edit a specific user
+    // =========================================================================
+    // =========================================================================
+    // edit a specific user
     brother.saveBrother = function() {
-
-      //clear the error message
-      brother.message = '';
-
-      crudFactory.update($stateParams.brotherid, brother.userData).success(function(data) {
-        brother.userData = {};
-        brother.message = data.message;
-      });
+      //clear the error messages, call the necessary functions
+      brother.dataMessage = '';
+      brother.pictureMessage = '';
+      brother.updateBrother($stateParams.brotherid, brother.userData);
     };
 
+    // =========================================================================
+    // =========================================================================
+    brother.updateBrother = function(id, info){
+      // update the brothers info
+      crudFactory.update(id, info)
+      .success(function(res) {
+        console.log(res.message)
+        brother.dataMessage = res.message;
+        brother.updatePicture(id);
+      })
+      .error(function(res){
+        console.log(res.message)
+      })
+    };
+
+    // =========================================================================
+    // =========================================================================
+
+    brother.updatePicture = function(brotherId){
+      var file = $scope.myFile;
+      var method = 'PUT';
+      //console.dir(file);
+
+      var uploadUrl = "/api/pictures/" + brotherId;
+
+      // save the brothers picture using special service
+      fileUpload.upload(method, file, uploadUrl, function(data, status, headers, config){
+        console.log(data.message);
+        brother.pictureMessage = data.message;
+      });
+    };
 
     // get the data
     brother.init();
   };
+
 
 
 

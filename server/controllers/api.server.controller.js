@@ -31,7 +31,8 @@ exports.brothers = function(req, res) {
   .exec(function(err, brothers) {
     if (err){
       res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
-    } else {
+    }
+    else {
       res.status(200).send({ success: true, message: '200 - OK: Successfully retrieved brothers.', info: brothers });
     }
   });
@@ -93,7 +94,7 @@ exports.tokens = function(req, res, next) {
       }
     });
   }
-  else{
+  else {
     res.status(403).send({ success: false, message: '403 - Forbidden: No token.' });
   }
 };
@@ -106,7 +107,8 @@ exports.me = function(req, res) {
   .exec(function(err, brother) {
     if (err){
       res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
-    } else {
+    }
+    else {
       res.status(200).send({ success: true, message: '200 - OK: Successfully retrieved logged in user.', info: brother });
     }
   });
@@ -121,15 +123,16 @@ exports.delete = function(req, res) {
   if (req.params.brother_id.match(/^[0-9a-fA-F]{24}$/)) {
 
     Brothers.remove({_id: req.params.brother_id}, function(err, user) {
-      if (err){
+      if (err) {
         res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
-      } else {
+      }
+      else {
         res.status(200).send({ success: true, message: '200 - OK: Successfully deleted brother info.' });
       }
     });
   }
   // else, it was not a correct mongo id format
-  else{
+  else {
     res.status(400).send({ success: false, message: '400 - Bad Request: Id is incorrect format.' });
   }
 };
@@ -140,9 +143,10 @@ exports.deletePicture = function(req, res) {
 
   if (req.params.id === '0.jpg'){
     res.status(202).send({ success: true, message: '202 - Accepted: Received request but did not delete default picture.' });
-  } else{
+  }
+  else {
     gfs.remove({filename: req.params.id}, function (err) {
-      if (err){
+      if (err) {
         res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
       } else {
         res.status(200).send({ success: true, message: '200 - OK: Successfully deleted brother picture.' });
@@ -172,14 +176,16 @@ exports.create = function(req, res) {
 
   // save the new entry
   brother.save(function(err) {
-    if (err){
-      if (err.code === 11000){
+    if (err) {
+      if (err.code === 11000) {
         res.status(500).send({ success: false, message: '500 - Internal Server Error: Duplicate Roll/Username' });
-      } else {
+      }
+      else {
           res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
       }
-    } else {
-      res.status(200).send({ success: true, message: '200 - OK: User created!', brotherId: brother._id });
+    }
+    else {
+      res.status(200).send({ success: true, message: '200 - OK: Brother created!', brotherId: brother._id });
     }
   });
 };
@@ -189,47 +195,57 @@ exports.create = function(req, res) {
 // Post a picture of a brother given their unique mongo _id
 // POST /api/pictures/:id
 exports.postPicture = function(req, res) {
+  // if it is a valid id ...
+  if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+    if (req.file){
+      // find the brother given the id
 
-  if (req.file){
-    // find the brother given the id
-    Brothers.findById(req.params.id, function(err, brother) {
-      if (err){
-        res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
-      }
+      console.log ('id and picture here');
 
-      // get the extension
-      var extension   = req.file.originalname.split(/[. ]+/).pop();
-      brother.picture = brother.roll + '.' + extension;
-
-      // streaming to gridfs
-      var writestream = gfs.createWriteStream({ filename: brother.picture });
-      fs.createReadStream(req.file.path).pipe(writestream);
-
-      //delete file from temp folder
-      writestream.on('close', function (file) {
-        fs.unlink(req.file.path, function() {
-            console.log('Temporary file has been deleted.');
-          });
-      });
-
-      // save the brothers information
-      brother.save(function(err) {
-        if (err){
-          if (err.code === 11000){
-            res.status(500).send({ success: false, message: '500 - Internal Server Error: Duplicate Picture' });
-          } else {
-              res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
-          }
-        } else {
-          res.status(200).send({ success: true, message: '200 - OK: Custom brother picture uploaded.' });
+      Brothers.findById(req.params.id, function(err, brother) {
+        if (err) {
+          res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
         }
+
+        // get the extension
+        var extension   = req.file.originalname.split(/[. ]+/).pop();
+        brother.picture = brother.roll + '.' + extension;
+
+        // streaming to gridfs
+        var writestream = gfs.createWriteStream({ filename: brother.picture });
+        fs.createReadStream(req.file.path).pipe(writestream);
+
+        //delete file from temp folder
+        writestream.on('close', function (file) {
+          fs.unlink(req.file.path, function() {
+              console.log('Temporary file has been deleted.');
+            });
+        });
+
+        // save the brothers information
+        brother.save(function(err) {
+          if (err){
+            if (err.code === 11000){
+              res.status(500).send({ success: false, message: '500 - Internal Server Error: Duplicate Picture' });
+            }
+            else {
+                res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
+            }
+          }
+          else {
+            res.status(200).send({ success: true, message: '200 - OK: Custom brother picture uploaded.' });
+          }
+        });
       });
-    });
-  } else {
-    console.log('no pic');
-      res.status(200).send({ success: false, message: '200 - OK: No custom picture uploaded.'});
     }
-  };
+    else {
+        res.status(200).send({ success: false, message: '200 - OK: No custom picture uploaded.'});
+      }
+  }
+  else {
+    res.status(400).send({ success: false, message: '400 - Bad Request: Id is incorrect format.' });
+  }
+};
 
 // =============================================================================
 // =============================================================================
@@ -244,14 +260,17 @@ exports.read = function(req, res) {
     Brothers.findById(req.params.brother_id, function(err, brother) {
       if (err){
         res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
-      } else {
+      }
+      else {
         res.status(200).send({ success: true,  message: '200 - OK: Successfully retrieved brother info.', info: brother });
       }
     });
   }
 
   // else, it was not a correct mongo id format
-  else res.status(400).send({ success: false, message: '400 - Bad Request: Invalid id format' });
+  else {
+    res.status(400).send({ success: false, message: '400 - Bad Request: Invalid id format' });
+  }
 };
 
 
@@ -290,23 +309,7 @@ exports.readPicture = function(req, res) {
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// =============================================================================
 // =============================================================================
 // PUT api/brothers/:brother_id
 exports.update = function(req, res) {
@@ -318,7 +321,9 @@ exports.update = function(req, res) {
     Brothers.findById(req.params.brother_id, function(err, brother) {
 
       // if there is an error ...
-      if (err) res.send(err);
+      if (err) {
+        res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
+      }
 
       // set the new brother information if it exists in the request
       if (req.body.username) brother.username       = req.body.username;
@@ -334,12 +339,99 @@ exports.update = function(req, res) {
 
       // save the newly updated brother
       brother.save(function(err) {
-        console.log('Error '  + err);
-        if (err) res.send({ message: 'Error: ' + err.message });
-        else res.json({ message: 'Brother updated!' });
+        if (err){
+          if (err.code === 11000){
+            res.status(500).send({ success: false, message: '500 - Internal Server Error: Duplicate Roll/Username' });
+          }
+          else {
+            res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
+          }
+        }
+        else {
+          res.status(200).send({ success: true, message: '200 - OK: Brother updated!' });
+        }
       });
     });
   }
   // else, it was not a correct mongo id format
-  else res.json({ message: 'Invalid id format.' });
+  else {
+    res.status(400).send({ success: false, message: '400 - Bad Request: Invalid id format' });
+  }
+};
+
+// =============================================================================
+// =============================================================================
+// PUT api/pictures/:id
+exports.updatePicture = function(req, res) {
+  // if it is a valid id ...
+  if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+
+    // If there's a file attached
+    if (req.file){
+      // find the brother given the id
+      Brothers.findById(req.params.id, function(err, brother) {
+
+        if (err) {
+          res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
+        }
+
+        // Delete the brothers current picture from mongo, unless it is 0.jpg
+        if (brother.picture != '0.jpg'){
+
+          // verify it exists and not some mishap
+          var options = {filename : brother.picture}; //can be done via _id as well
+          gfs.exist(options, function (err, found) {
+
+            if (err){
+              res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
+            }
+
+            if (found){
+              gfs.remove({filename: brother.picture}, function (err) {
+                if (err) {
+                  res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
+                }
+              });
+            }
+
+            // get the extension
+            var extension   = req.file.originalname.split(/[. ]+/).pop();
+            brother.picture = brother.roll + '.' + extension;
+
+            // streaming to gridfs
+            var writestream = gfs.createWriteStream({ filename: brother.picture });
+            fs.createReadStream(req.file.path).pipe(writestream);
+
+            //delete file from temp folder
+            writestream.on('close', function (file) {
+              fs.unlink(req.file.path, function() {
+                console.log('Temporary file has been deleted.');
+              });
+            });
+
+            // save the brothers information
+            brother.save(function(err) {
+              if (err){
+                if (err.code === 11000){
+                  res.status(500).send({ success: false, message: '500 - Internal Server Error: Duplicate Picture' });
+                }
+                else {
+                  res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
+                }
+              }
+              else {
+                res.status(200).send({ success: true, message: '200 - OK: Custom brother picture updated.' });
+              }
+            });
+          });
+        }
+      });
+    }
+    else {
+        res.status(200).send({ success: false, message: '200 - OK: No custom picture updated.'});
+      }
+  }
+  else {
+    res.status(400).send({ success: false, message: '400 - Bad Request: Id is incorrect format.' });
+  }
 };

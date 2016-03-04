@@ -1,12 +1,25 @@
 angular.module('zgApp').service('fileUpload', ['$http', function ($http) {
-  this.upload = function(file, uploadUrl, callback){
+  this.upload = function(method, file, uploadUrl, callback){
      var fd = new FormData();
      fd.append('file', file);
-     $http.post(uploadUrl, fd, {
+
+     if (method === 'POST'){
+       $http.post(uploadUrl, fd, {
          transformRequest: angular.identity,
          headers: {'Content-Type': undefined}
-     })
-     .success(callback)
-     .error(callback);
+       })
+       .success(callback)
+       .error(callback);
+    }
+    if (method === 'PUT'){
+      $http.put(uploadUrl, fd, {
+        transformRequest: angular.identity,
+        headers: {'Content-Type': undefined}
+      })
+      .success(callback)
+      .error(callback);
+    }
+
+
  }
 }]);

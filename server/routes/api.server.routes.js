@@ -30,7 +30,8 @@ router.route('/brothers/:brother_id')
 router.route('/pictures/:id')
   .delete(api.deletePicture)
   .post(upload.single('file'), api.postPicture)
-  .get(api.readPicture);
+  .get(api.readPicture)
+  .put(upload.single('file'), api.updatePicture);
 
 router.route('/me')
   .get(api.me);

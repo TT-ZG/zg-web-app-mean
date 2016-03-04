@@ -7,8 +7,6 @@
       // ***************************************
       // better to use 'controller as' rather than brother
       var brother = this;
-      // variable to determine if we should hide/show elements of the view
-    	brother.type = 'create';
       // set default values
       brother.userData = {};
       brother.userData.available = 'Unavailable';
@@ -19,28 +17,37 @@
     	// call a service to save a user
     	brother.saveBrother = function() {
 
+        // clear messages
+        brother.dataMessage = '';
+        brother.pictureMessage = '';
+
     		// use the create function in the userService
     		crudFactory.create(brother.userData, brother.files).success(function(data) {
-    				brother.message = data.message;
+    				brother.dataMessage = data.message;
             brother.uploadPicture(data.brotherId);
             brother.userData = {};
     			});
     	};
 
       // ***************************************
-      // for uploading a form
+      // separate custom http req for uploading a picture
       brother.uploadPicture = function(brotherId){
         var file = $scope.myFile;
         //console.dir(file);
-        var uploadUrl = "/api/brothers/picture/" + brotherId;
 
-        // save the brothers picture using special service
-        fileUpload.upload(file, uploadUrl, function(data, status, headers, config){
+        // if they've uploaded a file
+        if (file){
+          console.log('Uploading picture...');
+          var uploadUrl = "/api/pictures/" + brotherId;
+
+          // save the brothers picture using special service
+          fileUpload.upload(file, uploadUrl, function(data, status, headers, config){
             if (status == 200)
-              console.log('Picture uploaded.');
+              brother.pictureMessage = data.message;
             else
-              console.log('Picture not uploaded.');    
+              console.log('Picture not uploaded.');
           });
+        }
       };
     };
 

@@ -1,13 +1,17 @@
+<div class="alert alert-danger" ng-if="main.error">
+  {{ main.error }}
+</div>
+
 <!--==============================================================================-->
 <!-- Filter options-->
-<div ng-init="main.filter[main.prop]={}">
+<div ng-init="listing.filter[listing.prop]={}">
 
   <div class="well col-sm-3 col-md-2 col-lg-2">
 
     <!-- Search bar -->
     <div class="input-group">
       <div class="input-group-addon"><i class="fa fa-search"></i></div>
-      <input type="text" class="form-control" placeholder="Search..." ng-model="main.search">
+      <input type="text" class="form-control" placeholder="Search..." ng-model="listing.search">
     </div>
 
     <hr>
@@ -16,8 +20,8 @@
     <div>
       <!-- List options -->
       <h4>Standing</h4>
-      <div ng-repeat="category in main.standings">
-        <input type="checkbox"  ng-model="main.filter[category.property][category.value]"/>
+      <div ng-repeat="category in listing.standings">
+        <input type="checkbox"  ng-model="listing.filter[category.property][category.value]"/>
         &nbsp;&nbsp;{{category.value}}&nbsp;&nbsp;
       </div>
     </div>
@@ -28,8 +32,8 @@
     <div>
       <h4>Availability</h4>
       <!-- List options -->
-      <div ng-repeat="category in main.availables">
-        <input type="checkbox"  ng-model="main.filter[category.property][category.value]"/>
+      <div ng-repeat="category in listing.availables">
+        <input type="checkbox"  ng-model="listing.filter[category.property][category.value]"/>
         &nbsp;&nbsp;{{category.value}}&nbsp;&nbsp;
       </div>
     </div>
@@ -40,8 +44,8 @@
     <div>
       <h4>GPA</h4>
       <!-- List options -->
-      <div ng-repeat="category in main.gpas">
-        <input type="checkbox"  ng-model="main.filter[category.property][category.value]"/>
+      <div ng-repeat="category in listing.gpas">
+        <input type="checkbox"  ng-model="listing.filter[category.property][category.value]"/>
         &nbsp;&nbsp;{{category.value}}&nbsp;&nbsp;
       </div>
     </div>
@@ -59,52 +63,52 @@
   	<thead>
   		<tr>
         <th>
-          <a href="#" ng-click="main.sortType = 'roll';main.sortReverse = !main.sortReverse">
+          <a href="#" ng-click="listing.sortType = 'roll';listing.sortReverse = !listing.sortReverse">
             Roll
-            <span ng-show="main.sortType == 'roll' && !main.sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="main.sortType == 'roll' && main.sortReverse" class="fa fa-caret-up"></span>
+            <span ng-show="listing.sortType == 'roll' && !listing.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="listing.sortType == 'roll' && listing.sortReverse" class="fa fa-caret-up"></span>
           </a>
         </th>
         <th>
-          <a href="#" ng-click="main.sortType = 'name';main.sortReverse = !main.sortReverse">
+          <a href="#" ng-click="listing.sortType = 'name';listing.sortReverse = !listing.sortReverse">
             Name
-            <span ng-show="main.sortType == 'name' && !main.sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="main.sortType == 'name' && main.sortReverse" class="fa fa-caret-up"></span>
+            <span ng-show="listing.sortType == 'name' && !listing.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="listing.sortType == 'name' && listing.sortReverse" class="fa fa-caret-up"></span>
           </a>
         </th>
         <th>
-          <a href="#" ng-click="main.sortType = 'major';main.sortReverse = !main.sortReverse">
+          <a href="#" ng-click="listing.sortType = 'major';listing.sortReverse = !listing.sortReverse">
             Major
-            <span ng-show="main.sortType == 'major' && !main.sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="main.sortType == 'major' && main.sortReverse" class="fa fa-caret-up"></span>
+            <span ng-show="listing.sortType == 'major' && !listing.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="listing.sortType == 'major' && listing.sortReverse" class="fa fa-caret-up"></span>
           </a>
         </th>
         <th>
-          <a href="#" ng-click="main.sortType = 'available';main.sortReverse = !main.sortReverse">
+          <a href="#" ng-click="listing.sortType = 'available';listing.sortReverse = !listing.sortReverse">
             Availability
-            <span ng-show="main.sortType == 'available' && !main.sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="main.sortType == 'available' && main.sortReverse" class="fa fa-caret-up"></span>
+            <span ng-show="listing.sortType == 'available' && !listing.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="listing.sortType == 'available' && listing.sortReverse" class="fa fa-caret-up"></span>
           </a>
         </th>
         <th>
-          <a href="#" ng-click="main.sortType = 'standing';main.sortReverse = !main.sortReverse">
+          <a href="#" ng-click="listing.sortType = 'standing';listing.sortReverse = !listing.sortReverse">
             Standing
-            <span ng-show="main.sortType == 'standing' && !main.sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="main.sortType == 'standing' && main.sortReverse" class="fa fa-caret-up"></span>
+            <span ng-show="listing.sortType == 'standing' && !listing.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="listing.sortType == 'standing' && listing.sortReverse" class="fa fa-caret-up"></span>
           </a>
         </th>
         <th>
-          <a href="#" ng-click="main.sortType = 'graduation';main.sortReverse = !main.sortReverse">
+          <a href="#" ng-click="listing.sortType = 'graduation';listing.sortReverse = !listing.sortReverse">
             Graduation
-            <span ng-show="main.sortType == 'graduation' && !main.sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="main.sortType == 'graduation' && main.sortReverse" class="fa fa-caret-up"></span>
+            <span ng-show="listing.sortType == 'graduation' && !listing.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="listing.sortType == 'graduation' && listing.sortReverse" class="fa fa-caret-up"></span>
           </a>
         </th>
         <th>
-          <a href="#" ng-click="main.sortType = 'gpa';main.sortReverse = !main.sortReverse">
+          <a href="#" ng-click="listing.sortType = 'gpa';listing.sortReverse = !listing.sortReverse">
             GPA
-            <span ng-show="main.sortType == 'gpa' && !main.sortReverse" class="fa fa-caret-down"></span>
-            <span ng-show="main.sortType == 'gpa' && main.sortReverse" class="fa fa-caret-up"></span>
+            <span ng-show="listing.sortType == 'gpa' && !listing.sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="listing.sortType == 'gpa' && listing.sortReverse" class="fa fa-caret-up"></span>
           </a>
         </th>
   		</tr>
@@ -114,7 +118,7 @@
       <!--<a ui-sref="main.login">ay</a>
       <!--<a ng-click="admin.setID(brother._id)" ui-sref="main.edit({brotherid: admin.desiredID})"-->
 
-      <tr ng-repeat="brother in filtered=(main.brothers | orderBy:main.sortType:main.sortReverse | filter:main.filterByProperties | filter:main.search)" ng-click="main.setID(brother)"  ui-sref="main.profile({brotherid: main.desiredID})">
+      <tr ng-repeat="brother in filtered=(main.brothers | orderBy:listing.sortType:main.sortReverse | filter:listing.filterByProperties | filter:listing.search)" ng-click="listing.setID(brother)"  ui-sref="main.profile({brotherid: main.desiredID})">
           <td>{{ brother.roll}}</td>
           <td>{{ brother.name }}</td>
           <td>{{ brother.major }}</td>

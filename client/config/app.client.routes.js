@@ -27,8 +27,10 @@
         //* Brothers */
         .state('main.brothers', {
           url: '/brothers',
-          templateUrl: 'views/brothers.html'
+          templateUrl: 'views/brothers.html',
+          controller: 'listingController as listing'
         })
+
         .state('main.profile', {
           url: '/brothers/:brotherid',
           templateUrl: 'views/profile.html',

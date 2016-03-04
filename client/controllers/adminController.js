@@ -10,7 +10,7 @@
       // ***************************************
       // get all brothers
       crudFactory.get().success(function(data) {
-        admin.brothers = data;
+        admin.brothers = data.data;
       });
 
       // ***************************************
@@ -25,7 +25,7 @@
         crudFactory.delete(id).success(function(data) {
             // get all users to update the table
             crudFactory.get().success(function(data) {
-                admin.brothers = data;
+                admin.brothers = data.data;
               });
           });
       };

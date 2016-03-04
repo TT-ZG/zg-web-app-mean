@@ -24,6 +24,21 @@ conn.once('open', function() {
 
 // =============================================================================
 // =============================================================================
+// GET api/brothers
+exports.brothers = function(req, res) {
+  Brothers.find()
+  .sort('name')
+  .exec(function(err, brothers) {
+    if (err){
+      res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+    } else {
+      res.status(200).send({ success: true, info: brothers });
+    }
+  });
+};
+
+// =============================================================================
+// =============================================================================
 // Users post to api/authenticate to get a token
 exports.authenticate = function(req, res) {
 
@@ -32,41 +47,32 @@ exports.authenticate = function(req, res) {
   .select('name username password')
   .exec(function(err, brother) {
     // throw error if any
-    if (err)
-      throw err;
+    if (err){
+      res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+      //throw err
+    }
 
     // if not found, return false
     if (!brother)
-      res.json({ success: false, message: 'User not found.' });
+      res.status(401).send({ success: false, message: 'Unauthorized: User/password incorrect.' });
 
     else if (brother) {
       // check passwords
       var validPassword = brother.comparePassword(req.body.password);
       if (!validPassword)
-        res.json({ success: false, message: 'Wrong password.' });
+        res.status(401).send({ success: false, message: 'Unauthorized: User/password incorrect.' });
 
       // sign a token if all is OK
       else {
+        console.log('Signing a token');
         var token = jwt.sign({
           name: brother.name,
           username: brother.username },
           superSecret,
           {expiresInMinutes: 1440});
-        res.json({ success: true, message: 'OK.', token: token });
+        res.status(200).send({ success: true, token: token });
       }
     }
-  });
-};
-
-// =============================================================================
-// =============================================================================
-// GET api/brothers
-exports.brothers = function(req, res) {
-  Brothers.find()
-  .sort('name')
-  .exec(function(err, users) {
-    if (err) res.send(err);
-    res.json(users);
   });
 };
 
@@ -81,26 +87,24 @@ exports.tokens = function(req, res, next) {
   if (token) {
     jwt.verify(token, superSecret, function(err, decoded) {
       if (err)
-        res.status(403)
-        .send({ success: false, message: 'Invalid token.' });
+        res.status(403).send({ success: false, message: 'Forbidden: Invalid token.' });
       else {
         req.decoded = decoded;        //save to request for use in other routes
         next();
       }
     });
   }
-  else
-    res.status(403)
-    .send({ success: false, message: 'Forbidden.' });
+  else{
+    res.status(403).send({ success: false, message: 'Forbidden: No token.' });
+  }
 };
 
 
 // =============================================================================
 // =============================================================================
+// Create a brother and upload their JSON data
 // POST api/brothers
 exports.create = function(req, res) {
-  console.log('req.body', req.body);
-  console.log('req.file', req.file);
 
   // create a new instance and set its data
   var brother         = new Brothers();
@@ -115,23 +119,6 @@ exports.create = function(req, res) {
   brother.graduation  = req.body.graduation;
   brother.gpa         = req.body.gpa;
 
-  /* take care of the picture file side of things (more complicated)
-  if(req.file) {
-    var extension   = req.file.originalname.split(/[. ]+/).pop();
-    brother.picture = req.body.roll + '.' + extension;
-
-    // streaming to gridfs
-    var writestream = gfs.createWriteStream({ filename: brother.picture });
-    fs.createReadStream(req.file.path).pipe(writestream);
-
-    //delete file from temp folder
-    writestream.on('close', function (file) {
-      fs.unlink(req.file.path, function() {
-          // Deleted temp file
-        });
-    });
-  }*/
-
   // save the new entry
   brother.save(function(err) {
     if (err)
@@ -143,35 +130,7 @@ exports.create = function(req, res) {
 
 // =============================================================================
 // =============================================================================
-// POST /brothers/picture/:brother_id
-exports.postPicture = function(req, res) {
-  console.log('Posting a picture for ' + req.params.brother_id);
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// =============================================================================
-// =============================================================================
+// Retrieve a brother by their id
 // GET api/brothers/:brother_id
 exports.read = function(req, res) {
 
@@ -193,11 +152,122 @@ exports.read = function(req, res) {
 
 // =============================================================================
 // =============================================================================
-// GET api/brothers/picture/:brother_id
+// Post a picture of a brother given their unique mongo _id
+// POST /api/pictures/:id
+exports.postPicture = function(req, res) {
+
+  // find the brother given the id
+  Brothers.findById(req.params.id, function(err, brother) {
+    if (err) res.send(err);
+
+    // get the extension
+    var extension   = req.file.originalname.split(/[. ]+/).pop();
+    brother.picture = brother.roll + '.' + extension;
+
+    // streaming to gridfs
+    var writestream = gfs.createWriteStream({ filename: brother.picture });
+    fs.createReadStream(req.file.path).pipe(writestream);
+
+    //delete file from temp folder
+    writestream.on('close', function (file) {
+      fs.unlink(req.file.path, function() {
+          // Deleted temp file
+        });
+    });
+
+    // save the brothers information
+    brother.save(function(err) {
+      if (err) res.send({ message: 'Error: ' + err.message });
+      else res.json({ message: 'Brother picture updated!' });
+    });
+  });
+};
+
+// =============================================================================
+// =============================================================================
+// Get a picture given a pictures name
+// GET api/pictures/:id
 exports.readPicture = function(req, res) {
 
+  // find the picture
+  gfs.files.find({ filename: req.params.id }).toArray(function (err, files) {
+    console.log(files);
+
+ 	  if(files.length===0)
+			return res.send({ message: 'File not found' });
+
+    // create a read stream
+    var readstream = gfs.createReadStream({
+     	filename: files[0].filename
+     });
+
+     // Return the binary data as base64 encoded
+     var bufs = [];
+     readstream.on('data', function(chunk) {
+       bufs.push(chunk);}
+     )
+     .on('end', function() { // done
+       var fbuf = Buffer.concat(bufs);
+       var base64 = (fbuf.toString('base64'));
+       res.send(base64);
+    });
+
+
+// write the content-type we are returning
+//res.writeHead(200, {'Content-Type': 'image/png'});
+//res.writeHead(200, {'Content-Type': files[0].contentType});
+
+     /*
+    // write the data
+    readstream.on('data', function(data) {
+      res.write(data);
+    });
+
+    // end the readstream
+    readstream.on('end', function() {
+      res.end();
+    });
+
+    // for error handling
+    readstream.on('error', function (err) {
+      console.log('An error occurred!', err);
+      throw err;
+    });*/
+
+
+  });
+
+
+  /*
+  var readstream = gfs.createReadStream({
+        filename: req.params.pictureName
+      });
+      req.on('error', function(err) {
+        res.send({ message: 'File not found' });
+      });
+      readstream.on('error', function (err) {
+        res.send({ message: 'File not found' });
+      });
+      readstream.pipe(res);
+      */
 
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -256,13 +326,26 @@ exports.delete = function(req, res) {
   else res.json({ message: 'Invalid id format.' });
 };
 
+
+
+
+
+
+
+
+
+
+
+// =============================================================================
 // =============================================================================
 // send the current user
 exports.me = function(req, res) {
-
-  // jwt has saved the username in decoded, use this to search as usernames are unique
-  // now we can return all the info from the db including _id
-  Brothers.findOne({ username: req.decoded.username }).exec(function(err, brother) {
-    res.send(brother);
+  Brothers.findOne({ username: req.decoded.username })
+  .exec(function(err, brother) {
+    if (err){
+      res.status(500).send({ success: false, message: 'Internal server error: ' + err });
+    } else {
+      res.status(200).send({ success: true, info: brother });
+    }
   });
 }

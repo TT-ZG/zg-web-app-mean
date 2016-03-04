@@ -11,11 +11,6 @@
           return $http.post('/api/authenticate', {
             username: username,
             password: password
-          })
-          // if it was a success
-          .success(function(data) {
-            $window.localStorage.setItem('token', data.token);
-            return data;
           });
         },
 
@@ -36,13 +31,17 @@
 
         // ***************************************
         // get the current users info
-        getUser : function() {
+        getUser : function(){
+          return $http.get('/api/me');
+        }
+
+        /*getUser : function() {
           if ($window.localStorage.getItem('token')){
             return $http.get('/api/me');
           }
           else
             return $q.reject({ message: 'No token.' });
-        }
+        }*/
       };
       return methods;
     };

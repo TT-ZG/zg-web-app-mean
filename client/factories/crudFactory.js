@@ -15,6 +15,11 @@
           return $http.get('/api/brothers/' + id);
         },
         // ***************************************
+        // get a users picture by id
+        readPicture: function(pictureName) {
+          return $http.get('/api/pictures/' + pictureName);
+        },
+        // ***************************************
         // create a user
         create: function(userData) {
           return $http.post('/api/brothers/', userData);

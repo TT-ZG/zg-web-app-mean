@@ -1,9 +1,11 @@
 // =============================================================================
+// =============================================================================
 // get dependencies
 var mongoose  = require('mongoose'),
 		Schema    = mongoose.Schema,
 		bcrypt 	 = require('bcrypt-nodejs');
 
+// =============================================================================
 // =============================================================================
 // brother schema, password is NOT returned on mongoose queries
 var brotherSchema   = new Schema({
@@ -17,11 +19,12 @@ var brotherSchema   = new Schema({
 	standing: { type: String , enum: ['Active', 'Alumni'], required: true},
 	graduation: {type: Date, required: true},
 	gpa: {type: String, enum: ['3.00 - 3.32', '3.33 - 3.66', '3.67 - 4.00', 'On Request'], required: true},
-	picture: {type: String, required: true, default: 'NoPictureAvailable.jpg'},
+	picture: {type: String, required: true, default: '0.jpg'},
 	created_at: Date,
   updated_at: Date
 });
 
+// =============================================================================
 // =============================================================================
 // set times and hash password before saving
 brotherSchema.pre('save', function(next) {
@@ -50,12 +53,14 @@ brotherSchema.pre('save', function(next) {
 });
 
 // =============================================================================
+// =============================================================================
 // method to compare a given password with the database hash
 brotherSchema.methods.comparePassword = function(password) {
 	var brother = this;
 	return bcrypt.compareSync(password, brother.password);
 };
 
+// =============================================================================
 // =============================================================================
 // export
 var Brother = mongoose.model('Brother', brotherSchema);

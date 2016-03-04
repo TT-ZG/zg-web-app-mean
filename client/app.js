@@ -5,7 +5,7 @@
 angular.module('routes', []);
 
 // register the application and inject all the necessary dependencies
-var app = angular.module('zgApp', ['ui.router', 'ui.bootstrap', 'routes', 'ngAnimate']);
+var app = angular.module('zgApp', ['ui.router', 'ui.bootstrap', 'routes', 'ngAnimate', 'ngSanitize']);
 
 // application configuration
 app.config([ '$urlRouterProvider', '$locationProvider', '$httpProvider',

@@ -1,15 +1,12 @@
 // best practice: wrap in function
 (function() {
 
+  // this controller handles the editing of brothers
   var editController = function($state, $stateParams, crudFactory, $scope, fileUpload){
 
     // ***************************************
     // better to use 'controller as' rather than brother
     var brother = this;
-
-    // variable to determine if we should hide/show elements of the view
-    brother.type = 'edit';
-
 
     // ***************************************
     // call a service to get a specific user
@@ -17,12 +14,39 @@
 
       // get the information for this id
       brother.userData = data;
-
       // angular doesn't like the default date object
       brother.userData.graduation = new Date(brother.userData.graduation);
-
-      
+      // get the users picture
+      brother.readPicture(brother.userData.picture);
     });
+
+    // ***************************************
+    // call a service to get a specific users picture
+     brother.readPicture = function(pictureName){
+
+       crudFactory.readPicture(pictureName).success(function(data) {
+
+
+         brother.theImage = data
+        
+
+       });
+
+
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // ***************************************
     // call a service to edit a specific user
@@ -37,6 +61,10 @@
       });
     };
   };
+
+
+
+
 
     // ***************************************
     // For minification purposes

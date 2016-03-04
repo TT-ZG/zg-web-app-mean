@@ -34,14 +34,6 @@
         getUser : function(){
           return $http.get('/api/me');
         }
-
-        /*getUser : function() {
-          if ($window.localStorage.getItem('token')){
-            return $http.get('/api/me');
-          }
-          else
-            return $q.reject({ message: 'No token.' });
-        }*/
       };
       return methods;
     };

@@ -122,11 +122,6 @@
     brother.init();
   };
 
-
-
-
-
-
     // ***************************************
     // For minification purposes
     editController.$inject = ['$state', '$stateParams', 'crudFactory', '$scope', 'fileUpload'];
@@ -134,18 +129,3 @@
     angular.module('zgApp').controller('editController', editController);
 
 }());
-
-
-    /*
-      crudFactory.get()
-      .success(function(brothers){
-        if (brothers.success){
-          main.brothers = brothers.info;
-        }
-      })
-      .error(function(res){
-        console.log ('Uncaught error: ' + brothers.message);
-      });
-    };
-      // get the users picture
-      brother.readPicture(brother.userData.picture);*/

@@ -4,11 +4,35 @@
   // this controller handles the editing of brothers
   var editController = function($state, $stateParams, crudFactory, $scope, fileUpload){
 
-    // ***************************************
+    // =========================================================================
+    // =========================================================================
     // better to use 'controller as' rather than brother
     var brother = this;
 
-    // ***************************************
+    // The options available for standings
+    brother.standings = [
+      { property : "standing", value: "Active" },
+      { property : "standing", value: "Alumni" },
+    ];
+
+    // The relevant options available for employment seeking status
+    brother.availables = [
+      { property : "available", value: "Internship" },
+      { property : "available", value: "Full-Time" },
+      { property : "available", value: "Part-Time" },
+      { property : "available", value: "Unavailable"}
+    ];
+
+    // The gpa brackets
+    brother.gpas = [
+      { property : "gpa", value: "3.00 - 3.32" },
+      { property : "gpa", value: "3.33 - 3.66" },
+      { property : "gpa", value: "3.67 - 4.00" },
+      { property : "gpa", value: "On Request" },
+    ];
+
+    // =========================================================================
+    // =========================================================================
     // call a service to get a specific user
     crudFactory.read($stateParams.brotherid).success(function(data) {
 
@@ -28,24 +52,12 @@
 
 
          brother.theImage = data
-        
+
 
        });
 
 
      }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     // ***************************************

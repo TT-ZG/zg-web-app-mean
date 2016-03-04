@@ -1,11 +1,11 @@
 // =============================================================================
 // =============================================================================
 // get dependencies
-var api = require('../controllers/api.server.controller.js'),
+var api     = require('../controllers/api.server.controller.js'),
     express = require('express'),
-    router = express.Router(),
-    multer = require('multer'),
-    upload = multer({ dest: 'uploads/'});
+    router  = express.Router(),
+    multer  = require('multer'),
+    upload  = multer({ dest: 'uploads/'});
 
 // =============================================================================
 // =============================================================================
@@ -27,15 +27,13 @@ router.route('/brothers/:brother_id')
   .put(api.update)
   .delete(api.delete);
 
-
-  router.route('/pictures/:id')
-    .post(upload.single('file'), api.postPicture)
-    .get(api.readPicture);
-
+router.route('/pictures/:id')
+  .delete(api.deletePicture)
+  .post(upload.single('file'), api.postPicture)
+  .get(api.readPicture);
 
 router.route('/me')
   .get(api.me);
-
 
 // =============================================================================
 // =============================================================================

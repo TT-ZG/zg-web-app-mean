@@ -4,54 +4,84 @@
   // this controller handles the creation of brothers
   var createController = function($scope, $state, $stateParams, crudFactory, fileUpload){
 
-      // ***************************************
-      // better to use 'controller as' rather than brother
-      var brother = this;
-      // set default values
-      brother.userData = {};
-      brother.userData.available = 'Unavailable';
-      brother.userData.gpa = 'On Request';
-      brother.userData.standing = 'Active';
+    // =========================================================================
+    // =========================================================================
+    // better to use 'controller as' rather than brother
+    var brother = this;
 
-    	// ***************************************
-    	// call a service to save a user
-    	brother.saveBrother = function() {
+    // set default values
+    brother.userData = {};
+    brother.userData.available = 'Unavailable';
+    brother.userData.gpa = 'On Request';
+    brother.userData.standing = 'Active';
 
-        // clear messages
-        brother.dataMessage = '';
-        brother.pictureMessage = '';
+    // The options available for standings
+    brother.standings = [
+      { property : "standing", value: "Active" },
+      { property : "standing", value: "Alumni" },
+    ];
 
-    		// use the create function in the userService
-    		crudFactory.create(brother.userData, brother.files).success(function(data) {
-    				brother.dataMessage = data.message;
-            brother.uploadPicture(data.brotherId);
-            brother.userData = {};
-    			});
-    	};
+    // The relevant options available for employment seeking status
+    brother.availables = [
+      { property : "available", value: "Internship" },
+      { property : "available", value: "Full-Time" },
+      { property : "available", value: "Part-Time" },
+      { property : "available", value: "Unavailable"}
+    ];
 
-      // ***************************************
-      // separate custom http req for uploading a picture
-      brother.uploadPicture = function(brotherId){
-        var file = $scope.myFile;
-        //console.dir(file);
+    // The gpa brackets
+    brother.gpas = [
+      { property : "gpa", value: "3.00 - 3.32" },
+      { property : "gpa", value: "3.33 - 3.66" },
+      { property : "gpa", value: "3.67 - 4.00" },
+      { property : "gpa", value: "On Request" },
+    ];
 
-        // if they've uploaded a file
-        if (file){
-          console.log('Uploading picture...');
-          var uploadUrl = "/api/pictures/" + brotherId;
-
-          // save the brothers picture using special service
-          fileUpload.upload(file, uploadUrl, function(data, status, headers, config){
-            if (status == 200)
-              brother.pictureMessage = data.message;
-            else
-              console.log('Picture not uploaded.');
-          });
-        }
-      };
+    // =========================================================================
+    // =========================================================================
+    // call a service to save a user
+    brother.saveBrother = function() {
+      // clear messages
+      brother.dataMessage = '';
+      brother.pictureMessage = '';
+      brother.create();
     };
 
-    // ***************************************
+    // =========================================================================
+    // =========================================================================
+    // create a brothers info
+    brother.create = function(){
+      // these are nested b/c we need id from create()
+      crudFactory.create(brother.userData)
+      .success(function(res){
+        brother.dataMessage = res.message
+        brother.uploadPicture(res.brotherId);
+      })
+      .error(function(res){
+        brother.dataMessage = res.message
+      });
+    };
+
+    // =========================================================================
+    // =========================================================================
+    // upload a brothers picture
+    brother.uploadPicture = function(brotherId){
+      var file = $scope.myFile;
+      //console.dir(file);
+
+      console.log('Uploading picture...');
+      var uploadUrl = "/api/pictures/" + brotherId;
+
+      // save the brothers picture using special service
+      fileUpload.upload(file, uploadUrl, function(data, status, headers, config){
+        brother.pictureMessage = data.message;
+      });
+    };
+
+  };
+
+  // =========================================================================
+  // =========================================================================
     // For minification purposes
     createController.$inject = ['$scope', '$state', '$stateParams', 'crudFactory', 'fileUpload'];
     // Attach the controller

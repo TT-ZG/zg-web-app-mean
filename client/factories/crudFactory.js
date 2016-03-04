@@ -33,6 +33,11 @@
         // delete a user
         delete: function(id) {
           return $http.delete('/api/brothers/' + id);
+        },
+        // ***************************************
+        // delete a picture
+        deletePicture: function(pictureName) {
+          return $http.delete('/api/pictures/' + pictureName);
         }
       };
       return methods;

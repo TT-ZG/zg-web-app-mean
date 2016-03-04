@@ -15,7 +15,6 @@ var express    = require('express'),
 // export a function that sets up everything for this app
 module.exports.init = function() {
 
-
   //initialize app
   var app = express();
 

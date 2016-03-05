@@ -26,6 +26,7 @@
         .success(function(res){
           if (res.success){
             main.current = res.info;
+            console.log(JSON.stringify(res.info));
             console.log(res.message);
           }
         })

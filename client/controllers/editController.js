@@ -68,7 +68,7 @@
        .success(function(res) {
          console.log(res.message);
          brother.pictureMessage = res.message;
-         brother.theImage = res.data;
+         $scope.image_source = "data:image/jpeg;base64, " + res.data;
        })
        .error(function(res){
          console.log (res.message);
@@ -87,6 +87,7 @@
 
     // =========================================================================
     // =========================================================================
+    // for updating a brother's information
     brother.updateBrother = function(id, info){
       // update the brothers info
       crudFactory.update(id, info)
@@ -102,14 +103,28 @@
 
     // =========================================================================
     // =========================================================================
+    // for image preview
+    $scope.setFile = function(element) {
+      $scope.currentFile = element.files[0];
+      var reader = new FileReader();
 
+      reader.onload = function(event) {
+        $scope.image_source = event.target.result;
+        $scope.$apply()
+      }
+      // when the file is read it triggers the onload event above.
+      reader.readAsDataURL(element.files[0]);
+    }
+
+    // =========================================================================
+    // =========================================================================
     brother.updatePicture = function(brotherId){
       var file = $scope.myFile;
       var method = 'PUT';
       //console.dir(file);
 
       var uploadUrl = "/api/pictures/" + brotherId;
-      
+
       // save the brothers picture using special service
       fileUpload.upload(method, file, uploadUrl, function(data, status, headers, config){
         console.log(data.message);

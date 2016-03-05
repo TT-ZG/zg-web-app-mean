@@ -1,19 +1,10 @@
 <form class="form-horizontal" ng-submit="brother.saveBrother()">
 
-
-	<div class = "row">
-		<div class="col-md-12">
-			<img id = "profile" ng-src="data:image/jpeg;base64, {{brother.theImage}}" height=150px width=150px>
-		</div>
-	</div>
-
-
-
 	<div class="row" id ="profileInfo">
 	  <div class="col-md-6">
 			<div class="form-group">
-				<label class="control-label">Picture</label>
-				<input type="file" file-directive="myFile"/>
+				<img ng-src="{{image_source}}" height=350px width=350px>
+				<input type="file" id="trigger" class="ng-show" onchange="angular.element(this).scope().setFile(this)" accept="image/*" file-directive="myFile">
 				Current Pic: {{brother.userData.picture}}
 			</div>
 			<div class="form-group">

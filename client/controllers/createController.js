@@ -44,12 +44,13 @@
       // clear messages
       brother.dataMessage = '';
       brother.pictureMessage = '';
+      // create the brother
       brother.create();
     };
 
     // =========================================================================
     // =========================================================================
-    // create a brothers info
+    // create a brothers info from the textual information
     brother.create = function(){
 
       //chop off the last item from the array if it is blank
@@ -61,8 +62,11 @@
       // these are nested b/c we need id from create()
       crudFactory.create(brother.userData)
       .success(function(res){
+        // log the message
         console.log(res.message);
+        // show the returned message
         brother.dataMessage = res.message
+        // call another function to update the picture now
         brother.uploadPicture(res.brotherId);
         // if we shaved off the example because they entered nothing, reset
         if (brother.userData.internships.length === 0){
@@ -70,7 +74,9 @@
         }
       })
       .error(function(res){
+        // log the message
         console.log(res.message);
+        // show the returned message
         brother.dataMessage = res.message
       });
     };
@@ -80,13 +86,16 @@
     // upload a brothers picture
     brother.uploadPicture = function(brotherId){
       var file = $scope.myFile;
+      // set the upload type
       var method = 'POST';
       //console.dir(file);
       var uploadUrl = "/api/pictures/" + brotherId;
 
       // save the brothers picture using special service
       fileUpload.upload(method, file, uploadUrl, function(data, status, headers, config){
+        // log the message
         console.log(data.message);
+        // show the returned message
         brother.pictureMessage = data.message;
       });
     };
@@ -128,7 +137,8 @@
     brother.removeChoice = function() {
       var lastItem = brother.userData.internships.length-1;
       if (lastItem === 0){
-        delete brother.userData.internships[0].name;
+        //delete brother.userData.internships[0].name;
+        brother.generateInternships();
       }
       else{
         brother.userData.internships.splice(lastItem);

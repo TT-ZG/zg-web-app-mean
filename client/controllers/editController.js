@@ -34,6 +34,7 @@
     // =========================================================================
     // get a specific users information
     brother.init = function() {
+      brother.processing = true;
       brother.dataMessage = '';
       brother.pictureMessage = '';
       brother.get($stateParams.brotherid);
@@ -69,9 +70,11 @@
          console.log(res.message);
          brother.pictureMessage = res.message;
          $scope.image_source = "data:image/jpeg;base64, " + res.data;
+         brother.processing = false;
        })
        .error(function(res){
          console.log (res.message);
+         brother.processing = false;
        });
      }
 

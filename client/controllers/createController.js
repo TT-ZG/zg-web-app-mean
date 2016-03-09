@@ -51,12 +51,23 @@
     // =========================================================================
     // create a brothers info
     brother.create = function(){
+
+      //chop off the last item from the array if it is blank
+      var lastItem = brother.userData.internships.length-1;
+      if (brother.userData.internships[lastItem].name === undefined){
+        brother.userData.internships.splice(lastItem);
+      }
+
       // these are nested b/c we need id from create()
       crudFactory.create(brother.userData)
       .success(function(res){
         console.log(res.message);
         brother.dataMessage = res.message
         brother.uploadPicture(res.brotherId);
+        // if we shaved off the example because they entered nothing, reset
+        if (brother.userData.internships.length === 0){
+          brother.generateInternships();
+        }
       })
       .error(function(res){
         console.log(res.message);
@@ -80,13 +91,49 @@
       });
     };
 
+    // =========================================================================
+    // =========================================================================
+    // for image preview
+    $scope.setFile = function(element) {
+      $scope.currentFile = element.files[0];
+      var reader = new FileReader();
 
+      reader.onload = function(event) {
+        $scope.image_source = event.target.result;
+        $scope.$apply()
+      }
+      // when the file is read it triggers the onload event above.
+      reader.readAsDataURL(element.files[0]);
+    }
 
+    // =========================================================================
+    // =========================================================================
+    // for internships
+    // by default they start off with one choice
+    brother.generateInternships = function(){
+      brother.userData.internships = [{id: '1'}];
+    }
+    // generate default on start
+    brother.generateInternships();
 
+    // only add positions if the name property of the last position is not null
+    brother.addNewChoice = function() {
+      var newItemNo = brother.userData.internships.length+1;
+      if (brother.userData.internships[brother.userData.internships.length-1].name != null){
+        brother.userData.internships.push({'id':newItemNo});
+      }
+    };
 
-
-
-
+    // if the first item is the last item, don't remove it entirely. only the name property.
+    brother.removeChoice = function() {
+      var lastItem = brother.userData.internships.length-1;
+      if (lastItem === 0){
+        delete brother.userData.internships[0].name;
+      }
+      else{
+        brother.userData.internships.splice(lastItem);
+      }
+    };
   };
 
   // =========================================================================

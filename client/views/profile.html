@@ -4,10 +4,10 @@
 <form class="form-horizontal" ng-submit="brother.saveBrother()">
 
 	<div class="row" id ="profileInfo">
-	  <div class="col-md-6">
+	  <div class="col-md-4">
 			<div class="form-group">
-				<img ng-src="{{image_source}}" height=350px width=350px>
-				<input type="file" id="trigger" class="ng-show" onchange="angular.element(this).scope().setFile(this)" accept="image/*" file-directive="myFile">
+				<img ng-src="{{image_source}}" height=200px width=200px>
+				<input type="file" class="ng-show" onchange="angular.element(this).scope().setFile(this)" accept="image/*" file-directive="myFile">
 				Current Pic: {{brother.userData.picture}}
 			</div>
 			<div class="form-group">
@@ -56,19 +56,39 @@
 					<option ng-repeat="s in brother.standings">{{s.value}}</option>
 				</select>
 			</div>
-			<div class="form-group">
-				<div class="col-offset-2 ">
-					<button class="btn btn-success btn-sm btn-block" type="submit">Submit</button>
-				</div>
-			</div>
 		</div> <!--first col-->
 
-	  <div class="col-md-6">
-			Other stuff
-		</div>
+		<div class="col-md-1"></div>
+
+	  <div class="col-md-4">
+
+			<div class="form-group">
+				<label class="control-label">Internships</label>
+				<div ng-repeat="choice in brother.userData.internships">
+	 				<input type="text" class="form-control" ng-model="choice.name" placeholder="Internship">
+	 				<button type="button" ng-show="$last" ng-click="brother.removeChoice()">-</button>
+					<button type="button" ng-show="$last" ng-click="brother.addNewChoice()">+</button>
+				</div>
+			</div>
+
+			<div id="choicesDisplay">
+	 			{{ brother.userData.internships}}
+			</div>
+
+
+
+
+ 	</div><!-- seocnd col-->
+
+
+
 
 	</div> <!--.row-->
-
+	<div class="form-group">
+		<div class="col-offset-0">
+			<button class="btn btn-success btn-sm btn-block" type="submit">Submit</button>
+		</div>
+	</div>
 	<div class="alert alert-info" ng-show="brother.dataMessage">{{ brother.dataMessage }}</div>
 	<div class="alert alert-info" ng-show="brother.pictureMessage">{{ brother.pictureMessage }}</div>
 </form>

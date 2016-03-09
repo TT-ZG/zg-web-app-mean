@@ -59,6 +59,10 @@ var brotherSchema   = new Schema({
 		type: String,
 		required: true,
 		default: '0.jpg'},
+	internships: [{
+		id: Number,
+		name: String
+	}],
 	created_at: Date,
   updated_at: Date
 });

@@ -173,6 +173,7 @@ exports.create = function(req, res) {
   brother.standing    = req.body.standing;
   brother.graduation  = req.body.graduation;
   brother.gpa         = req.body.gpa;
+  brother.internships = req.body.internships;
 
   // save the new entry
   brother.save(function(err) {

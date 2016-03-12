@@ -179,7 +179,7 @@ exports.create = function(req, res) {
   brother.save(function(err) {
     if (err) {
       if (err.code === 11000) {
-        res.status(500).send({ success: false, message: '500 - Internal Server Error: Duplicate Roll/Username' });
+        res.status(300).send({ success: false, message: '400 - Bad Request: Duplicate Roll/Username' });
       }
       else {
           res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
@@ -240,7 +240,7 @@ exports.postPicture = function(req, res) {
       });
     }
     else {
-        res.status(200).send({ success: false, message: '200 - OK: No custom picture uploaded.'});
+        res.status(200).send({ success: true, message: '200 - OK: No custom picture uploaded.'});
       }
   }
   else {
@@ -339,6 +339,7 @@ exports.update = function(req, res) {
       if (req.body.gpa) brother.gpa                 = req.body.gpa;
       if (req.body.picture) brother.picture         = req.body.picture;
       if (req.body.internships) brother.internships = req.body.internships;
+
       // save the newly updated brother
       brother.save(function(err) {
         if (err){
@@ -368,7 +369,7 @@ exports.updatePicture = function(req, res) {
   // if it is a valid id ...
   if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
 
-    // If there's a file attached
+    // If there's a file attached, then we are uploading a new picture
     if (req.file){
       // find the brother given the id
       Brothers.findById(req.params.id, function(err, brother) {

@@ -3,105 +3,166 @@
 
   // this controller handles the creation of brothers
   var createController = function($scope, $state, $stateParams, crudFactory, fileUpload){
-
-    // =========================================================================
-    // =========================================================================
-    // better to use 'controller as' rather than brother
     var brother = this;
 
-    // set default values
-    brother.userData = {};
-    brother.userData.available = 'Unavailable';
-    brother.userData.gpa = 'On Request';
-    brother.userData.standing = 'Active';
-
-    // The options available for standings
-    brother.standings = [
-      { property : "standing", value: "Active" },
-      { property : "standing", value: "Alumni" },
-    ];
-
-    // The relevant options available for employment seeking status
-    brother.availables = [
-      { property : "available", value: "Internship" },
-      { property : "available", value: "Full-Time" },
-      { property : "available", value: "Part-Time" },
-      { property : "available", value: "Unavailable"}
-    ];
-
-    // The gpa brackets
-    brother.gpas = [
-      { property : "gpa", value: "3.00 - 3.32" },
-      { property : "gpa", value: "3.33 - 3.66" },
-      { property : "gpa", value: "3.67 - 4.00" },
-      { property : "gpa", value: "On Request" },
-    ];
-
     // =========================================================================
+    // ==========================SETUP FUNCTIONS================================
     // =========================================================================
-    // call a service to save a user
-    brother.saveBrother = function() {
-      // clear messages
-      brother.dataMessage = '';
-      brother.pictureMessage = '';
-      // create the brother
-      brother.create();
+
+    // *********************************
+    // *********************************
+    // setup default values
+    brother.init = function() {
+
+      // The options available for standings
+      brother.standings = [
+        { property : "standing", value: "Active" },
+        { property : "standing", value: "Alumni" },
+      ];
+
+      // The relevant options available for employment seeking status
+      brother.availables = [
+        { property : "available", value: "Internship" },
+        { property : "available", value: "Full-Time" },
+        { property : "available", value: "Part-Time" },
+        { property : "available", value: "Unavailable"}
+      ];
+
+      // The gpa brackets
+      brother.gpas = [
+        { property : "gpa", value: "3.00 - 3.32" },
+        { property : "gpa", value: "3.33 - 3.66" },
+        { property : "gpa", value: "3.67 - 4.00" },
+        { property : "gpa", value: "On Request" },
+      ];
+
+      // set default values
+      brother.userData = {};
+      brother.userData.available = 'Unavailable';
+      brother.userData.gpa = 'On Request';
+      brother.userData.standing = 'Active';
+
+      // set a spinner, generate lists, get default picture
+      brother.resetErrors();
+      brother.generateInternships();
+      brother.getDefaultPicture('0.jpg');
     };
 
-    // =========================================================================
-    // =========================================================================
-    // create a brothers info from the textual information
-    brother.create = function(){
+    // *********************************
+    // *********************************
+    // reset errors
+    brother.resetErrors = function(){
+      brother.processing = true;
+      brother.dataMessage = '';
+      brother.pictureMessage = '';
+      brother.dataError = '';
+      brother.pictureError = '';
+    };
 
-      //chop off the last item from the array if it is blank
-      var lastItem = brother.userData.internships.length-1;
-      if (brother.userData.internships[lastItem].name === undefined){
-        brother.userData.internships.splice(lastItem);
+    // *********************************
+    // *********************************
+    // set error messages
+    brother.setErrors = function(picture, data){
+
+      if(picture!== undefined){
+        brother.pictureMessage = '';
+        brother.pictureError = '';
+        if(picture.success){
+          console.log('Success:' + picture.message);
+          brother.pictureMessage = picture.message;
+          brother.pictureError = '';
+        }
+        else{
+          console.log('Error:' + picture.message);
+          brother.pictureError = picture.message;
+          brother.pictureMessage = '';
+        }
       }
-
-      // these are nested b/c we need id from create()
-      crudFactory.create(brother.userData)
-      .success(function(res){
-        // log the message
-        console.log(res.message);
-        // show the returned message
-        brother.dataMessage = res.message
-        // call another function to update the picture now
-        brother.uploadPicture(res.brotherId);
+      if(data!== undefined){
+        brother.dataMessage = '';
+        brother.dataError = '';
         // if we shaved off the example because they entered nothing, reset
         if (brother.userData.internships.length === 0){
           brother.generateInternships();
         }
+
+        if(data.success){
+          console.log('Success:' + data.message);
+          brother.dataMessage = data.message;
+          brother.dataError = '';
+        }
+        else{
+          console.log('Error:' + data.message);
+          brother.dataError = data.message;
+          brother.dataMessage = '';
+        }
+      }
+      brother.processing = false;
+    }
+
+
+    // =========================================================================
+    // ==========================MAIN FUNCTIONS=================================
+    // =========================================================================
+
+    // *************************************
+    // *************************************
+    // get a specific users picture
+     brother.getDefaultPicture = function(pictureName){
+
+       // reset any current errors
+       brother.resetErrors();
+
+       // get a picture based on the name (picturenames are unique)
+       crudFactory.readPicture(pictureName)
+       .success(function(res){
+         $scope.image_source = "data:image/jpeg;base64, " + res.data;
+         brother.setErrors(res, undefined);
+       })
+       .error(function(res){
+         brother.setErrors(res, undefined);
+       });
+     };
+
+    // *************************************
+    // *************************************
+    // create a user
+    brother.saveBrother = function() {
+
+      // reset any current errors, remove blank array rows
+      brother.resetErrors();
+      brother.spliceArray(brother.userData.internships);
+
+      // create a brother
+      crudFactory.create(brother.userData)
+      .success(function(res){
+        brother.setErrors(undefined, res);
+        brother.uploadPicture(res.brotherId);
       })
       .error(function(res){
-        // log the message
-        console.log(res.message);
-        // show the returned message
-        brother.dataMessage = res.message
+        brother.setErrors(undefined, res);
       });
     };
 
-    // =========================================================================
-    // =========================================================================
+    // *************************************
+    // *************************************
     // upload a brothers picture
     brother.uploadPicture = function(brotherId){
       var file = $scope.myFile;
-      // set the upload type
       var method = 'POST';
-      //console.dir(file);
       var uploadUrl = "/api/pictures/" + brotherId;
-
       // save the brothers picture using special service
       fileUpload.upload(method, file, uploadUrl, function(data, status, headers, config){
-        // log the message
-        console.log(data.message);
-        // show the returned message
-        brother.pictureMessage = data.message;
+        brother.setErrors(data, undefined);
       });
     };
 
+    //==========================================================================
+    // ========================HELPER FUNCTIONS=================================
     // =========================================================================
-    // =========================================================================
+
+    // *********************************
+    // *********************************
     // for image preview
     $scope.setFile = function(element) {
       $scope.currentFile = element.files[0];
@@ -115,16 +176,12 @@
       reader.readAsDataURL(element.files[0]);
     }
 
-    // =========================================================================
-    // =========================================================================
-    // for internships
+    // *********************************
+    // *********************************
     // by default they start off with one choice
     brother.generateInternships = function(){
       brother.userData.internships = [{id: '1'}];
     }
-    // generate default on start
-    brother.generateInternships();
-
     // only add positions if the name property of the last position is not null
     brother.addNewChoice = function() {
       var newItemNo = brother.userData.internships.length+1;
@@ -133,17 +190,31 @@
       }
     };
 
+    // *********************************
+    // *********************************
     // if the first item is the last item, don't remove it entirely. only the name property.
     brother.removeChoice = function() {
       var lastItem = brother.userData.internships.length-1;
-      if (lastItem === 0){
-        //delete brother.userData.internships[0].name;
+      if (lastItem === 0)
         brother.generateInternships();
-      }
-      else{
+      else
         brother.userData.internships.splice(lastItem);
+    };
+
+    // *********************************
+    // *********************************
+    //chop off the last item from the array if it is blank
+    brother.spliceArray = function(array){
+      var lastItem = array.length-1;
+      if (array[lastItem].name === undefined){
+        array.splice(lastItem);
       }
     };
+
+    // *********************************
+    // *********************************
+    // Set up the form
+    brother.init();
   };
 
   // =========================================================================

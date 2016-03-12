@@ -9,37 +9,38 @@
     // better to use 'controller as' rather than brother
     var brother = this;
 
-    // The options available for standings
-    brother.standings = [
-      { property : "standing", value: "Active" },
-      { property : "standing", value: "Alumni" },
-    ];
-
-    // The relevant options available for employment seeking status
-    brother.availables = [
-      { property : "available", value: "Internship" },
-      { property : "available", value: "Full-Time" },
-      { property : "available", value: "Part-Time" },
-      { property : "available", value: "Unavailable"}
-    ];
-
-    // The gpa brackets
-    brother.gpas = [
-      { property : "gpa", value: "3.00 - 3.32" },
-      { property : "gpa", value: "3.33 - 3.66" },
-      { property : "gpa", value: "3.67 - 4.00" },
-      { property : "gpa", value: "On Request" },
-    ];
     // =========================================================================
     // =========================================================================
     // get a specific users information
     brother.init = function() {
-      // set a spinner while we are fetching the data
+      // set a spinner while we are fetching the data, clear, messages
       brother.processing = true;
-      // clear messages
       brother.dataMessage = '';
       brother.pictureMessage = '';
-      // get a brother given the id in the URL
+
+      // The options available for standings
+      brother.standings = [
+        { property : "standing", value: "Active" },
+        { property : "standing", value: "Alumni" },
+      ];
+
+      // The relevant options available for employment seeking status
+      brother.availables = [
+        { property : "available", value: "Internship" },
+        { property : "available", value: "Full-Time" },
+        { property : "available", value: "Part-Time" },
+        { property : "available", value: "Unavailable"}
+      ];
+
+      // The gpa brackets
+      brother.gpas = [
+        { property : "gpa", value: "3.00 - 3.32" },
+        { property : "gpa", value: "3.33 - 3.66" },
+        { property : "gpa", value: "3.67 - 4.00" },
+        { property : "gpa", value: "On Request" },
+      ];
+
+      // get brother
       brother.get($stateParams.brotherid);
     };
 
@@ -48,28 +49,26 @@
     // get a brothers info
     brother.get = function(id){
 
+      // get info by id
       crudFactory.read(id)
       .success(function(res){
         if (res.success){
-          // log the message
-          console.log(res.message);
-          // show the returned messages
+          // show the returned messages, save the brothers info
           brother.userData = res.info;
           brother.dataMessage = res.message;
           // angular doesn't like the returned date, we need to set it this way
           brother.userData.graduation = new Date(brother.userData.graduation);
           // if they have no internships
-          if (brother.userData.internships.length === 0){
+          if (brother.userData.internships.length === 0)
             brother.generateInternships();
-          }
           // get the brothers picture given their picture name
           brother.readPicture(brother.userData.picture);
         }
+        console.log (res.message);
       })
       .error(function(res){
-        // log the message
         console.log (res.message);
-      });
+      })
     };
 
     // =========================================================================
@@ -77,21 +76,17 @@
     // call a service to get a specific users picture
      brother.readPicture = function(pictureName){
        crudFactory.readPicture(pictureName)
-       .success(function(res) {
-         // log the message
-         console.log(res.message);
-         // set the picture
-         brother.pictureMessage = res.message;
-         // encode base64 image data this way
-         $scope.image_source = "data:image/jpeg;base64, " + res.data;
-         // end the spinner
-         brother.processing = false;
+       .success(function(res){
+         if (res.success){
+           brother.pictureMessage = res.message;
+           // encode base64 image data into html this way
+           $scope.image_source = "data:image/jpeg;base64, " + res.data;
+           brother.processing = false;
+         }
+        console.log (res.message);
        })
        .error(function(res){
-         // show the message
          console.log (res.message);
-         // end the spinner
-         brother.processing = false;
        });
      }
 
@@ -99,17 +94,9 @@
     // =========================================================================
     // edit a specific user
     brother.saveBrother = function() {
-      //clear the error messages
       brother.dataMessage = '';
       brother.pictureMessage = '';
-      // update the brother
-      brother.updateBrother($stateParams.brotherid, brother.userData);
-    };
-
-    // =========================================================================
-    // =========================================================================
-    // for updating a brother's information
-    brother.updateBrother = function(id, info){
+      brother.processing = true;
 
       //chop off the last item from the array if it is blank
       var lastItem = brother.userData.internships.length-1;
@@ -118,22 +105,19 @@
       }
 
       // update the brothers info
-      crudFactory.update(id, info)
-      .success(function(res) {
-        // log the message
-        console.log(res.message)
-        // show the returned message
-        brother.dataMessage = res.message;
-        // update the brothers picture given the brothers id
-        brother.updatePicture(id);
-        // if we chopped off the last internship
-        if (brother.userData.internships.length === 0){
-          brother.generateInternships();
+      crudFactory.update($stateParams.brotherid, brother.userData)
+      .success(function(res){
+        if (res.success){
+          brother.dataMessage = res.message;
+          brother.updatePicture($stateParams.brotherid);
+          // if we chopped off the last internship
+          if (brother.userData.internships.length === 0)
+            brother.generateInternships();
         }
+        console.log(res.message);
       })
       .error(function(res){
-        // log the message
-        console.log(res.message)
+        console.log(res.message);
       })
     };
 
@@ -158,16 +142,13 @@
       var file = $scope.myFile;
       // set the format in which we update the picture
       var method = 'PUT';
-      //console.dir(file);
-
       var uploadUrl = "/api/pictures/" + brotherId;
 
       // save the brothers picture using special service
       fileUpload.upload(method, file, uploadUrl, function(data, status, headers, config){
-        // log the message
         console.log(data.message);
-        // set the picture
         brother.pictureMessage = data.message;
+        brother.processing = false;
       });
     };
 
@@ -189,25 +170,24 @@
     // if the first item is the last item, simply do the default
     brother.removeChoice = function() {
       var lastItem = brother.userData.internships.length-1;
-
-      // if the first item is the last item, simply set it to the default
-      if (lastItem === 0){
+      if (lastItem === 0)
         brother.generateInternships();
-      }
-      // else, remove the last item entirely
-      else{
+      else
         brother.userData.internships.splice(lastItem);
-      }
     };
 
+    // =========================================================================
+    // =========================================================================
     // get the data when the state is loaded
     brother.init();
   };
 
-    // ***************************************
-    // For minification purposes
-    editController.$inject = ['$state', '$stateParams', 'crudFactory', '$scope', 'fileUpload'];
-    // Attach the controller
-    angular.module('zgApp').controller('editController', editController);
+  // =========================================================================
+  // =========================================================================
+  // For minification purposes
+  editController.$inject = ['$state', '$stateParams', 'crudFactory', '$scope', 'fileUpload'];
+
+  // Attach the controller
+  angular.module('zgApp').controller('editController', editController);
 
 }());

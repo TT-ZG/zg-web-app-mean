@@ -6,23 +6,21 @@
 
     // =========================================================================
     // =========================================================================
-    // set data
-    var admin = this;       // better to use 'controller as' rather than $scope
+    // better to use 'controller as' rather than $scope
+    var admin = this;
 
     // =========================================================================
     // =========================================================================
+    // initialize brothers
     admin.init = function() {
       crudFactory.get()
-      .success(function(brothers){
-        if (brothers.success){
-          admin.brothers = brothers.info;
-        }
+      .then(function(res){
+        if (res.data.success)
+          admin.brothers = res.data.info;
+        console.log(res.data.message);
       })
-      .error(function(res){
-        console.log ('Uncaught error: ' + admin.message);
-      });
     };
-    admin.init(); // initialize brothers
+    admin.init();
 
     // =========================================================================
     // =========================================================================
@@ -44,15 +42,9 @@
     // =========================================================================
     // delete a brothers info by id
     admin.deleteBrother = function(id){
-      // delete the brother by id
       crudFactory.delete(id)
-      .success(function(res){
-        if (res.success){
-          console.log (res.message);
-        }
-      })
-      .error(function(res){
-        console.log ('Uncaught error: ' + res.message);
+      .then(function(res){
+        console.log(res.data.message);
       });
     };
     // =========================================================================
@@ -61,36 +53,28 @@
     admin.deletePicture = function(pictureName){
       // delete the picture by pictureName
       crudFactory.deletePicture(pictureName)
-      .success(function(res){
-        if (res.success){
-          console.log (res.message);
-        }
-      })
-      .error(function(res){
-        console.log ('Uncaught error: ' + res.message);
+      .then(function(res){
+        console.log(res.data.message);
       });
     };
 
     // =========================================================================
     // =========================================================================
     // delete a brothers picture
-    admin.resetPicture = function(brotherId){
+    admin.resetPicture = function(brotherId, pictureName){
+
+      // delete the current picture from the database
+      admin.deletePicture(pictureName);
+
       // reset the picture to default
       admin.userData = {};
       admin.userData.picture = '0.jpg';
-
       crudFactory.update(brotherId, admin.userData)
-      .success(function(res) {
-        console.log(res.message);
-        admin.init();
-      })
-      .error(function(res){
-        console.log(res.message);
+      .then(function(res){
+        console.log(res.data.message);
         admin.init();
       });
     };
-
-
 };
 
   // =========================================================================

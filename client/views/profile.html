@@ -1,6 +1,16 @@
 <div ng-show="brother.processing" class="loading">Loading&#8230;</div>
 
 
+<div class="alert alert-success" ng-show="brother.dataMessage">{{ brother.dataMessage }}</div>
+<div class="alert alert-danger" ng-show="brother.dataError">{{ brother.dataError}}</div>
+
+
+<div class="alert alert-success" ng-show="brother.pictureMessage">{{ brother.pictureMessage }}</div>
+<div class="alert alert-danger" ng-show="brother.pictureError">{{ brother.pictureError}}</div>
+
+
+
+
 <form class="form-horizontal" ng-submit="brother.saveBrother()">
 
 	<div class="row" id ="profileInfo">
@@ -71,10 +81,6 @@
 				</div>
 			</div>
 
-			<div id="choicesDisplay">
-	 			{{ brother.userData.internships}}
-			</div>
-
 
 
 
@@ -89,6 +95,4 @@
 			<button class="btn btn-success btn-sm btn-block" type="submit">Submit</button>
 		</div>
 	</div>
-	<div class="alert alert-info" ng-show="brother.dataMessage">{{ brother.dataMessage }}</div>
-	<div class="alert alert-info" ng-show="brother.pictureMessage">{{ brother.pictureMessage }}</div>
 </form>

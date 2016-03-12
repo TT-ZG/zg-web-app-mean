@@ -217,11 +217,13 @@
     brother.init();
   };
 
-  // =========================================================================
-  // =========================================================================
-    // For minification purposes
-    createController.$inject = ['$scope', '$state', '$stateParams', 'crudFactory', 'fileUpload'];
-    // Attach the controller
-    angular.module('zgApp').controller('createController', createController);
+  // ===========================================================================
+  // ==========================ATTACH TO APP====================================
+  // ===========================================================================
+  // For minification purposes
+  createController.$inject = ['$scope', '$state', '$stateParams', 'crudFactory', 'fileUpload'];
+
+  // Attach the controller
+  angular.module('zgApp').controller('createController', createController);
 
 }());

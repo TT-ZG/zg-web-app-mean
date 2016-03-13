@@ -104,23 +104,16 @@
       brother.startSpinner();
       brother.resetMessages();
       brother.resetInternships();
-      brother.getDefaultPicture('0.jpg');
+
+      crudFactory.readPicture('0.jpg')
+       .then(function(res){
+         if(res.data.success){
+           $scope.image_source = "data:image/jpeg;base64, " + res.data.data;
+         }
+         brother.setPictureMessages(res);
+         brother.endSpinner();
+       });
     };
-
-    // =========================================================================
-    // ====================These functions GET the initial data=================
-    // =========================================================================
-    // get the default picture from the database '0.jpg'
-     brother.getDefaultPicture = function(pictureName){
-
-       crudFactory.readPicture(pictureName)
-        .then(function(res){
-          if(res.data.success){
-            $scope.image_source = "data:image/jpeg;base64, " + res.data.data;
-          }
-          brother.setPictureMessages(res);
-        });
-     };
 
     // =========================================================================
     // ====================These functions POST a new user to the db============
@@ -129,6 +122,7 @@
     brother.saveBrother = function() {
 
       // reset any current errors, remove blank array rows
+      brother.startSpinner();
       brother.resetMessages();
       brother.spliceArray(brother.userData.internships);
       // create a brother
@@ -136,8 +130,11 @@
         .then(function(res){
           if(res.data.success){
             brother.uploadPicture(res.data.brotherId);
+          } else{
+            brother.endSpinner();
           }
           brother.setDataMessages(res);
+          brother.resetInternships();
         });
     };
 

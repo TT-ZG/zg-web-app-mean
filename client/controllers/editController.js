@@ -48,6 +48,7 @@
 
     // set the server response messages for the picture
     brother.setPictureMessages = function(res){
+      console.log(res);
       if(res.data.success){
         console.log('Success:' + res.data.message);
         brother.pictureMessage = res.data.message;

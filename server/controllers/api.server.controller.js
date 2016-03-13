@@ -431,7 +431,7 @@ exports.updatePicture = function(req, res) {
       });
     }
     else {
-        res.status(200).send({ success: false, message: '200 - OK: No custom picture updated.'});
+        res.status(200).send({ success: true, message: '200 - OK: No custom picture updated.'});
       }
   }
   else {

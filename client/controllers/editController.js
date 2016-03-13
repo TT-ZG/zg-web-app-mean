@@ -27,69 +27,6 @@
       { property : "gpa", value: "On Request" },
     ];
 
-    // =============These functions serve to set the data for the form==========
-    // set the discrete json data
-    brother.setInfo = function(res){
-      brother.userData = res.data.info;
-      brother.userData.graduation = new Date(brother.userData.graduation);
-      brother.setInternships();
-    }
-    // set the base 64 encoded image
-    brother.setPicture = function(res){
-      $scope.image_source = "data:image/jpeg;base64, " + res.data.data;
-    }
-    // set the dynamic rows for the internships
-    brother.setInternships = function(){
-      // if we shaved off the example because they entered nothing, reset
-      if (brother.userData.internships.length === 0){
-        brother.generateInternships();
-      }
-    };
-
-    // =======These functions serve to set server response messages ============
-    // set the server response messages for the discrete json messages
-    brother.setDataMessages = function(res){
-      if(res.data.success){
-        console.log('Success:' + res.data.message);
-        brother.dataMessage = res.data.message;
-        brother.dataError = '';
-      }
-      else{
-        console.log('Error:' + res.data.message);
-        brother.dataError = res.data.message;
-        brother.dataMessage = '';
-      }
-    };
-    // set the server response messages for the picture
-    brother.setPictureMessages = function(res){
-      if(res.data.success){
-        console.log('Success:' + res.data.message);
-        brother.pictureMessage = res.data.message;
-        brother.pictureError = '';
-      }
-      else{
-        console.log('Error:' + res.data.message);
-        brother.pictureError = res.data.message;
-        brother.pictureMessage = '';
-      }
-    };
-    // reset all messages on the form
-    brother.resetMessages = function(){
-      brother.dataMessage = '';
-      brother.pictureMessage = '';
-      brother.dataError = '';
-      brother.pictureError = '';
-    };
-
-    // =======These functions serve to increase the user experience ============
-    // start the spinner on the page
-    brother.startSpinner = function(){
-      brother.processing = true;
-    };
-    // end the spinner on the page
-    brother.endSpinner = function(){
-      brother.processing = false;
-    };
 
     // =========These functions get the brothers info from the server===========
     // get a brothers info
@@ -120,7 +57,69 @@
         });
      };
 
+     // =============These functions serve to set the data for the form==========
+     // set the discrete json data
+     brother.setInfo = function(res){
+       brother.userData = res.data.info;
+       brother.userData.graduation = new Date(brother.userData.graduation);
+       brother.setInternships();
+     }
+     // set the base 64 encoded image
+     brother.setPicture = function(res){
+       $scope.image_source = "data:image/jpeg;base64, " + res.data.data;
+     }
+     // set the dynamic rows for the internships
+     brother.setInternships = function(){
+       // if we shaved off the example because they entered nothing, reset
+       if (brother.userData.internships.length === 0){
+         brother.generateInternships();
+       }
+     };
 
+     // =======These functions serve to set server response messages ============
+     // set the server response messages for the discrete json messages
+     brother.setDataMessages = function(res){
+       if(res.data.success){
+         console.log('Success:' + res.data.message);
+         brother.dataMessage = res.data.message;
+         brother.dataError = '';
+       }
+       else{
+         console.log('Error:' + res.data.message);
+         brother.dataError = res.data.message;
+         brother.dataMessage = '';
+       }
+     };
+     // set the server response messages for the picture
+     brother.setPictureMessages = function(res){
+       if(res.data.success){
+         console.log('Success:' + res.data.message);
+         brother.pictureMessage = res.data.message;
+         brother.pictureError = '';
+       }
+       else{
+         console.log('Error:' + res.data.message);
+         brother.pictureError = res.data.message;
+         brother.pictureMessage = '';
+       }
+     };
+     // reset all messages on the form
+     brother.resetMessages = function(){
+       brother.dataMessage = '';
+       brother.pictureMessage = '';
+       brother.dataError = '';
+       brother.pictureError = '';
+     };
+
+     // =======These functions serve to increase the user experience ============
+     // start the spinner on the page
+     brother.startSpinner = function(){
+       brother.processing = true;
+     };
+     // end the spinner on the page
+     brother.endSpinner = function(){
+       brother.processing = false;
+     };
 
 
 

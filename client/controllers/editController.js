@@ -57,7 +57,7 @@
         });
      };
 
-     // =============These functions serve to set the data for the form==========
+     // ==========These functions set the brothers info from the server==========
      // set the discrete json data
      brother.setInfo = function(res){
        brother.userData = res.data.info;
@@ -76,7 +76,7 @@
        }
      };
 
-     // =======These functions serve to set server response messages ============
+     // =======These functions set the response messages from the server=========
      // set the server response messages for the discrete json messages
      brother.setDataMessages = function(res){
        if(res.data.success){
@@ -111,7 +111,7 @@
        brother.pictureError = '';
      };
 
-     // =======These functions serve to increase the user experience ============
+     // ===========These functions increase the user experience=================
      // start the spinner on the page
      brother.startSpinner = function(){
        brother.processing = true;

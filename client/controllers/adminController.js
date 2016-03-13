@@ -6,32 +6,22 @@
     var admin = this;
 
     // =========================================================================
-    // ==========================SETUP FUNCTIONS================================
+    // ====================This function sets up the page=======================
     // =========================================================================
-
-    // *********************************
-    // *********************************
     // initialize brothers
     admin.init = function() {
       crudFactory.get()
-      .success(function(res){
-        if (res.success)
-          admin.brothers = res.info;
-        console.log(res.message);
-      })
-      .error(function(res){
-        console.log(res.message);
-      });
+        .then(function(res){
+          if (res.data.success)
+            admin.brothers = res.data.info;
+          console.log(res.data.message);
+        });
     };
     admin.init();
 
-
     // =========================================================================
-    // ==========================MAIN FUNCTIONS=================================
+    // ==============These functions handle the admin buttons===================
     // =========================================================================
-
-    // *********************************
-    // *********************************
     // delete a brothers information totally
     admin.delete = function(id, pictureName) {
       admin.deleteBrother(id);
@@ -39,66 +29,39 @@
       admin.init();
     };
 
-    // *********************************
-    // *********************************
     // delete a brothers info by id
     admin.deleteBrother = function(id){
       crudFactory.delete(id)
-      .success(function(res){
-        console.log(res.message);
-      })
-      .error(function(res){
-        console.log(res.message);
-      });
+        .then(function(res){
+          console.log(res.data.message);
+        });
     };
 
-    // *********************************
-    // *********************************
-    // delete a brothers picture
+    // delete a brothers picture by pictureName
     admin.deletePicture = function(pictureName){
-      // delete the picture by pictureName
       crudFactory.deletePicture(pictureName)
         .then(function(res){
           console.log(res.data.message);
         })
-      /*
-      .success(function(res){
-        console.log(res.message);
-      })
-      .error(function(res){
-        console.log(res.message);
-      });*/
     };
 
-    // *********************************
-    // *********************************
     // delete a brothers picture
     admin.resetPicture = function(brotherId, pictureName){
-
       // delete the current picture from the database
       admin.deletePicture(pictureName);
-
       // reset the picture to default
       admin.userData = {};
       admin.userData.picture = '0.jpg';
       crudFactory.update(brotherId, admin.userData)
-      .success(function(res){
-        console.log(res.message);
-        admin.init();
-      })
-      .error(function(res){
-        console.log(res.message);
+      .then(function(res){
+        console.log(res.data.message);
         admin.init();
       });
     };
 
-
-    //==========================================================================
-    // ========================HELPER FUNCTIONS=================================
     // =========================================================================
-
-    // *********************************
-    // *********************************
+    // ==============These functions help the main functions====================
+    // =========================================================================
     // set the id in scope because uirouter doesn't accept angular exp as parameters
     admin.setID = function(id){
       admin.desiredID = id;
@@ -106,7 +69,7 @@
   };
 
   // ===========================================================================
-  // ==========================ATTACH TO APP====================================
+  // ==========================End of controller================================
   // ===========================================================================
   // inject this way for minification purposes
   adminController.$inject = ['$state', '$stateParams', 'crudFactory'];

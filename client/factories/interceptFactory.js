@@ -32,7 +32,8 @@
           }
 
           // ***************************************
-          return $q.reject(response);
+          return response;
+          //return $q.reject(response); *doesn't work with .then()*
         }
       };
       return methods;

@@ -3,166 +3,162 @@
 
   // this controller handles the creation of brothers
   var createController = function($scope, $state, $stateParams, crudFactory, fileUpload){
+
+    // =========================================================================
+    // ====================Set the hardcoded form options=======================
+    // =========================================================================
     var brother = this;
 
-    // =========================================================================
-    // ==========================SETUP FUNCTIONS================================
-    // =========================================================================
+    // The options available for standings
+    brother.standings = [
+      { property : "standing", value: "Active" },
+      { property : "standing", value: "Alumni" },
+    ];
 
-    // *********************************
-    // *********************************
-    // setup default values
-    brother.init = function() {
+    // The relevant options available for employment seeking status
+    brother.availables = [
+      { property : "available", value: "Internship" },
+      { property : "available", value: "Full-Time" },
+      { property : "available", value: "Part-Time" },
+      { property : "available", value: "Unavailable"}
+    ];
 
-      // The options available for standings
-      brother.standings = [
-        { property : "standing", value: "Active" },
-        { property : "standing", value: "Alumni" },
-      ];
+    // The gpa brackets
+    brother.gpas = [
+      { property : "gpa", value: "3.00 - 3.32" },
+      { property : "gpa", value: "3.33 - 3.66" },
+      { property : "gpa", value: "3.67 - 4.00" },
+      { property : "gpa", value: "On Request" },
+    ];
 
-      // The relevant options available for employment seeking status
-      brother.availables = [
-        { property : "available", value: "Internship" },
-        { property : "available", value: "Full-Time" },
-        { property : "available", value: "Part-Time" },
-        { property : "available", value: "Unavailable"}
-      ];
+    // set default values
+    brother.userData = {};
+    brother.userData.available = 'Unavailable';
+    brother.userData.gpa = 'On Request';
+    brother.userData.standing = 'Active';
 
-      // The gpa brackets
-      brother.gpas = [
-        { property : "gpa", value: "3.00 - 3.32" },
-        { property : "gpa", value: "3.33 - 3.66" },
-        { property : "gpa", value: "3.67 - 4.00" },
-        { property : "gpa", value: "On Request" },
-      ];
-
-      // set default values
-      brother.userData = {};
-      brother.userData.available = 'Unavailable';
-      brother.userData.gpa = 'On Request';
-      brother.userData.standing = 'Active';
-
-      // set a spinner, generate lists, get default picture
-      brother.resetErrors();
-      brother.generateInternships();
-      brother.getDefaultPicture('0.jpg');
+    // ==========================================================================
+    // =======These functions set the response messages from the server=========
+    // ==========================================================================
+    // set the server response messages for the discrete json messages
+    brother.setDataMessages = function(res){
+      if(res.data.success){
+        console.log('Success:' + res.data.message);
+        brother.dataMessage = res.data.message;
+        brother.dataError = '';
+      }
+      else{
+        console.log('Error:' + res.data.message);
+        brother.dataError = res.data.message;
+        brother.dataMessage = '';
+      }
     };
 
-    // *********************************
-    // *********************************
-    // reset errors
-    brother.resetErrors = function(){
-      brother.processing = true;
+    // set the server response messages for the picture
+    brother.setPictureMessages = function(res){
+      if(res.data.success){
+        console.log('Success:' + res.data.message);
+        brother.pictureMessage = res.data.message;
+        brother.pictureError = '';
+      }
+      else{
+        console.log('Error:' + res.data.message);
+        brother.pictureError = res.data.message;
+        brother.pictureMessage = '';
+      }
+    };
+
+    // =========================================================================
+    // ==========These functions reset form data as necessary===================
+    // =========================================================================
+    // reset all messages on the form
+    brother.resetMessages = function(){
       brother.dataMessage = '';
       brother.pictureMessage = '';
       brother.dataError = '';
       brother.pictureError = '';
     };
+    // default internships (none)
+    brother.resetInternships = function(){
+      brother.userData.internships = [{id: '1'}];
+    };
 
-    // *********************************
-    // *********************************
-    // set error messages
-    brother.setErrors = function(picture, data){
+    // =========================================================================
+    // ===========These functions increase the user experience==================
+    // =========================================================================
+    // start the spinner on the page
+    brother.startSpinner = function(){
+      brother.processing = true;
+    };
 
-      if(picture!== undefined){
-        brother.pictureMessage = '';
-        brother.pictureError = '';
-        if(picture.success){
-          console.log('Success:' + picture.message);
-          brother.pictureMessage = picture.message;
-          brother.pictureError = '';
-        }
-        else{
-          console.log('Error:' + picture.message);
-          brother.pictureError = picture.message;
-          brother.pictureMessage = '';
-        }
-      }
-      if(data!== undefined){
-        brother.dataMessage = '';
-        brother.dataError = '';
-        // if we shaved off the example because they entered nothing, reset
-        if (brother.userData.internships.length === 0){
-          brother.generateInternships();
-        }
-
-        if(data.success){
-          console.log('Success:' + data.message);
-          brother.dataMessage = data.message;
-          brother.dataError = '';
-        }
-        else{
-          console.log('Error:' + data.message);
-          brother.dataError = data.message;
-          brother.dataMessage = '';
-        }
-      }
+    // end the spinner on the page
+    brother.endSpinner = function(){
       brother.processing = false;
-    }
-
+    };
 
     // =========================================================================
-    // ==========================MAIN FUNCTIONS=================================
+    // ====================This function sets up the page=======================
     // =========================================================================
+    // setup default values
+    brother.init = function() {
+      brother.startSpinner();
+      brother.resetMessages();
+      brother.resetInternships();
+      brother.getDefaultPicture('0.jpg');
+    };
 
-    // *************************************
-    // *************************************
-    // get a specific users picture
+    // =========================================================================
+    // ====================These functions GET the initial data=================
+    // =========================================================================
+    // get the default picture from the database '0.jpg'
      brother.getDefaultPicture = function(pictureName){
 
-       // reset any current errors
-       brother.resetErrors();
-
-       // get a picture based on the name (picturenames are unique)
        crudFactory.readPicture(pictureName)
-       .success(function(res){
-         $scope.image_source = "data:image/jpeg;base64, " + res.data;
-         brother.setErrors(res, undefined);
-       })
-       .error(function(res){
-         brother.setErrors(res, undefined);
-       });
+        .then(function(res){
+          if(res.data.success){
+            $scope.image_source = "data:image/jpeg;base64, " + res.data.data;
+          }
+          brother.setPictureMessages(res);
+        });
      };
 
-    // *************************************
-    // *************************************
+    // =========================================================================
+    // ====================These functions POST a new user to the db============
+    // =========================================================================
     // create a user
     brother.saveBrother = function() {
 
       // reset any current errors, remove blank array rows
-      brother.resetErrors();
+      brother.resetMessages();
       brother.spliceArray(brother.userData.internships);
-
       // create a brother
       crudFactory.create(brother.userData)
-      .success(function(res){
-        brother.setErrors(undefined, res);
-        brother.uploadPicture(res.brotherId);
-      })
-      .error(function(res){
-        brother.setErrors(undefined, res);
-      });
+        .then(function(res){
+          if(res.data.success){
+            brother.uploadPicture(res.data.brotherId);
+          }
+          brother.setDataMessages(res);
+        });
     };
 
-    // *************************************
-    // *************************************
-    // upload a brothers picture
+    // save a brothers picture
     brother.uploadPicture = function(brotherId){
       var file = $scope.myFile;
       var method = 'POST';
       var uploadUrl = "/api/pictures/" + brotherId;
       // save the brothers picture using special service
       fileUpload.upload(method, file, uploadUrl, function(data, status, headers, config){
-        brother.setErrors(data, undefined);
+        // the response object is a little different here
+        var res = {};
+        res.data = data;
+        brother.setPictureMessages(res);
+        brother.endSpinner();
       });
     };
 
-    //==========================================================================
-    // ========================HELPER FUNCTIONS=================================
     // =========================================================================
-
-    // *********************************
-    // *********************************
+    // ==========These functions help angular handle file objects===============
+    // =========================================================================
     // for image preview
     $scope.setFile = function(element) {
       $scope.currentFile = element.files[0];
@@ -176,13 +172,10 @@
       reader.readAsDataURL(element.files[0]);
     }
 
-    // *********************************
-    // *********************************
-    // by default they start off with one choice
-    brother.generateInternships = function(){
-      brother.userData.internships = [{id: '1'}];
-    }
-    // only add positions if the name property of the last position is not null
+    // =========================================================================
+    // ==========These functions help handle dynamic row generation=============
+    // =========================================================================
+    // only add if last position is not null
     brother.addNewChoice = function() {
       var newItemNo = brother.userData.internships.length+1;
       if (brother.userData.internships[brother.userData.internships.length-1].name != null){
@@ -190,19 +183,15 @@
       }
     };
 
-    // *********************************
-    // *********************************
-    // if the first item is the last item, don't remove it entirely. only the name property.
+    // if the first item is the last item, simply do the default
     brother.removeChoice = function() {
       var lastItem = brother.userData.internships.length-1;
       if (lastItem === 0)
-        brother.generateInternships();
+        brother.resetInternships();
       else
         brother.userData.internships.splice(lastItem);
     };
 
-    // *********************************
-    // *********************************
     //chop off the last item from the array if it is blank
     brother.spliceArray = function(array){
       var lastItem = array.length-1;
@@ -211,14 +200,16 @@
       }
     };
 
-    // *********************************
-    // *********************************
+
+    // =========================================================================
+    // ============================Setup the form data==========================
+    // =========================================================================
     // Set up the form
     brother.init();
   };
 
   // ===========================================================================
-  // ==========================ATTACH TO APP====================================
+  // ==========================End of controller================================
   // ===========================================================================
   // For minification purposes
   createController.$inject = ['$scope', '$state', '$stateParams', 'crudFactory', 'fileUpload'];

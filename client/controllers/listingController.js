@@ -5,12 +5,10 @@
   var listingController = function(){
 
     // =========================================================================
+    // ====================Set the hardcoded form options=======================
     // =========================================================================
-    // better to use 'controller as' rather than brother
     var listing = this;
 
-    // =========================================================================
-    // =========================================================================
     // for handling checkbox filters
     // set default options
     listing.sortType     = 'roll';
@@ -41,13 +39,14 @@
     ];
 
     // =========================================================================
+    // ==================These functions handle filtering=======================
     // =========================================================================
     // Filter by property
     listing.filterByProperties = function (brother) {
       // Use this snippet for matching with AND
       var matchesAND = true;
       for (var prop in listing.filter) {
-        if (noSubFilter(listing.filter[prop])) continue;
+        if (listing.noSubFilter(listing.filter[prop])) continue;
         if (!listing.filter[prop][brother[prop]]) {
           matchesAND = false;
           break;
@@ -56,10 +55,8 @@
       return matchesAND;
     };
 
-    // =========================================================================
-    // =========================================================================
     // checks if there is any filter activated
-    function noSubFilter(subFilterObj) {
+    listing.noSubFilter = function(subFilterObj) {
       for (var key in subFilterObj) {
         if (subFilterObj[key]) return false;
       }
@@ -67,19 +64,21 @@
     };
 
     // =========================================================================
+    // ==============These functions help the main functions====================
     // =========================================================================
     // set the id of the clicked row in scope because uirouter doesn't accept angular exp as parameters
     listing.setID = function(brother){
       listing.desiredID = brother._id;
     };
-    
-  }
 
-  // =========================================================================
-  // =========================================================================
-    // For minification purposes
-    listingController.$inject = [];
+  };
 
-    // Attach the controller
-    angular.module('zgApp').controller('listingController', listingController);
+  // ===========================================================================
+  // ==========================End of controller================================
+  // ===========================================================================
+  // For minification purposes
+  listingController.$inject = [];
+
+  // Attach the controller
+  angular.module('zgApp').controller('listingController', listingController);
 }());

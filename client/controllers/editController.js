@@ -3,92 +3,144 @@
 
   // this controller handles the editing of brothers
   var editController = function($state, $stateParams, crudFactory, $scope, fileUpload){
-
-    // =========================================================================
-    // =========================================================================
-    // better to use 'controller as' rather than brother
     var brother = this;
+    // The options available for standings
+    brother.standings = [
+      { property : "standing", value: "Active" },
+      { property : "standing", value: "Alumni" },
+    ];
+
+    // The relevant options available for employment seeking status
+    brother.availables = [
+      { property : "available", value: "Internship" },
+      { property : "available", value: "Full-Time" },
+      { property : "available", value: "Part-Time" },
+      { property : "available", value: "Unavailable"}
+    ];
+
+    // The gpa brackets
+    brother.gpas = [
+      { property : "gpa", value: "3.00 - 3.32" },
+      { property : "gpa", value: "3.33 - 3.66" },
+      { property : "gpa", value: "3.67 - 4.00" },
+      { property : "gpa", value: "On Request" },
+    ];
+
 
     // =========================================================================
+    // ==========================SETUP FUNCTIONS================================
     // =========================================================================
-    // get a specific users information
-    brother.init = function() {
-      // set a spinner while we are fetching the data, clear, messages
-      brother.processing = true;
+
+    // *********************************
+    // reset errors
+    brother.resetErrors = function(){
       brother.dataMessage = '';
       brother.pictureMessage = '';
-
-      // The options available for standings
-      brother.standings = [
-        { property : "standing", value: "Active" },
-        { property : "standing", value: "Alumni" },
-      ];
-
-      // The relevant options available for employment seeking status
-      brother.availables = [
-        { property : "available", value: "Internship" },
-        { property : "available", value: "Full-Time" },
-        { property : "available", value: "Part-Time" },
-        { property : "available", value: "Unavailable"}
-      ];
-
-      // The gpa brackets
-      brother.gpas = [
-        { property : "gpa", value: "3.00 - 3.32" },
-        { property : "gpa", value: "3.33 - 3.66" },
-        { property : "gpa", value: "3.67 - 4.00" },
-        { property : "gpa", value: "On Request" },
-      ];
-
-      // get brother
-      brother.get($stateParams.brotherid);
+      brother.dataError = '';
+      brother.pictureError = '';
     };
 
-    // =========================================================================
-    // =========================================================================
+    // start the spinner
+    brother.startSpinner = function(){
+      brother.processing = true;
+    };
+
+    // end the spinner
+    brother.endSpinner = function(){
+      brother.processing = false;
+    };
+
+    brother.checkInternships = function(){
+      // if we shaved off the example because they entered nothing, reset
+      if (brother.userData.internships.length === 0){
+        brother.generateInternships();
+      }
+    };
+
+    brother.setDataMessages = function(res){
+      if(res.success){
+        console.log('Success:' + res.message);
+        brother.dataMessage = res.message;
+        brother.dataError = '';
+      }
+      else{
+        console.log('Error:' + res.message);
+        brother.dataError = res.message;
+        brother.dataMessage = '';
+      }
+    };
+
+    brother.setPictureMessages = function(res){
+      if(res.success){
+        console.log('Success:' + res.message);
+        brother.pictureMessage = res.message;
+        brother.pictureError = '';
+      }
+      else{
+        console.log('Error:' + res.message);
+        brother.pictureError = res.message;
+        brother.pictureMessage = '';
+      }
+    };
+
+    brother.setInfo = function(res){
+      brother.userData = res.info;
+      brother.userData.graduation = new Date(brother.userData.graduation);
+      brother.checkInternships();
+    }
+
+    brother.setPicture = function(res){
+      $scope.image_source = "data:image/jpeg;base64, " + res.data;
+    }
+
+
+
+
+    // ========MAIN FUNCTIONS===========
+    // *********************************
     // get a brothers info
     brother.get = function(id){
 
+      brother.resetErrors();
+      brother.startSpinner();
+
       // get info by id
       crudFactory.read(id)
-      .success(function(res){
-        if (res.success){
-          // show the returned messages, save the brothers info
-          brother.userData = res.info;
-          brother.dataMessage = res.message;
-          // angular doesn't like the returned date, we need to set it this way
-          brother.userData.graduation = new Date(brother.userData.graduation);
-          // if they have no internships
-          if (brother.userData.internships.length === 0)
-            brother.generateInternships();
-          // get the brothers picture given their picture name
+        .success(function(res){
+          brother.setInfo(res);
+          brother.setDataMessages(res);
           brother.readPicture(brother.userData.picture);
-        }
-        console.log (res.message);
-      })
-      .error(function(res){
-        console.log (res.message);
-      })
+        })
+        .error(function(res){
+          brother.setDataMessages(res);
+          brother.endSpinner();
+        });
     };
-
-    // =========================================================================
-    // =========================================================================
+    // *********************************
     // call a service to get a specific users picture
      brother.readPicture = function(pictureName){
        crudFactory.readPicture(pictureName)
        .success(function(res){
-         if (res.success){
-           brother.pictureMessage = res.message;
-           // encode base64 image data into html this way
-           $scope.image_source = "data:image/jpeg;base64, " + res.data;
-           brother.processing = false;
-         }
-        console.log (res.message);
+          brother.setPicture(res);
+          brother.setPictureMessages(res);
+          brother.endSpinner();
        })
        .error(function(res){
-         console.log (res.message);
+          brother.setPictureMessages(res);
+          brother.endSpinner();
        });
-     }
+     };
+
+
+
+
+
+
+
+
+
+
+
 
     // =========================================================================
     // =========================================================================
@@ -179,7 +231,7 @@
     // =========================================================================
     // =========================================================================
     // get the data when the state is loaded
-    brother.init();
+    brother.get($stateParams.brotherid);
   };
 
   // =========================================================================

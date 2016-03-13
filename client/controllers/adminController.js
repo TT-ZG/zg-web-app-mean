@@ -58,12 +58,16 @@
     admin.deletePicture = function(pictureName){
       // delete the picture by pictureName
       crudFactory.deletePicture(pictureName)
+        .then(function(res){
+          console.log(res.data.message);
+        })
+      /*
       .success(function(res){
         console.log(res.message);
       })
       .error(function(res){
         console.log(res.message);
-      });
+      });*/
     };
 
     // *********************************

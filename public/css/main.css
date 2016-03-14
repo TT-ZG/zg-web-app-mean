@@ -22,7 +22,8 @@ hr {
     padding: 0;
 }
 
-
+/*=============================================================================*/
+/* Bootstrap cascade navbar overwrite*/
 /* For the active class on the side bar */
 .sidebar > .active > a,
 .sidebar > .active > a:hover,
@@ -30,6 +31,49 @@ hr {
   background-color: #953633;
 }
 
+/* Remove border on navbar */
+.navbar {
+  border: none;
+}
+
+/*=============================================================================*/
+/* Sidebar transition when logging in and out */
+/* Adjust padding as sidebar is not displayed if not logged in*/
+.page-wrapper--adjusted{
+  padding-left: 0px !important;
+}
+
+.animate-if.ng-enter, .animate-if.ng-leave {
+  transition: all .6s ease 0s;
+}
+
+.animate-if.ng-enter,
+.animate-if.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+.animate-if.ng-leave,
+.animate-if.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+/*=============================================================================*/
+/* Sidebar cascade overwrite*/
+#sidebar-wrapper {
+  background: #7D0906;
+}
+ul.sidebar .sidebar-main a,
+.sidebar-footer,
+ul.sidebar .sidebar-list a:hover,
+#page-wrapper:not(.open) ul.sidebar .sidebar-title.separator {
+  /* Sidebar header and footer color */
+  background: #953633;
+}
+.sidebar-footer {
+  bottom: 45px; /* height of the navbar*/
+}
+
+/*=============================================================================*/
 /* For loading spinner * /
 /* Absolute Center Spinner */
 .loading {

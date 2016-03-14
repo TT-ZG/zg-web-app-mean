@@ -21,7 +21,7 @@
       // update status, refresh active brothers, refresh logged on user
       main.init();
       main.loggedIn = authFactory.isLoggedIn();
-
+      console.log('Logged in:' + main.loggedIn);
       // update the info if logged in
       if(main.loggedIn && $window.localStorage.getItem('token')){
         authFactory.getUser()

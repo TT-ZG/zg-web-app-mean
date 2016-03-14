@@ -47,9 +47,9 @@
 <!-- ========================================================================= -->
 <!-- ========================================================================= -->
 <!-- Main page contents-->
-<div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
-  <!-- Sidebar -->
-  <div id="sidebar-wrapper">
+<div id="page-wrapper" ng-class="{'open': toggle, 'page-wrapper--adjusted': !main.loggedIn}" ng-cloak>
+  <!-- Sidebar ng-class="{'ng-hide': main.loggedIn}"-->
+  <div id="sidebar-wrapper" ng-if="main.loggedIn" class="animate-if">
     <ul class="sidebar">
       <!-- Toggle the sidebar-->
       <li class="sidebar-main">
@@ -60,7 +60,6 @@
       <!-- List of items -->
       <li class="sidebar-list" ui-sref-active-if="main.admin">
         <a ui-sref="main.admin">Admin<span class="menu-icon glyphicon glyphicon-wrench"></span></a>
-
         <!--<a href="#">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>-->
       </li>
     </ul>
@@ -150,9 +149,9 @@
       </div>
       <!-- End Header Bar -->
 
-      <div class="container">
-        <div ui-view></div>
-      </div>
+
+    <div ui-view></div>
+
 
     </div><!-- End Page Content -->
   </div><!-- End Content Wrapper -->

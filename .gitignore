@@ -1,2 +1,11 @@
-config.js
+# configuration files
+server/config/config.js
+
+# tests
+server/tests/api.server.routes.test.js
+
+# node
 node_modules
+
+# bower
+public/lib

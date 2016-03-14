@@ -1,0 +1,51 @@
+<div class="page-header">
+	<h1>
+		<a ui-sref="main.create" class="btn btn-default">
+			<span class="glyphicon glyphicon-plus"></span>
+			New Brother
+		</a>
+	</h1>
+</div>
+
+<div class="table-responsive">
+<table class="table table-bordered table-striped table-condensed">
+	<thead>
+		<tr>
+			<th>Username</th>
+			<th>Password</th>
+			<th>Roll</th>
+			<th>Pledge Class</th>
+			<th>Name</th>
+			<th>Major</th>
+			<th>Available For Hire</th>
+			<th>Standing</th>
+			<th>Graduation</th>
+			<th>GPA</th>
+			<th>picture</th>
+			<th> internships </th>
+			<th class="col-sm-2"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="brother in admin.brothers">
+			<td>{{ brother.username }}</td>
+			<td>(hidden)</td>
+			<td>{{ brother.roll}}</td>
+			<td>{{ brother.pledgeClass}}</td>
+			<td>{{ brother.name }}</td>
+			<td>{{ brother.major }}</td>
+			<td>{{ brother.available}}</td>
+			<td>{{ brother.standing}}</td>
+			<td>{{ brother.graduation | date: 'yyyy-MM-dd' }}</td>
+			<td>{{ brother.gpa}}</td>
+			<td>{{ brother.picture}} </td>
+			<td>{{ brother.internships.length}}</td>
+			<td>
+      <a ng-click="admin.setID(brother._id)" ui-sref="main.edit({brotherid: admin.desiredID})" class="btn btn-danger">E</a>
+			<a ng-click="admin.delete(brother._id, brother.picture)" ui-sref="main.admin" class="btn btn-primary">D</a>
+			<a ng-click="admin.resetPicture(brother._id, brother.picture)" ui-sref="main.admin" class="btn btn-info">R</a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<div>

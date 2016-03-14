@@ -54,7 +54,7 @@
           url: '/admin/brothers/:brotherid',
           templateUrl: 'views/profile.html',
           controller  : 'editController as brother'
-        })
+        });
 
 
     };

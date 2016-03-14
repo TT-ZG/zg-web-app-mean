@@ -15,7 +15,7 @@ brother =  {
   name: "Test-Name",
   username: "Test-Username",
   password: "Test-Password"
-}
+};
 
 // =============================================================================
 // =============================================================================
@@ -58,7 +58,7 @@ describe('Brother Schema Unit Tests', function() {
       }).save(function(err){
         should.exist(err);
         done();
-      })
+      });
     });
 
     it('throws an error when password not provided', function(done){
@@ -67,7 +67,7 @@ describe('Brother Schema Unit Tests', function() {
       }).save(function(err){
         should.exist(err);
         done();
-      })
+      });
     });
 
   });

@@ -42,7 +42,7 @@
       crudFactory.deletePicture(pictureName)
         .then(function(res){
           console.log(res.data.message);
-        })
+        });
     };
 
     // delete a brothers picture

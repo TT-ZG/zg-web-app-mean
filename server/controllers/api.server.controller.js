@@ -112,7 +112,7 @@ exports.me = function(req, res) {
       res.status(200).send({ success: true, message: '200 - OK: Successfully retrieved logged in user.', info: brother });
     }
   });
-}
+};
 
 // =============================================================================
 // =============================================================================

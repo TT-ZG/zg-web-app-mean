@@ -75,7 +75,7 @@ brotherSchema.pre('save', function(next) {
   var brother = this;
 
   // get and set the current time
-  var currentTime = new Date;
+  var currentTime = new Date();
   brother.updated_at = currentTime;
   if(!this.created_at) this.created_at = currentTime;
 

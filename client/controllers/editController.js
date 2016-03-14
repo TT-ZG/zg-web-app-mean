@@ -190,8 +190,8 @@
 
       reader.onload = function(event) {
         $scope.image_source = event.target.result;
-        $scope.$apply()
-      }
+        $scope.$apply();
+      };
       // when the file is read it triggers the onload event above.
       reader.readAsDataURL(element.files[0]);
     };
@@ -202,7 +202,7 @@
     // only add if last position is not null
     brother.addNewChoice = function() {
       var newItemNo = brother.userData.internships.length+1;
-      if (brother.userData.internships[brother.userData.internships.length-1].name != null){
+      if (brother.userData.internships[brother.userData.internships.length-1].name !== null){
         brother.userData.internships.push({'id':newItemNo});
       }
     };

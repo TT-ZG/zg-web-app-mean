@@ -21,5 +21,5 @@ angular.module('zgApp').service('fileUpload', ['$http', function ($http) {
     }
 
 
- }
+ };
 }]);

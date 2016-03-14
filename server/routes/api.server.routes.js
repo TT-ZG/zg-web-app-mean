@@ -23,7 +23,7 @@ router.route('/brothers/:brother_id')
 
 // Retrieving a single brother's picture is allowed to the public
 router.route('/pictures/:id')
-  .get(api.readPicture)
+  .get(api.readPicture);
 
 // To use any of the following routes, a token is required
 router.use(api.tokens);

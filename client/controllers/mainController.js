@@ -2,7 +2,7 @@
 (function() {
 
   // this controller handles everything on the public side:
-  var mainController = function($state, $rootScope, authFactory, crudFactory, $window){
+  var mainController = function($state, $scope, $rootScope, authFactory, crudFactory, $window, $cookieStore){
 
     // =========================================================================
     // ================Set the initial logged in status=========================
@@ -73,13 +73,44 @@
       main.current = '';
       main.loggedIn = false;
     };
+
+    // =========================================================================
+    // ================These functions handle the offcanvas sidebar=============
+    // =========================================================================
+    var mobileView = 992;
+
+    $scope.getWidth = function() {
+        return window.innerWidth;
+    };
+
+    $scope.$watch($scope.getWidth, function(newValue, oldValue) {
+        if (newValue >= mobileView) {
+            if (angular.isDefined($cookieStore.get('toggle'))) {
+                $scope.toggle = ! $cookieStore.get('toggle') ? false : true;
+            } else {
+                $scope.toggle = true;
+            }
+        } else {
+            $scope.toggle = false;
+        }
+
+    });
+
+    $scope.toggleSidebar = function() {
+        $scope.toggle = !$scope.toggle;
+        $cookieStore.put('toggle', $scope.toggle);
+    };
+
+    window.onresize = function() {
+        $scope.$apply();
+    };
   };
 
   // ===========================================================================
   // ==========================End of controller================================
   // ===========================================================================
   // for minification purposes
-  mainController.$inject = ['$state', '$rootScope', 'authFactory', 'crudFactory', '$window'];
+  mainController.$inject = ['$state', '$scope', '$rootScope', 'authFactory', 'crudFactory', '$window', '$cookieStore'];
 
   // Attach the controller to the app
   angular.module('zgApp').controller('mainController', mainController);

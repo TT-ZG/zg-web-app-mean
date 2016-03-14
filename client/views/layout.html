@@ -1,8 +1,7 @@
+<!-- ========================================================================= -->
+<!-- ========================================================================= -->
 <!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
-
-  <div class="container-fluid">
-    <!-- ================================================================= -->
     <!-- Collapse to hamburger menu -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -17,86 +16,52 @@
       </a>
     </div>
 
-    <!-- ================================================================= -->
     <!-- Main nav bar items-->
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <!--
-        <li>
-          <a>
-            <span></span> Current State: {{main.$state.current.name}}
-          </a>
-        </li>-->
-
         <!-- Home tab-->
         <li ui-sref-active-if="main.home">
-          <!-- For full screen-->
-          <a ui-sref="main.home">
-            <span class="glyphicon glyphicon-home"></span> Home
-          </a>
+          <a ui-sref="main.home"><span class="glyphicon glyphicon-home"></span> Home</a>
         </li>
 
         <!-- Search tab-->
         <li ui-sref-active-if="main.brothers">
-          <!-- For full screen-->
-          <a ui-sref="main.brothers">
-            <span class="glyphicon glyphicon-search"></span> Brothers
-          </a>
+          <a ui-sref="main.brothers"><span class="glyphicon glyphicon-search"></span> Brothers</a>
         </li>
-
       </ul>
 
-      <!-- ================================================================= -->
       <!-- Right navbar items-->
       <ul class="nav navbar-nav navbar-right">
-
-        <!-- Search tab-->
-        <li ui-sref-active-if="main.admin">
-          <!-- For full screen-->
-          <a ui-sref="main.admin">
-            <span class="glyphicon glyphicon-wrench"></span> Admin
-          </a>
-        </li>
-
         <!-- If the user is logged in ...-->
         <li ng-if="main.loggedIn">
-          <a ui-sref="main.home" ng-click="main.doLogout()">
-            <span class="glyphicon glyphicon-off"></span> Logout
-          </a>
+          <a ui-sref="main.home" ng-click="main.doLogout()"><span class="glyphicon glyphicon-off"></span> Logout</a>
         </li>
-
         <!-- If the user is not logged in ...-->
         <li ui-sref-active-if="main.login" ng-if="!main.loggedIn">
-          <a ui-sref="main.login">
-            <span class="glyphicon glyphicon-log-in"></span> Login
-          </a>
+          <a ui-sref="main.login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
         </li>
-
-
-
       </ul>
     </div> <!-- .navbar collapse -->
-  </div> <!-- .container-fluid -->
 </nav>
 
-
+<!-- ========================================================================= -->
+<!-- ========================================================================= -->
+<!-- Main page contents-->
 <div id="page-wrapper" ng-class="{'open': toggle}" ng-cloak>
-
   <!-- Sidebar -->
   <div id="sidebar-wrapper">
     <ul class="sidebar">
+      <!-- Toggle the sidebar-->
       <li class="sidebar-main">
-        <a ng-click="toggleSidebar()">
-          Dashboard
-          <span class="menu-icon glyphicon glyphicon-transfer"></span>
-        </a>
+        <a ng-click="toggleSidebar()">Dashboard<span class="menu-icon glyphicon glyphicon-transfer"></span></a>
       </li>
+      <!-- Header-->
       <li class="sidebar-title"><span>NAVIGATION</span></li>
-      <li class="sidebar-list">
-        <a href="#">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
-      </li>
-      <li class="sidebar-list">
-        <a href="#/tables">Tables <span class="menu-icon fa fa-table"></span></a>
+      <!-- List of items -->
+      <li class="sidebar-list" ui-sref-active-if="main.admin">
+        <a ui-sref="main.admin">Admin<span class="menu-icon glyphicon glyphicon-wrench"></span></a>
+
+        <!--<a href="#">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>-->
       </li>
     </ul>
     <div class="sidebar-footer">
@@ -185,24 +150,10 @@
       </div>
       <!-- End Header Bar -->
 
-      <!-- Main Content -->
-      <div ui-view></div>
+      <div class="container">
+        <div ui-view></div>
+      </div>
 
     </div><!-- End Page Content -->
   </div><!-- End Content Wrapper -->
 </div><!-- End Page Wrapper -->
-
-
-
-
-
-
-
-
-
-
-
-<!-- Angular injected views -->
-<div class="container">
-  <div ui-view></div>
-</div>

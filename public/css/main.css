@@ -1,6 +1,6 @@
 /* Give some padding for the navbar */
 body {
-  padding-top: 90px;
+  padding-top: 45px;
 }
 
 /* Clear floats */
@@ -22,10 +22,12 @@ hr {
     padding: 0;
 }
 
-/* For the picture thumbnail*/
-.thumb {
-    width: 250px;
-    height: 250px;
+
+/* For the active class on the side bar */
+.sidebar > .active > a,
+.sidebar > .active > a:hover,
+.sidebar > .active > a:focus {
+  background-color: #953633;
 }
 
 /* For loading spinner * /

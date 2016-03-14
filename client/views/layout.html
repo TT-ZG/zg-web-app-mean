@@ -12,9 +12,14 @@
       </button>
 
       <!-- Cog Icon -->
-      <a class="navbar-brand">
+
+      <a ng-if="main.loggedIn" href="#menu-toggle" class="navbar-brand" id="menu-toggle">
         <i class="fa fa-cog fa-spin"></i><span> UF &Theta;&Tau;</span>
       </a>
+      <a ng-if="!main.loggedIn" class="navbar-brand">
+        <i class="fa fa-cog fa-spin"></i><span> UF &Theta;&Tau;</span>
+      </a>
+
     </div>
 
     <!-- Main nav bar items-->
@@ -30,7 +35,6 @@
           <a ui-sref="main.brothers"><span class="glyphicon glyphicon-search"></span> Brothers</a>
         </li>
       </ul>
-
       <!-- Right navbar items-->
       <ul class="nav navbar-nav navbar-right">
         <!-- If the user is logged in ...-->
@@ -46,6 +50,45 @@
   </div>
 </nav>
 
+
+<!-- ========================================================================= -->
+<!-- ========================================================================= -->
+<!-- Sidebar and content-->
+<div id="wrapper"  ng-class="{'page-wrapper--adjusted': !main.loggedIn}">
+
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper" ng-if="main.loggedIn" class="animate-if">
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand">
+        <a>
+          Dashboard
+        </a>
+      </li>
+      <li ui-sref-active-if="main.admin">
+        <a ui-sref="main.admin">
+          Admin
+          <span class="pull-right"><i class="glyphicon glyphicon-wrench"></i></span>
+        </a>
+      </li>
+    </ul>
+  </div> <!-- /#sidebar-wrapper -->
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12" ui-view>
+        </div>
+      </div>
+    </div>
+  </div><!-- /#page-content-wrapper -->
+ </div> <!-- /#wrapper -->
+
+
+
+
+
+<!--
 <div id="page-wrapper">
   <div id="page-viewport">
     <div id="sidebar" ng-if="main.loggedIn" class="animate-if">
@@ -69,17 +112,7 @@
       <div ui-view></div>
     </div>
   </div>
-</div>
-
-
-
-
-
-
-
-
-
-
+</div>-->
 <!-- ========================================================================= -->
 <!-- ========================================================================= -->
 <!--

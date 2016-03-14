@@ -11,19 +11,8 @@ $(document).on('click',function(){
 });
 
 
-$(document).on('click', '.toggle-sidebar', function() {
-  toggleSideBar();
-});
-
-
-function toggleSideBar() {
-
-    if ($('#page-wrapper').hasClass('show-sidebar')) {
-        // Do things on Nav Close
-        $('#page-wrapper').removeClass('show-sidebar');
-    } else {
-        // Do things on Nav Open
-        $('#page-wrapper').addClass('show-sidebar');
-    }
-    //$('#site-wrapper').toggleClass('show-nav');
-}
+$(document).on('click', '#menu-toggle', function(e) {
+    console.log('herr');
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });

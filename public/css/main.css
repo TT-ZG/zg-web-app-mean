@@ -121,7 +121,8 @@ hr {
 /* Sidebar transition when logging in and out */
 /* Adjust padding as sidebar is not displayed if not logged in*/
 .page-wrapper--adjusted{
-  padding-left: 0px !important;
+  left: 0px !important;
+  width: -webkit-calc(100%) !important;
 }
 
 .animate-if.ng-enter, .animate-if.ng-leave {
@@ -140,66 +141,74 @@ hr {
 
 /*=============================================================================*/
 /* Sidebar cascade overwrite*/
-#sidebar-wrapper {
-  background: maroon;
+
+.navbar {
+  margin-bottom:0px;
+}
+#page-wrapper {
+  position: fixed;
+  width:100%;
+  height:100%;
+  top:40px;
+  left:0;
 }
 
-/* Sidebar header and footer color */
-ul.sidebar .sidebar-main a, .sidebar-footer,
-#page-wrapper:not(.open) ul.sidebar .sidebar-title.separator {
-  background: brown;
-}
-.sidebar-footer {
-  bottom: 40px; /* height of the navbar*/
-}
-ul.sidebar .sidebar-title {
-  color: ivory;
-}
-ul.sidebar .sidebar-list a {
-  color: ivory;
-}
-ul.sidebar .sidebar-list a:hover {
-  color: gold;
-  background-color: brown;
-}
-/*
-li.active {
-  background-color: brown;
-}*/
-ul.sidebar .sidebar-list.active{
-  background-color: brown;
-}
-.sidebar-footer div a, .sidebar-footer div span {
-  color: ivory;
-  text-decoration: none;
-}
-.sidebar-footer div a:hover {
-  color: gold;
+#page-viewport {
+  position:relative;
+  width:100%;
+  height:100%;
+  transition: .5s ease all;
 }
 
-/*
-ul.sidebar li a {
-  width: 196px;
+#sidebar {
+  position: absolute;
+  width: 250px;
+  height: 100%;
+  left:-200px;
+  background-color:#f9f9f9;
+  padding: 5px;
 }
 
-#sidebar-wrapper {
-  left: -5px;
-  width: 196px;
+#sidebar h3 {
+  display:inline;
+  position:relative;
+  top:5px;
+  left:5px;
+}
+#sidebar a:hover {
+  text-decoration:none;
 }
 
-ul.sidebar .sidebar-main .menu-icon{
-  padding-right: 14px;
+#sidebar-header {
+  height: 40px;
+  border-bottom:1px solid #f0f0f0;
 }
 
-ul.sidebar .sidebar-list .menu-icon {
-  width: 55px;
+#sidebar-page-content {
+  position:absolute;
+  width: -webkit-calc(100% - 50px);
+  left:50px;
+  padding: 5px;
+  transition: .5s ease all;
 }
 
-@media only screen and (max-width: 560px) {
-body.hamburg #page-wrapper:not(.open) #sidebar-wrapper {
- left: -75px ;
+#page-content {
+  padding: 5px;
 }
-}*/
+
+#page-wrapper.show-sidebar #page-viewport {
+  -webkit-transform: translateX(200px);
+}
+
+#page-wrapper.show-sidebar #sidebar-page-content {
+  width: -webkit-calc(100% - 250px);
+}
+
+
+
+
+
+
 
 /*=============================================================================*/
 /* For loading spinner * /

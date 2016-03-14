@@ -20,7 +20,9 @@
     "bootstrap": "~3.3.6",
     "font-awesome": "fontawesome#^4.5.0",
     "jquery": "~2.1.4",
-    "ngAnimate": "*",
-    "rdash-ui": "1.0.*"
+    "ngAnimate": "*"
+  },
+  "resolutions": {
+    "angular": "1.5.0"
   }
 }

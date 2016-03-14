@@ -1,6 +1,7 @@
 /* Give some padding for the navbar */
 body {
   padding-top: 40px;
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 /* Clear floats */
@@ -147,74 +148,8 @@ hr {
 
 /*=============================================================================*/
 /* Sidebar*/
-
-/*
-#page-wrapper {
-  /*position: fixed;
-  position: absolute;
-  width:100%;
-  height:100%;
-  top:40px;
-  left:0;
-}
-
-#page-viewport {
-  position:relative;
-  width:100%;
-  height:100%;
-  transition: .5s ease all;
-}
-
-#sidebar {
-  position: absolute;
-  width: 250px;
-  height: 100%;
-  left:-200px;
-  background-color:#f9f9f9;
-  padding: 5px;
-  overflow: hidden;
-}
-
-#sidebar h3 {
-  display:inline;
-  position:relative;
-  top:5px;
-  left:5px;
-}
-#sidebar a:hover {
-  text-decoration:none;
-}
-
-#sidebar-header {
-  height: 40px;
-  border-bottom:1px solid #f0f0f0;
-}
-
-#sidebar-page-content {
-  border: solid red 1px;
-  position:absolute;
-  width: -webkit-calc(100% - 50px);
-  left:50px;
-  padding: 5px;
-  transition: .5s ease all;
-}
-
-#page-content {
-  padding: 5px;
-}
-
-#page-wrapper.show-sidebar #page-viewport {
-  -webkit-transform: translateX(200px);
-}
-
-#page-wrapper.show-sidebar #sidebar-page-content {
-  width: -webkit-calc(100% - 250px);
-}*/
-/* Toggle Styles */
-
-/* If you want to change the width, change every value
-in this section with a CSS length of '150px' to your
-desired width*/
+/*If you want to change the width, change everything in this section that is
+'93px' to whatever size you want'.*/
 #wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
@@ -224,16 +159,16 @@ desired width*/
 }
 
 #wrapper.toggled {
-    padding-left: 100px;
+    padding-left: 93px;
 }
 
 #sidebar-wrapper {
     z-index: 1000;
     position: fixed;
-    left: 100px;
+    left: 93px;
     width: 0;
     height: 100%;
-    margin-left: -100px;
+    margin-left: -93px;
     overflow-y: auto;
     background: maroon;
     -webkit-transition: all 0.5s ease;
@@ -243,7 +178,7 @@ desired width*/
 }
 
 #wrapper.toggled #sidebar-wrapper {
-    width: 100px;
+    width: 93px;
 }
 
 #page-content-wrapper {
@@ -254,14 +189,14 @@ desired width*/
 
 #wrapper.toggled #page-content-wrapper {
     position: absolute;
-    margin-right: -100px;
+    margin-right: -93px;
 }
 
 /* Sidebar Styles */
 .sidebar-nav {
     position: absolute;
     top: 0;
-    width: 100px;
+    width: 93px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -313,7 +248,7 @@ desired width*/
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 100px;
+        padding-left: 93px;
     }
 
     #wrapper.toggled {
@@ -321,7 +256,7 @@ desired width*/
     }
 
     #sidebar-wrapper {
-        width: 100px;
+        width: 93px;
     }
 
     #wrapper.toggled #sidebar-wrapper {

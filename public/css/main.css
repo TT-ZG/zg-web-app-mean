@@ -25,47 +25,74 @@ hr {
 /*=============================================================================*/
 /* Bootstrap cascade navbar overwrite*/
 
-/* Remove border, change height and padding on navbar */
+/* Remove border, change height and padding on navbar
 .navbar-nav > li > a, .navbar-brand {
     padding-top:10px !important;
     padding-bottom:0 !important;
     height: 40px;
 }
-.navbar {
+.navbar-fixed-top {
   min-height:40px !important;
   border: none;
+}*/
+/* Navbar height */
+.navbar {
+    min-height: 40px !important;
+    border: none;
+}
+.navbar-brand,
+.navbar-nav>li>a {
+    line-height: 40px;
+    padding: 1px 15px;
+    height: 40px;
+}
+/* Toggle button size */
+.navbar-toggle {
+    margin: 7px;
+    padding: 7px;
+}
+.navbar-toggle .icon-bar {
+    width: 14px;
+}
+.navbar-toggle .icon-bar+.icon-bar {
+    margin-top: 2px;
 }
 
 /* navbar */
 .navbar-default {
     background-color: #7D0906;
+    background-color: maroon;
 }
 /* title */
 .navbar-default .navbar-brand {
-    color: #fff;
+    color: ivory;
 }
 /* link */
 .navbar-default .navbar-nav > li > a {
-    color: #b2bfdc;
+    /*color: #b2bfdc;*/
+    color: ivory;
 }
 
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-    color: #fff;
+    color: ivory;
 }
 
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-    color: #fff;
+    color: gold;
 }
 
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
-    color: #b2bfdc;
-    background-color: #953633;
+    color: ivory;
+    background-color: brown;
 }
 
+.icon-bar{
+  color: ivory;
+}
 
 /*
 .navbar-default .navbar-nav > .open > a,
@@ -114,31 +141,43 @@ hr {
 /*=============================================================================*/
 /* Sidebar cascade overwrite*/
 #sidebar-wrapper {
-  background: #7D0906;
+  background: maroon;
 }
 
+/* Sidebar header and footer color */
 ul.sidebar .sidebar-main a, .sidebar-footer,
-ul.sidebar .sidebar-list a:hover,
 #page-wrapper:not(.open) ul.sidebar .sidebar-title.separator {
-  /* Sidebar header and footer color */
-  background: #953633;
+  background: brown;
 }
 .sidebar-footer {
   bottom: 40px; /* height of the navbar*/
 }
-
-/* Change the color of the title */
 ul.sidebar .sidebar-title {
-  color: #BC817F;
+  color: ivory;
+}
+ul.sidebar .sidebar-list a {
+  color: ivory;
+}
+ul.sidebar .sidebar-list a:hover {
+  color: gold;
+  background-color: brown;
+}
+/*
+li.active {
+  background-color: brown;
+}*/
+ul.sidebar .sidebar-list.active{
+  background-color: brown;
+}
+.sidebar-footer div a, .sidebar-footer div span {
+  color: ivory;
+  text-decoration: none;
+}
+.sidebar-footer div a:hover {
+  color: gold;
 }
 
-/* For the active class on the side bar */
-.sidebar > .active > a,
-.sidebar > .active > a:hover,
-.sidebar > .active > a:focus {
-  background-color: #953633;
-}
-
+/*
 ul.sidebar li a {
   width: 196px;
 }
@@ -156,6 +195,11 @@ ul.sidebar .sidebar-list .menu-icon {
   width: 55px;
 }
 
+@media only screen and (max-width: 560px) {
+body.hamburg #page-wrapper:not(.open) #sidebar-wrapper {
+ left: -75px ;
+}
+}*/
 
 /*=============================================================================*/
 /* For loading spinner * /

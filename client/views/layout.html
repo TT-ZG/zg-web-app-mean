@@ -2,6 +2,7 @@
 <!-- ========================================================================= -->
 <!-- Fixed navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
     <!-- Collapse to hamburger menu -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -42,6 +43,7 @@
         </li>
       </ul>
     </div> <!-- .navbar collapse -->
+  </div>
 </nav>
 
 <!-- ========================================================================= -->
@@ -62,22 +64,18 @@
         <a ui-sref="main.admin">Admin<span class="menu-icon glyphicon glyphicon-wrench"></span></a>
         <!--<a href="#">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>-->
       </li>
+      <li class="sidebar-list" ui-sref-active-if="main.home">
+        <a ui-sref="main.home">Admin<span class="menu-icon glyphicon glyphicon-wrench"></span></a>
+        <!--<a href="#">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>-->
+      </li>
     </ul>
     <div class="sidebar-footer">
-      <div class="col-xs-4">
-        <a href="https://github.com/rdash/rdash-angular" target="_blank">
-          Github
+      <div class="col-xs-12">
+        <span>Made with</span>
+        <a href="https://github.com/jmclemore368" target="_blank">
+          <i class="fa fa-heart pulse"></i>
         </a>
-      </div>
-      <div class="col-xs-4">
-        <a href="https://github.com/rdash/rdash-angular/README.md" target="_blank">
-          About
-        </a>
-      </div>
-      <div class="col-xs-4">
-        <a href="#">
-          Support
-        </a>
+        <span> in H&amp;T </span>
       </div>
     </div>
   </div>

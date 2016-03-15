@@ -2,7 +2,7 @@
 (function() {
 
   // this controller handles everything on the public side:
-  var mainController = function($state, $rootScope, authFactory, crudFactory, $window){
+  var mainController = function($state, $scope, $rootScope, authFactory, crudFactory, $window, $cookieStore){
 
     // =========================================================================
     // ================Set the initial logged in status=========================
@@ -21,7 +21,7 @@
       // update status, refresh active brothers, refresh logged on user
       main.init();
       main.loggedIn = authFactory.isLoggedIn();
-
+      console.log('Logged in:' + main.loggedIn);
       // update the info if logged in
       if(main.loggedIn && $window.localStorage.getItem('token')){
         authFactory.getUser()
@@ -79,7 +79,7 @@
   // ==========================End of controller================================
   // ===========================================================================
   // for minification purposes
-  mainController.$inject = ['$state', '$rootScope', 'authFactory', 'crudFactory', '$window'];
+  mainController.$inject = ['$state', '$scope', '$rootScope', 'authFactory', 'crudFactory', '$window', '$cookieStore'];
 
   // Attach the controller to the app
   angular.module('zgApp').controller('mainController', mainController);

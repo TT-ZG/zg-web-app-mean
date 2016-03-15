@@ -9,3 +9,10 @@ $(document).on('click','.navbar-collapse.in',function(e) {
 $(document).on('click',function(){
 	$('.collapse').collapse('hide');
 });
+
+
+$(document).on('click', '#menu-toggle', function(e) {
+    console.log('herr');
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+  });

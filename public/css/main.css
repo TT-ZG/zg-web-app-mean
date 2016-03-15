@@ -1,6 +1,7 @@
 /* Give some padding for the navbar */
 body {
-  padding-top: 90px;
+  /*padding-top: 40px;*/
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 /* Clear floats */
@@ -22,12 +23,407 @@ hr {
     padding: 0;
 }
 
-/* For the picture thumbnail*/
-.thumb {
-    width: 250px;
-    height: 250px;
+/*=============================================================================*/
+/* Bootstrap cascade navbar overwrite*/
+
+/* Remove border, change height and padding on navbar
+.navbar-nav > li > a, .navbar-brand {
+    padding-top:10px !important;
+    padding-bottom:0 !important;
+    height: 40px;
+}
+.navbar-fixed-top {
+  min-height:40px !important;
+  border: none;
+}*/
+/* Navbar height */
+.navbar {
+    min-height: 30px !important;
+    border-radius: 0 !important;
+    border: none;
+    padding: 0;
+    margin: 0;
+    /*
+    position: fixed !important;
+    width: 100%;
+    top: 0px;
+
+    width: 100%;
+    border: none;
+    z-index: 9999;*/
+  }
+.navbar-brand,
+.navbar-nav>li>a {
+    line-height: 30px;
+    padding: 1px 15px;
+    height: 30px;
+}
+/* Toggle button size */
+.navbar-toggle {
+    margin: 4px 7px;
+    padding: 4px 7px;
+}
+.navbar-toggle .icon-bar {
+    width: 14px;
+}
+.navbar-toggle .icon-bar+.icon-bar {
+    margin-top: 3px;
 }
 
+/* navbar */
+.navbar-default {
+    background-color: #7D0906;
+    background-color: maroon;
+}
+/* title */
+.navbar-default .navbar-brand {
+    color: ivory;
+}
+/* link */
+.navbar-default .navbar-nav > li > a {
+    /*color: #b2bfdc;*/
+    color: ivory;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: ivory;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: gold;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: ivory;
+    background-color: brown;
+}
+
+.icon-bar{
+  color: ivory;
+}
+
+/*
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #555;
+    background-color: #D5D5D5;
+}
+.navbar-default .navbar-nav > .dropdown > a .caret {
+    border-top-color: #777;
+    border-bottom-color: #777;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+    border-top-color: #333;
+    border-bottom-color: #333;
+}
+.navbar-default .navbar-nav > .open > a .caret,
+.navbar-default .navbar-nav > .open > a:hover .caret,
+.navbar-default .navbar-nav > .open > a:focus .caret {
+    border-top-color: #555;
+    border-bottom-color: #555;
+}*/
+
+/*=============================================================================*/
+/* Sidebar transition when logging in and out */
+/* Adjust padding as sidebar is not displayed if not logged in*/
+.page-wrapper--adjusted{
+}
+@media(min-width:768px) {
+    .page-wrapper--adjusted {
+        padding-left: 0px !important;
+    }
+}
+
+.animate-if.ng-enter, .animate-if.ng-leave {
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.animate-if.ng-enter,
+.animate-if.ng-leave.ng-leave-active {
+  opacity:0;
+}
+
+.animate-if.ng-leave,
+.animate-if.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
+/*=============================================================================*/
+/* Sidebar*/
+/*If you want to change the width, change everything in this section that is
+'93px' to whatever size you want'.*/
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 93px;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position:fixed;
+    left: 93px;
+    width: 0;
+    height: 100%;
+    margin-left: -93px;
+    overflow-y: auto;
+    /*overflow-x: hidden; /*NEW*/
+    background: maroon;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 93px;
+}
+
+#page-content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -93px;
+}
+
+/* Sidebar Styles */
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 93px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 2px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: ivory;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: gold;
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav li.active{
+  background-color: brown;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 65px;
+    font-size: 18px;
+    line-height: 60px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: ivory;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+ .sidebar-nav li  a  i{
+   padding-right: 20px;
+ }
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 93px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 93px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 0;
+    }
+
+    #page-content-wrapper {
+        padding: 20px;
+        position: relative;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0;
+    }
+}
+
+/* Equal to the height of the navbar */
+#wrapper{
+  padding-top: 30px;
+}
+
+/* Add some extra padding */
+#page-content-wrapper{
+  padding-top: 20px;
+}
+
+/*=============================================================================*/
+/* Footer */
+
+/* Vertically center div and its contents */
+.center{
+  text-align: center;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  color: ivory;
+}
+/* Same height as nav */
+.footer{
+  height: 30px;
+  background-color: maroon;
+}
+
+/*=============================================================================*/
+/* Icons */
+
+.fa-heart:hover{
+  color: gold !important;
+}
+
+.list-unstyled {
+ list-style: none;
+  height: 30px;
+  padding: 0;
+  margin: 0;
+}
+.list-inline li {
+	display: inline-block;
+	padding-left: 5px;
+  padding-top: 3px;
+  height: 100%;
+}
+
+.list-inline li a {
+  height: 25px;
+}
+/*Change icons size here*/
+.social-icons .fa {
+	font-size: 1.5em;
+}
+/*Change icons circle size and color here*/
+.social-icons .fa {
+	width: 25px;
+	height: 25px;
+	line-height: 25px;
+	text-align: center;
+	color: #FFF;
+	color: rgba(255, 255, 255, 0.8);
+	-webkit-transition: all 0.3s ease-in-out;
+	-moz-transition: all 0.3s ease-in-out;
+	-ms-transition: all 0.3s ease-in-out;
+	-o-transition: all 0.3s ease-in-out;
+	transition: all 0.3s ease-in-out;
+}
+
+.social-icons.icon-circle .fa{
+	border-radius: 50%;
+}
+.social-icons.icon-rounded .fa{
+	border-radius:5px;
+}
+.social-icons.icon-flat .fa{
+	border-radius: 0;
+}
+
+.social-icons .fa:hover, .social-icons .fa:active {
+	color: #FFF;
+	-webkit-box-shadow: 1px 1px 3px #333;
+	-moz-box-shadow: 1px 1px 3px #333;
+	box-shadow: 1px 1px 3px #333;
+}
+.social-icons.icon-zoom .fa:hover, .social-icons.icon-zoom .fa:active {
+ 	-webkit-transform: scale(1.1);
+	-moz-transform: scale(1.1);
+	-ms-transform: scale(1.1);
+	-o-transform: scale(1.1);
+	transform: scale(1.1);
+}
+.social-icons.icon-rotate .fa:hover, .social-icons.icon-rotate .fa:active {
+	-webkit-transform: scale(1.1) rotate(360deg);
+	-moz-transform: scale(1.1) rotate(360deg);
+	-ms-transform: scale(1.1) rotate(360deg);
+	-o-transform: scale(1.1) rotate(360deg);
+	transform: scale(1.1) rotate(360deg);
+}
+
+.social-icons .fa-adn{background-color:#504e54;}
+.social-icons .fa-apple{background-color:#aeb5c5;}
+.social-icons .fa-android{background-color:#A5C63B;}
+.social-icons .fa-bitbucket,.social-icons .fa-bitbucket-square{background-color:#003366;}
+.social-icons .fa-bitcoin,.social-icons .fa-btc{background-color:#F7931A;}
+.social-icons .fa-css3{background-color:#1572B7;}
+.social-icons .fa-dribbble{background-color:#F46899;}
+.social-icons .fa-dropbox{background-color:#018BD3;}
+.social-icons .fa-facebook,.social-icons .fa-facebook-square{background-color:#3C599F;}
+.social-icons .fa-flickr{background-color:#FF0084;}
+.social-icons .fa-foursquare{background-color:#0086BE;}
+.social-icons .fa-github,.social-icons .fa-github-alt,.social-icons .fa-github-square{background-color:#070709;}
+.social-icons .fa-google-plus,.social-icons .fa-google-plus-square{background-color:#CF3D2E;}
+.social-icons .fa-html5{background-color:#E54D26;}
+.social-icons .fa-instagram{background-color:#A1755C;}
+.social-icons .fa-linkedin,.social-icons .fa-linkedin-square{background-color:#0085AE;}
+.social-icons .fa-linux{background-color:#FBC002;color:#333;}
+.social-icons .fa-maxcdn{background-color:#F6AE1C;}
+.social-icons .fa-pagelines{background-color:#241E20;color:#3984EA;}
+.social-icons .fa-pinterest,.social-icons .fa-pinterest-square{background-color:#CC2127;}
+.social-icons .fa-renren{background-color:#025DAC;}
+.social-icons .fa-skype{background-color:#01AEF2;}
+.social-icons .fa-stack-exchange{background-color:#245590;}
+.social-icons .fa-stack-overflow{background-color:#FF7300;}
+.social-icons .fa-trello{background-color:#265A7F;}
+.social-icons .fa-tumblr,.social-icons .fa-tumblr-square{background-color:#314E6C;}
+.social-icons .fa-twitter,.social-icons .fa-twitter-square{background-color:#32CCFE;}
+.social-icons .fa-vimeo-square{background-color:#229ACC;}
+.social-icons .fa-vk{background-color:#375474;}
+.social-icons .fa-weibo{background-color:#D72B2B;}
+.social-icons .fa-windows{background-color:#12B6F3;}
+.social-icons .fa-xing,.social-icons .fa-xing-square{background-color:#00555C;}
+.social-icons .fa-youtube,.social-icons .fa-youtube-play,.social-icons .fa-youtube-square{background-color:#C52F30;}
+
+
+
+
+/*=============================================================================*/
 /* For loading spinner * /
 /* Absolute Center Spinner */
 .loading {

@@ -1,8 +1,6 @@
-<!-- Fixed navbar -->
+<!-- Navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
-
   <div class="container-fluid">
-    <!-- ================================================================= -->
     <!-- Collapse to hamburger menu -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -12,75 +10,143 @@
       </button>
 
       <!-- Cog Icon -->
-      <a class="navbar-brand">
-        <i class="fa fa-cog fa-spin fa-lg"></i><span> UF Theta Tau</span>
+
+      <a ng-if="main.loggedIn" href="#menu-toggle" class="navbar-brand" id="menu-toggle">
+        <i class="fa fa-cog fa-spin"></i><span> UF &Theta;&Tau;</span>
       </a>
+      <a ng-if="!main.loggedIn" class="navbar-brand">
+        <i class="fa fa-cog fa-spin"></i><span> UF &Theta;&Tau;</span>
+      </a>
+
     </div>
 
-    <!-- ================================================================= -->
     <!-- Main nav bar items-->
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <!--
-        <li>
-          <a>
-            <span></span> Current State: {{main.$state.current.name}}
-          </a>
-        </li>-->
-
         <!-- Home tab-->
         <li ui-sref-active-if="main.home">
-          <!-- For full screen-->
-          <a ui-sref="main.home">
-            <span class="glyphicon glyphicon-home"></span> Home
-          </a>
+          <a ui-sref="main.home"><span class="glyphicon glyphicon-home"></span> Home</a>
         </li>
 
         <!-- Search tab-->
         <li ui-sref-active-if="main.brothers">
-          <!-- For full screen-->
-          <a ui-sref="main.brothers">
-            <span class="glyphicon glyphicon-search"></span> Brothers
-          </a>
+          <a ui-sref="main.brothers"><span class="glyphicon glyphicon-search"></span> Brothers</a>
         </li>
-
       </ul>
-
-      <!-- ================================================================= -->
       <!-- Right navbar items-->
       <ul class="nav navbar-nav navbar-right">
-
-        <!-- Search tab-->
-        <li ui-sref-active-if="main.admin">
-          <!-- For full screen-->
-          <a ui-sref="main.admin">
-            <span class="glyphicon glyphicon-wrench"></span> Admin
-          </a>
-        </li>
-
         <!-- If the user is logged in ...-->
         <li ng-if="main.loggedIn">
-          <a ui-sref="main.home" ng-click="main.doLogout()">
-            <span class="glyphicon glyphicon-off"></span> Logout
-          </a>
+          <a ui-sref="main.home" ng-click="main.doLogout()"><span class="glyphicon glyphicon-off"></span> Logout</a>
         </li>
-
         <!-- If the user is not logged in ...-->
         <li ui-sref-active-if="main.login" ng-if="!main.loggedIn">
-          <a ui-sref="main.login">
-            <span class="glyphicon glyphicon-log-in"></span> Login
-          </a>
+          <a ui-sref="main.login"><span class="glyphicon glyphicon-log-in"></span> Login</a>
         </li>
-
-
-
       </ul>
     </div> <!-- .navbar collapse -->
-  </div> <!-- .container-fluid -->
 </nav>
 
 
-<!-- Angular injected views -->
-<div class="container">
-  <div ui-view></div>
-</div>
+<!-- Sidebar and content-->
+<div id="wrapper"  ng-class="{'page-wrapper--adjusted': !main.loggedIn}">
+  <!-- Sidebar -->
+  <div id="sidebar-wrapper" ng-if="main.loggedIn" class="animate-if">
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand">
+        <a>
+          Dashboard
+        </a>
+      </li>
+      <li ui-sref-active-if="main.admin">
+        <a ui-sref="main.admin">
+          Admin
+          <span class="pull-right"><i class="glyphicon glyphicon-wrench"></i></span>
+        </a>
+      </li>
+    </ul>
+  </div> <!-- /#sidebar-wrapper -->
+
+
+  <!-- Page Content -->
+  <div id="page-content-wrapper">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12" ui-view>
+        </div>
+      </div>
+    </div>
+  </div><!-- /#page-content-wrapper -->
+
+
+
+  <footer class="footer navbar-fixed-bottom">
+    <div class="pull-left center">
+      <ul class="social-icons icon-flat icon-rotate list-unstyled list-inline">
+        <li>
+          Made with
+          <a href="https://github.com/jmclemore368" target="_blank">
+          <i class="fa fa-heart"></i></a>
+          in H&amp;T
+        </li>
+      </ul>
+      <!--
+      Made with
+      <a href="https://www.facebook.com/thetatau/" target="_blank">
+      <i class="fa fa-heart"></i></a>
+      in H&amp;T-->
+    </div>
+    <div class="pull-right">
+      <ul class="social-icons icon-flat icon-rotate list-unstyled list-inline">
+        <li>
+          <a href="https://www.facebook.com/thetatau/" target="_blank">
+          <i class="fa fa-facebook"></i></a>
+        </li>
+         <li>
+           <a href="https://www.instagram.com/ufthetatau/" target="_blank">
+           <i class="fa fa-instagram"></i></a>
+         </li>
+         <li>
+           <a href="https://twitter.com/ufthetatau" target="_blank">
+           <i class="fa fa-twitter"></i></a>
+         </li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- CENTERED DIV - USEFUL - DON'T DELETE
+  <footer class="footer navbar-fixed-bottom" style="border: solid red 1px;">
+     <div class="container center" style="border: solid red 1px;">
+       <div class="row" style="border: solid red 1px;">
+         <div class="pull-right">
+
+           <ul class="social-icons icon-flat icon-rotate list-unstyled list-inline">
+             <li>
+               <a href="https://www.facebook.com/thetatau/" target="_blank">
+               <i class="fa fa-facebook-square"></i></a>
+             </li>
+              <li>
+                <a href="https://www.instagram.com/ufthetatau/" target="_blank">
+                <i class="fa fa-instagram"></i></a>
+              </li>
+              <li>
+                <a href="https://twitter.com/ufthetatau" target="_blank">
+                <i class="fa fa-twitter-square"></i></a>
+              </li>
+              <li>
+                <a href="https://github.com/TT-ZG" target="_blank">
+                <i class="fa fa-github-square"></i></a>
+              </li>
+           </ul>
+         </div>
+       </div>
+     </div>
+   </footer>-->
+
+
+
+
+
+ </div> <!-- /#wrapper -->

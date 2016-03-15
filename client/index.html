@@ -3,6 +3,7 @@
 <head>
 	<!-- For HTML5 mode in angular to remove the #-->
 	<base href="/">
+
  <!-- ################################################################################### -->
  <!-- # THIS SITE, ITS CONTENT, CODE AND DESIGN ARE COPYRIGHTED PROPERTY OF THETA TAU - # -->
  <!-- # ZETA GAMMA CHAPTER AND ARE PROTECTED BY A CREATIVE COMMONS LICENSE. YOU MAY     # -->
@@ -22,9 +23,10 @@
 	<title>UF Theta Tau</title>
 
   <!-- Bootstrap, Font Awesome, Custom Stylesheet -->
-  <link rel="stylesheet" href="/public/lib/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/public/lib/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/public/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/public/lib/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/public/lib/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/public/css/main.css">
+<link href='https://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
 </head>
 
 <!-- apply our angular app to our site -->
@@ -33,46 +35,20 @@
 	<!-- uiRouter injected views-->
 	<div ui-view></div>
 
-
-<!-- Scripts -->
-</script>
-
   <!-- 3rd Party Dependencies -->
-  <script src="/public/lib/jquery/dist/jquery.min.js"></script>
-  <script src="/public/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="/public/lib/angular/angular.js"></script>
-  <script src="/public/lib/angular-ui-router/release/angular-ui-router.js"></script>
-  <script src="/public/lib/angular-bootstrap/ui-bootstrap.js"></script>
-  <script src="/public/lib/angular-animate/angular-animate.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-sanitize.min.js"></script>
+  <script type="text/javascript" src="/public/lib/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="/public/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/public/lib/angular/angular.js"></script>
+  <script type="text/javascript" src="/public/lib/angular-ui-router/release/angular-ui-router.js"></script>
+  <script type="text/javascript" src="/public/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script type="text/javascript" src="/public/lib/angular-animate/angular-animate.js"></script>
+	<script type="text/javascript" src="/public/lib/angular-sanitize/angular-sanitize.min.js"></script>
+  <script type="text/javascript" src="/public/lib/angular-cookies/angular-cookies.min.js"></script>
 
 	<!-- All of our Angular files, concatenated and minified w/ gulp-->
 	<script src="/public/dist/all.js"></script>
 
-	<!--
-  <!-- App, Routes, Controllers, Factories, Services, Directives, Custom JS
-  <script src="app.js"></script>
-  <script src="config/app.client.routes.js"></script>
-
-	<!-- Controllers
-	<script src="controllers/adminController.js"></script>
-	<script src="controllers/editController.js"></script>
-	<script src="controllers/createController.js"></script>
-	<script src="controllers/mainController.js"></script>
-	<script src="controllers/listingController.js"></script>
-
-
-	<!-- Factories and Services
-	<script src="factories/authFactory.js"></script>
-	<script src="factories/crudFactory.js"></script>
-	<script src="factories/interceptFactory.js"></script>
-	<script src="factories/formService.js"></script>
-
-	<!-- Custom directives and JS
-	<script src="directives/menuDirective.js"></script>
-	<script src="directives/fileDirective.js"></script>
-	<script src="/public/js/main.js"></script>-->
-
-
+	<!-- Custom JS file -->
+	<script src="/public/js/main.js"></script>
 </body>
 </html>

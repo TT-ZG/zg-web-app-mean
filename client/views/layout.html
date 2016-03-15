@@ -1,6 +1,4 @@
-<!-- ========================================================================= -->
-<!-- ========================================================================= -->
-<!-- Fixed navbar -->
+<!-- Navbar -->
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <!-- Collapse to hamburger menu -->
@@ -47,17 +45,14 @@
         </li>
       </ul>
     </div> <!-- .navbar collapse -->
-  </div>
 </nav>
 
 
-<!-- ========================================================================= -->
-<!-- ========================================================================= -->
 <!-- Sidebar and content-->
 <div id="wrapper"  ng-class="{'page-wrapper--adjusted': !main.loggedIn}">
-
   <!-- Sidebar -->
   <div id="sidebar-wrapper" ng-if="main.loggedIn" class="animate-if">
+
     <ul class="sidebar-nav">
       <li class="sidebar-brand">
         <a>
@@ -73,8 +68,10 @@
     </ul>
   </div> <!-- /#sidebar-wrapper -->
 
+
   <!-- Page Content -->
   <div id="page-content-wrapper">
+
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-12" ui-view>
@@ -82,143 +79,74 @@
       </div>
     </div>
   </div><!-- /#page-content-wrapper -->
- </div> <!-- /#wrapper -->
 
 
 
-
-
-<!--
-<div id="page-wrapper">
-  <div id="page-viewport">
-    <div id="sidebar" ng-if="main.loggedIn" class="animate-if">
-      <div id="sidebar-header">
-        <a href="" class="toggle-sidebar"><h3>Dashboard</h3></a>
-        <span class="pull-right">
-          <a href="" class="toggle-sidebar btn btn-default">
-            <i class="fa fa-bars"></i>
-          </a>
-        </span>
-      </div>
-      <ul class="nav nav-pills nav-stacked">
-        <li ui-sref-active-if="main.admin">
-          <a ui-sref="main.admin">Admin
-            <span class="pull-right"><i class="glyphicon glyphicon-wrench"></i></span>
-          </a>
+  <footer class="footer navbar-fixed-bottom">
+    <div class="pull-left center">
+      <ul class="social-icons icon-flat icon-rotate list-unstyled list-inline">
+        <li>
+          Made with
+          <a href="https://github.com/jmclemore368" target="_blank">
+          <i class="fa fa-heart"></i></a>
+          in H&amp;T
         </li>
       </ul>
+      <!--
+      Made with
+      <a href="https://www.facebook.com/thetatau/" target="_blank">
+      <i class="fa fa-heart"></i></a>
+      in H&amp;T-->
     </div>
-    <div id="sidebar-page-content" ng-class="{'page-wrapper--adjusted': !main.loggedIn}">
-      <div ui-view></div>
+    <div class="pull-right">
+      <ul class="social-icons icon-flat icon-rotate list-unstyled list-inline">
+        <li>
+          <a href="https://www.facebook.com/thetatau/" target="_blank">
+          <i class="fa fa-facebook"></i></a>
+        </li>
+         <li>
+           <a href="https://www.instagram.com/ufthetatau/" target="_blank">
+           <i class="fa fa-instagram"></i></a>
+         </li>
+         <li>
+           <a href="https://twitter.com/ufthetatau" target="_blank">
+           <i class="fa fa-twitter"></i></a>
+         </li>
+      </ul>
     </div>
-  </div>
-</div>-->
-<!-- ========================================================================= -->
-<!-- ========================================================================= -->
-<!--
-<!-- Main page contents
-<div id="page-wrapper" ng-class="{'open': toggle, 'page-wrapper--adjusted': !main.loggedIn}" ng-cloak>
-  <!-- Sidebar ng-class="{'ng-hide': main.loggedIn}"
-  <div id="sidebar-wrapper" ng-if="main.loggedIn" class="animate-if">
-    <ul class="sidebar">
-      <!-- Toggle the sidebar
-      <li class="sidebar-main">
-        <a ng-click="toggleSidebar()">Dashboard<span class="menu-icon glyphicon glyphicon-transfer"></span></a>
-      </li>
-      <!-- Header
-      <li class="sidebar-title"><span>NAVIGATION</span></li>
-      <!-- List of items
-      <li class="sidebar-list" ui-sref-active-if="main.admin">
-        <a ui-sref="main.admin">Admin<span class="menu-icon glyphicon glyphicon-wrench"></span></a>
-        <!--<a href="#">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
-      </li>
-      <li class="sidebar-list" ui-sref-active-if="main.home">
-        <a ui-sref="main.home">Admin<span class="menu-icon glyphicon glyphicon-wrench"></span></a>
-        <!--<a href="#">Dashboard <span class="menu-icon fa fa-tachometer"></span></a>
-      </li>
-    </ul>
-    <div class="sidebar-footer">
-      <div class="col-xs-12">
-        <span>Made with</span>
-        <a href="https://github.com/jmclemore368" target="_blank">
-          <i class="fa fa-heart pulse"></i>
-        </a>
-        <span> in H&amp;T </span>
-      </div>
-    </div>
-  </div>
-  <!-- End Sidebar
+  </footer>
 
-  <div id="content-wrapper">
-    <div class="page-content">
+  <!-- CENTERED DIV - USEFUL - DON'T DELETE
+  <footer class="footer navbar-fixed-bottom" style="border: solid red 1px;">
+     <div class="container center" style="border: solid red 1px;">
+       <div class="row" style="border: solid red 1px;">
+         <div class="pull-right">
 
-      <!-- Header Bar
-      <div class="row header">
-        <div class="col-xs-12">
-          <div class="user pull-right">
-            <div class="item dropdown" uib-dropdown>
-              <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
-                <img src="img/avatar.jpg">
-              </a>
-              <ul class="dropdown-menu dropdown-menu-right">
-                <li class="dropdown-header">
-                  Joe Bloggs
-                </li>
-                <li class="divider"></li>
-                <li class="link">
-                  <a href="#">
-                    Profile
-                  </a>
-                </li>
-                <li class="link">
-                  <a href="#">
-                    Menu Item
-                  </a>
-                </li>
-                <li class="link">
-                  <a href="#">
-                    Menu Item
-                  </a>
-                </li>
-                <li class="divider"></li>
-                <li class="link">
-                  <a href="#">
-                    Logout
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div class="item dropdown" uib-dropdown>
-             <a href="#" class="dropdown-toggle" uib-dropdown-toggle>
-                <i class="fa fa-bell-o"></i>
-              </a>
-              <ul class="dropdown-menu dropdown-menu-right">
-                <li class="dropdown-header">
-                  Notifications
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <a href="#">Server Down!</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div class="meta">
-            <div class="page">
-              Dashboard
-            </div>
-            <div class="breadcrumb-links">
-              Home / Dashboard
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- End Header Bar
+           <ul class="social-icons icon-flat icon-rotate list-unstyled list-inline">
+             <li>
+               <a href="https://www.facebook.com/thetatau/" target="_blank">
+               <i class="fa fa-facebook-square"></i></a>
+             </li>
+              <li>
+                <a href="https://www.instagram.com/ufthetatau/" target="_blank">
+                <i class="fa fa-instagram"></i></a>
+              </li>
+              <li>
+                <a href="https://twitter.com/ufthetatau" target="_blank">
+                <i class="fa fa-twitter-square"></i></a>
+              </li>
+              <li>
+                <a href="https://github.com/TT-ZG" target="_blank">
+                <i class="fa fa-github-square"></i></a>
+              </li>
+           </ul>
+         </div>
+       </div>
+     </div>
+   </footer>-->
 
 
-    <div ui-view></div>
 
 
-    </div><!-- End Page Content
-  </div><!-- End Content Wrapper
-</div><!-- End Page Wrapper -->
+
+ </div> <!-- /#wrapper -->

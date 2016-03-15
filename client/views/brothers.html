@@ -118,7 +118,7 @@
       <!--<a ui-sref="main.login">ay</a>
       <!--<a ng-click="admin.setID(brother._id)" ui-sref="main.edit({brotherid: admin.desiredID})"-->
 
-      <tr ng-repeat="brother in filtered=(main.brothers | orderBy:listing.sortType:main.sortReverse | filter:listing.filterByProperties | filter:listing.search)" ng-click="listing.setID(brother)"  ui-sref="main.profile({brotherid: listing.desiredID})">
+      <tr ng-repeat="brother in filtered=(main.brothers | orderBy:listing.sortType:listing.sortReverse | filter:listing.filterByProperties | filter:listing.search)" ng-click="listing.setID(brother)"  ui-sref="main.profile({brotherid: listing.desiredID})">
           <td>{{ brother.roll}}</td>
           <td>{{ brother.name }}</td>
           <td>{{ brother.major }}</td>

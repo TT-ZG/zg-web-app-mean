@@ -312,7 +312,16 @@ hr {
   height: 30px;
   background-color: maroon;
 }
-
+#hidden{
+  font-size: .2em;
+  color: whitesmoke !important;
+}
+#hidden li, #hidden li a i{
+  color: grey;
+}
+#watermark{
+  width: 10px;
+}
 /*=============================================================================*/
 /* Icons */
 

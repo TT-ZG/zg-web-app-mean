@@ -175,6 +175,9 @@ exports.create = function(req, res) {
   brother.gpa         = req.body.gpa;
   brother.internships = req.body.internships;
 
+
+
+
   // save the new entry
   brother.save(function(err) {
     if (err) {
@@ -338,7 +341,21 @@ exports.update = function(req, res) {
       if (req.body.graduation) brother.graduation   = req.body.graduation;
       if (req.body.gpa) brother.gpa                 = req.body.gpa;
       if (req.body.picture) brother.picture         = req.body.picture;
-      if (req.body.internships) brother.internships = req.body.internships;
+
+
+      console.log('Internships:' + req.body.internships);
+
+      if (req.body.internships){
+        for (var i = 0; i < req.body.internships.length; i ++){
+          if (req.body.internships[i].name === undefined){
+            console.log('Splicing position: ' + i);
+            req.body.internships.splice(i);
+          }
+        }
+        brother.internships = req.body.internships;
+      }
+
+        //brother.internships = req.body.internships;
 
       // save the newly updated brother
       brother.save(function(err) {

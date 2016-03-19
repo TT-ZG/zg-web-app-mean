@@ -11,17 +11,21 @@
 <table class="table table-bordered table-striped table-condensed">
 	<thead>
 		<tr>
-			<th class="col-sm-2">Username</th>
-			<th class="col-sm-2"></th>
+			<th>Roll</th>
+			<th>Name</th>
+			<th>Pic</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="brother in admin.brothers">
-			<td>{{ brother.username }}</td>
+			<td>{{ brother.roll }}</td>
+			<td>{{ brother.name }}</td>
+			<td>{{ brother.picture }}</td>
 			<td>
       <a ng-click="admin.setID(brother._id)" ui-sref="main.edit({brotherid: admin.desiredID})" class="btn btn-primary">Edit</a>
 			<a ng-click="admin.delete(brother._id, brother.picture)" ui-sref="main.admin" class="btn btn-danger">Delete</a>
-			<a ng-click="admin.resetPicture(brother._id, brother.picture)" ui-sref="main.admin" class="btn btn-info">Reset Picture</a>
+			<a ng-click="admin.resetPicture(brother._id, brother.picture)" ui-sref="main.admin" class="btn btn-info">Reset Pic</a>
 			</td>
 		</tr>
 	</tbody>

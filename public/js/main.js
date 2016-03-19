@@ -12,7 +12,6 @@ $(document).on('click',function(){
 
 
 $(document).on('click', '#menu-toggle', function(e) {
-    console.log('herr');
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
   });

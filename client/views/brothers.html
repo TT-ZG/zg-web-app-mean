@@ -83,6 +83,7 @@
             <span ng-show="listing.sortType == 'major' && listing.sortReverse" class="fa fa-caret-up"></span>
           </a>
         </th>
+        <!--
         <th>
           <a href="#" ng-click="listing.sortType = 'available';listing.sortReverse = !listing.sortReverse">
             Availability
@@ -110,7 +111,7 @@
             <span ng-show="listing.sortType == 'gpa' && !listing.sortReverse" class="fa fa-caret-down"></span>
             <span ng-show="listing.sortType == 'gpa' && listing.sortReverse" class="fa fa-caret-up"></span>
           </a>
-        </th>
+        </th>-->
   		</tr>
   	</thead>
   	<tbody>
@@ -122,10 +123,11 @@
           <td>{{ brother.roll}}</td>
           <td>{{ brother.name }}</td>
           <td>{{ brother.major }}</td>
+          <!--
           <td>{{ brother.available }}</td>
           <td>{{ brother.standing }}</td>
           <td>{{ brother.graduation | date: 'yyyy-MM' }}</td>
-          <td>{{ brother.gpa}}</td>
+          <td>{{ brother.gpa}}</td>-->
       </tr>
   	</tbody>
   </table>

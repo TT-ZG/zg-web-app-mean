@@ -307,7 +307,7 @@ exports.readPicture = function(req, res) {
      .on('end', function() { // done
        var fbuf = Buffer.concat(bufs);
        var base64 = (fbuf.toString('base64'));
-       res.status(200).send({ success: true, message: '200 - OK: Img binary->base64 conversion successful.', data: base64});
+       res.status(200).send({ success: true, message: '200 - OK: Image binary->base64 encode conversion successful.', data: base64});
     });
   });
 };

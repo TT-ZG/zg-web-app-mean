@@ -47,13 +47,13 @@
         .state('main.create', {
           url: '/admin/brothers/create',
           templateUrl: 'views/profile.html',
-          controller  : 'createController as brother'
+          controller  : 'profileController as brother'
         })
 
         .state('main.edit', {
           url: '/admin/brothers/:brotherid',
           templateUrl: 'views/profile.html',
-          controller  : 'editController as brother'
+          controller  : 'profileController as brother'
         });
 
 

@@ -1,20 +1,21 @@
 // best practice: wrap in function to take out of global scope
 (function() {
 
-  // this controller handles everything on the public side:
-  var mainController = function($state, $scope, $rootScope, authFactory, crudFactory, $window, $cookieStore){
+  // this controller handles everything on the mainlic side:
+  var mainController = function($state, $scope, $rootScope, authFactory, crudFactory, $window, $cookieStore, items){
+    // *************************************************************************
+    // set controller as, defaults
+    var main         = this;
+    main.loggedIn    = authFactory.isLoggedIn();
+    main.$state      = $state;
+    main.standings   = items.getStandings();
+    main.availables  = items.getAvailables();
+    main.gpas        = items.getGpas();
+    main.sortType    = 'roll';
+    main.sortReverse = true;
+    main.filter      = {};
 
-    // =========================================================================
-    // ================Set the initial logged in status=========================
-    // =========================================================================
-    // set controller as, logged in status, state
-    var main      = this;
-    main.loggedIn = authFactory.isLoggedIn();
-    main.$state   = $state;
-
-    // =========================================================================
-    // ================This keeps track of the current user=====================
-    // =========================================================================
+    // *************************************************************************
     // on every change of state ...
     $rootScope.$on('$stateChangeStart', function() {
 
@@ -35,9 +36,7 @@
       }
     });
 
-    // =========================================================================
-    // ================This function populates the brothers table===============
-    // =========================================================================
+    // *************************************************************************
     // for populating the brothers table
     main.init = function() {
       crudFactory.get()
@@ -48,11 +47,8 @@
           }
         });
     };
-    main.init();
 
-    // =========================================================================
-    // ================These functions handle logging in and out================
-    // =========================================================================
+    // *************************************************************************
     // for logging in a user
     main.doLogin = function() {
     	main.error = '';
@@ -67,19 +63,50 @@
           console.log(res.data.message);
         });
     };
+    // *************************************************************************
     // for logging out a user
     main.doLogout = function() {
       authFactory.logout();
       main.current = '';
       main.loggedIn = false;
     };
+
+    // *************************************************************************
+    // Filter by property
+    main.filterByProperties = function (brother) {
+      // Use this snippet for matching with AND
+      var matchesAND = true;
+      for (var prop in main.filter) {
+        if (main.noSubFilter(main.filter[prop])) continue;
+        if (!main.filter[prop][brother[prop]]) {
+          matchesAND = false;
+          break;
+        }
+      }
+      return matchesAND;
+    };
+
+    // checks if there is any filter activated
+    main.noSubFilter = function(subFilterObj) {
+      for (var key in subFilterObj) {
+        if (subFilterObj[key]) return false;
+      }
+      return true;
+    };
+
+    // *************************************************************************
+    // set the id of the clicked row in scope because uirouter doesn't accept angular exp as parameters
+    main.setID = function(brother){
+      main.desiredID = brother._id;
+    };
+
+    // *************************************************************************
+    main.init();
   };
 
-  // ===========================================================================
-  // ==========================End of controller================================
-  // ===========================================================================
+    // *************************************************************************
   // for minification purposes
-  mainController.$inject = ['$state', '$scope', '$rootScope', 'authFactory', 'crudFactory', '$window', '$cookieStore'];
+  mainController.$inject = ['$state', '$scope', '$rootScope', 'authFactory', 'crudFactory', '$window', '$cookieStore', 'items'];
 
   // Attach the controller to the app
   angular.module('zgApp').controller('mainController', mainController);

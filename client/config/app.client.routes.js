@@ -14,7 +14,7 @@
           controller  : 'mainController as main'
         })
         //===========================================
-        //* Basic controllers everyone can see */
+        //* Basic states everyone can see */
         .state('main.home', {
           url: '/home',
           templateUrl: 'views/homepage.html'
@@ -23,18 +23,14 @@
           url: '/login',
           templateUrl: 'views/login.html'
         })
-        //===========================================
-        //* Brothers */
         .state('main.brothers', {
           url: '/brothers',
           templateUrl: 'views/brothers.html',
-          controller: 'listingController as listing'
         })
-
         .state('main.profile', {
           url: '/brothers/:brotherid',
           templateUrl: 'views/profile.html',
-          controller  : 'editController as brother'
+          controller  : 'profileController as brother'
         })
 
         //===========================================

@@ -43,7 +43,7 @@
         brother.userData = items.getDefault();
         brother.readPicture('0.jpg');
       }
-      else if ($state.current.name === 'main.edit'){
+      else if ($state.current.name === 'main.edit' || $state.current.name === 'main.profile'){
         brother.readBrother($stateParams.brotherid);
       }
     };

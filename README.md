@@ -1,7 +1,9 @@
-# zg-web-app-mean
+#Discontinued in favor of https://github.com/meanjs/mean for production security.
+
+~~# zg-web-app-mean
 Website built from the ground up using the MEAN stack.
 
-~~Master Branch Live in Production: https://zg-web-app-mean.herokuapp.com~~
+~~Master Branch Live in Production: https://zg-web-app-mean.herokuapp.com~
 
 # Instructions
 1. Navigate to the project directory
@@ -10,3 +12,4 @@ Website built from the ground up using the MEAN stack.
 4. Run 'npm install' and 'bower install'.
 5. Start the server with the command 'gulp'.
 6. Navigate to http://localhost:8080/ in your user agent of choice.
+~~

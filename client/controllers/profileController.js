@@ -10,7 +10,7 @@
     brother.standings   = items.getStandings();
     brother.availables  = items.getAvailables();
     brother.gpas        = items.getGpas();
-
+    brother.userData    = {};
     // *************************************************************************
     // these functions are helper functions
 
@@ -107,13 +107,14 @@
       if ($state.current.name === 'main.create'){
         brother.postBrother();
       }
-      else if ($state.current.name === 'main.edit'){
+      else if ($state.current.name === 'main.edit' || $state.current.name === 'main.profile'){
         brother.putBrother();
       }
     };
 
     // get a brothers picture
     brother.readPicture = function(pictureName){
+      console.log(pictureName);
       crudFactory.readPicture(pictureName).then(function(res){
         if (res.data.success){
           $scope.image_source = "data:image/jpeg;base64, " + res.data.data;
@@ -125,7 +126,7 @@
 
     // save a brothers picture
     brother.uploadPicture = function(brotherId, method){
-      var file = $scope.myFile;
+      var file = $scope.myFile || $scope.currentFile;
       var uploadUrl = "/api/pictures/" + brotherId;
       // save the brothers picture using special service
       fileUpload.upload(method, file, uploadUrl, function(data, status, headers, config){
@@ -134,6 +135,9 @@
         res.data = data;
         brother.pictureMessage = profile.setMessages(res);
         brother.endSpinner();
+        if ($state.current.name === 'main.create'){
+          brother.userData = '';
+        }
       });
     };
 

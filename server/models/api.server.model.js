@@ -48,7 +48,6 @@ var brotherSchema   = new Schema({
 	},
 	graduation: {
 		type: Date,
-		required: true
 	},
 	gpa: {
 		type: String,

@@ -22,6 +22,64 @@ conn.once('open', function() {
   gfs = Grid(conn.db);
 });
 
+
+// =============================================================================
+// =============================================================================
+
+/* In case there is an emergency/all users are deleted
+Make a POST request to /emergency using a tool such as Postman
+This creates a user named Jeff with password Brobama
+Note: Do not put into production. Anyone can make this request.
+For convenience during development only. */
+
+exports.emergency = function (req, res){
+  Brothers.findOne({ username: 'Jeff' })
+  .exec(function(err, brother) {
+    if (err){
+      res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
+    }
+
+    // if there is no jeff user, create one
+    if (!brother) {
+      var sampleUser = new Brothers();
+
+      sampleUser.name        = 'Jeff McLemore';
+      sampleUser.username    = 'Jeff';
+      sampleUser.password    = 'Brobama';
+      sampleUser.roll        = 499;
+      sampleUser.pledgeClass = 'Rho Beta';
+      sampleUser.major       = 'Computer Science Engineering';
+      sampleUser.available   = 'Internship'
+      sampleUser.standing    = 'Active'
+      sampleUser.gpa         = '3.67 - 4.00';
+      sampleUser.internships = [{id: 0, name: 'VTC USA'}];
+      sampleUser.picture     = '0.jpg';
+      
+      sampleUser.save(function(err) {
+        if (err) {
+          if (err.code === 11000) {
+            res.status(300).send({ success: false, message: '400 - Bad Request: Duplicate Roll/Username' });
+          }
+          else {
+              res.status(500).send({ success: false, message: '500 - Internal Server Error: ' + err });
+          }
+        }
+        else {
+          res.status(200).send({ success: true, message: '200 - OK: Brother created!' });
+        }
+      });
+
+    } else {
+      console.log(user);
+
+      // if there is a jeff, update his password
+      brother.password = 'Brobama';
+      brother.save();
+      res.status(200).send({ success: true, message: 'Succesfully updated Jeff' });
+    }
+  });
+};
+
 // =============================================================================
 // =============================================================================
 // GET api/brothers

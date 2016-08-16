@@ -10,6 +10,10 @@ var api     = require('../controllers/api.server.controller.js'),
 // =============================================================================
 // =============================================================================
 // Retrieving all brothers is allowed to the public
+
+router.route('/emergency')
+  .post(api.emergency);
+  
 router.route('/brothers')
   .get(api.brothers);
 

@@ -16,6 +16,16 @@
     main.filter      = {};
 
     // *************************************************************************
+    // start the spinner on the page
+    main.startSpinner = function(){
+      main.processing = true;
+    };
+    // end the spinner on the page
+    main.endSpinner = function(){
+      main.processing = false;
+    };
+
+    // *************************************************************************
     // on every change of state ...
     $rootScope.$on('$stateChangeStart', function() {
 

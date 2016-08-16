@@ -6,6 +6,16 @@
     var admin = this;
 
     // *************************************************************************
+    // start the spinner on the page
+    admin.startSpinner = function(){
+      admin.processing = true;
+    };
+    // end the spinner on the page
+    admin.endSpinner = function(){
+      admin.processing = false;
+    };
+
+    // *************************************************************************
     // initializes the data table
     admin.init = function() {
       crudFactory.get().then(function(res){
@@ -20,6 +30,7 @@
     // delete a brothers information totally
     admin.delete = function(id, pictureName) {
       // delete a brothers info by id
+      admin.startSpinner();
       crudFactory.delete(id).then(function(res){
           console.log(res.data.message);
         });
